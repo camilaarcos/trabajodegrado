@@ -1,5 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
 
@@ -8,58 +7,79 @@ export default function Home() {
   const navigation = useNavigation();
 
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Home</Text>
-        <TouchableOpacity style={styles.boxbutton} >
-              <Text>Registrar Crímen</Text>
+      <View style={styles.container}>
+        <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
+        <Text style={styles.tittle}></Text>
+        <Image source={require('../assets/logo.png')} style={styles.imageStyle} />
+        <TouchableOpacity onPress={()=> navigation.navigate('Registro de crímenes')} style={styles.boxbutton} >
+              <Text style={styles.textbutton}>Registrar Crímen</Text>
             </TouchableOpacity>
-              <TouchableOpacity onPress={() => navigation.navigate('LogIn')} >
-              <Text style={styles.login}>Inicio Sesión</Text>
+              <View style={styles.registerContainer}>
+              <Text style={styles.registerText}>¿Ya tienes cuenta?</Text>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('Inicio de sesión')}
+              >
+                <Text style={styles.registerLink}>Inicia sesión</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
-              <Text style={styles.login}>Registrarse</Text>
-              </TouchableOpacity> 
+              </View>
+              <View style={styles.registerContainer}>
+              <Text style={styles.registerText}>¿No tienes una cuenta?</Text>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('Registrarse')}
+              >
+                <Text style={styles.registerLink}>Regístrate</Text>
+              </TouchableOpacity>
+              </View>
       </View>
     );
   }
   const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
+  container:{ 
+    flex: 1,
+    alignItems: 'center',
+    // backgroundColor: '#84b6f4',
+  },
+  imagefondo: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+  },
+  tittle: {
+    fontFamily: "",
+     fontSize: 30,
+     fontWeight: "bold",
+      marginTop: 50,
+      textAlign : "center",
     },
-    login1: {
-      width: 350,
-      height: 500,
-      borderColor: 'blue',
-      borderWidth: 2,
-      borderRadius: 10,
-      padding: 10,
-      alignItems: 'center',
+    imageStyle: {
+      width: 100, // Ancho de la imagen
+      height: 100, // Altura de la imagen
     },
-    email: {
-      fontSize: 17,
-      fontWeight: '400'
-    },
-    input: {
-      width: 250,
-      height: 40,
-      borderColor: '#000',
-      borderWidth: 2,
-      borderRadius: 10,
-      padding: 10,
-      marginVertical: 10,
-      backgroundColor: '#00000090',
-      marginBottom: 20,
-    },
-    login: {
-      color: "#525fe1",
-    },
-   boxbutton: {
-      backgroundColor: "#525fe1",
-      padding: 10,
-      borderRadius: 5,
-      margin: 10,
-    },
+  boxbutton: {
+    backgroundColor: "#ffffff80",
+    padding: 10,
+    borderRadius: 5,
+    borderWidth: 2,
+    borderColor: '#fff',
+    margin: 10,
+    marginTop: 100,
+  },
+  textbutton:{
+    fontWeight: "bold",
+  },
+  registerContainer: {
+    flexDirection: "row", 
+    alignItems: "center", 
+    justifyContent: "center", 
+    marginTop: 10, 
+  },
+  registerText: {
+    marginRight: 5, 
+  },
+  registerLink: {
+    color: "#4d82bc", 
+    fontWeight: 'bold',
+    textDecorationLine: "underline",
+  },
+   
   });

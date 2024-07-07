@@ -1,8 +1,7 @@
 import { BlurView } from 'expo-blur';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TouchableOpacity,ScrollView, TextInput, View, Alert } from 'react-native';
-import React, { Component, useState, useEffect } from "react";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { StyleSheet, Text, TouchableOpacity,ScrollView, TextInput, View, Alert, Image } from 'react-native';
+import React, { useState } from "react";
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../firebase-config';
 import { useNavigation } from '@react-navigation/native';
@@ -22,51 +21,48 @@ export default function LogIn() {
       console.log('Usuario logueado');
       const user = userCredential.user;
       console.log(user);
-      Alert.alert("Título del Aviso", "Mensaje del aviso.");
+      Alert.alert("Inicio de sesión", "Inicio correctamente");
       navigation.navigate('Inicio');
     })
     .catch((error) => {
       console.log(error);
+      Alert.alert(error.message);
     });
   } 
-  const handleLogIn = async (email, password) => {
-    signInWithEmailAndPassword(auth, email, password)
-    try {
-      await LogIn(email, password);
-      alert("Se inició sesión");
-    } catch (error) {
-      alert("Error al iniciar sesión " + error.message);
-    } 
-  };
+
   return (
     <View style={styles.container}>
+      <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
       
       <ScrollView contentContainerStyle={{
         flex: 1,
         width: '100%',
         height: '100%',
         alignItems: 'center',
-        justifyContent: 'center',
+        marginTop: 90,
       }}>
-        <BlurView intensity={100} >   
+        <Text style={styles.tittle}>Inicio de sesión</Text>
+        <BlurView intensity={100}>   
           <View style={styles.login1}>
-              <Text style={styles.email}>Email</Text>
-              <TextInput onChangeText={(text)=> setEmail(text)} style={styles.input} placeholder='email@email.com'/>
+          <Image source={require('../assets/avatar.png')} style={styles.avatar} />
+              <Text style={styles.email}>Correo electrónico</Text>
+              <TextInput onChangeText={(text)=> setEmail(text)} style={styles.input} placeholder='ejemplo@gmail.com'/>
               <Text style={styles.email}>Contraseña</Text>
               <TextInput onChangeText={(text)=> setPassword(text)} style={styles.input} placeholder='contraseña' secureTextEntry= {true} />
-              <TouchableOpacity onPress={handleSignIn}>
-              <Text style={styles.login}>Inicio Sesión</Text>
+              <TouchableOpacity onPress={handleSignIn} style={styles.boxbutton}>
+              <Text style={styles.login}>Iniciar sesión</Text>
               </TouchableOpacity>
               <View style={styles.registerContainer}>
               <Text style={styles.registerText}>¿No tienes una cuenta?</Text>
               <TouchableOpacity
-                onPress={() => navigation.navigate('SignIn')}
+                onPress={() => navigation.navigate('Registrarse')} 
               >
-                <Text style={styles.registerLink}> Regístrate</Text>
+                <Text style={styles.registerLink}>Regístrate</Text>
               </TouchableOpacity>
               </View>
             </View>
           </BlurView>
+          {/* <Image source={require('../assets/logo.png')} style={styles.imageStyle} /> */}
         </ScrollView>
       
     </View>
@@ -76,42 +72,69 @@ export default function LogIn() {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
       alignItems: 'center',
-      justifyContent: 'center',
+    },
+    imagefondo: {
+      width: '100%',
+      height: '100%',
+      resizeMode: 'cover',
+    },
+    tittle: {
+      fontSize: 30,
+      color: '#4d82bc',
+      fontWeight: 'bold',
+      marginBottom: 10,
+    },
+    imageStyle: {
+      width: 100, // Ancho de la imagen
+      height: 100, // Altura de la imagen
+      marginTop: 20,
+      alignSelf: 'flex-end',
     },
     login1: {
       width: 350,
       height: 500,
-      borderColor: 'blue',
+      borderColor: '#4d82bc',
       borderWidth: 2,
       borderRadius: 10,
       padding: 10,
       alignItems: 'center',
     },
+    avatar: {
+      width: 100,
+      height: 100,
+      borderRadius: 50,
+      marginBottom: 10,
+    },
     email: {
       fontSize: 17,
-      fontWeight: '400'
+      color: '#4d82bc',
+      fontWeight: 'bold',
     },
     input: {
       width: 250,
       height: 40,
-      borderColor: '#000',
+      borderColor: '#fff',
       borderWidth: 2,
       borderRadius: 10,
       padding: 10,
       marginVertical: 10,
-      backgroundColor: '#00000090',
+      backgroundColor: '#ffffff90',
       marginBottom: 20,
+      fontWeight: '400',
     },
     login: {
-      color: "#525fe1",
+      color: "#4d82bc",
+      fontWeight: 'bold',
+
     },
    boxbutton: {
-      backgroundColor: "#525fe1",
-      padding: 10,
-      borderRadius: 5,
-      margin: 10,
+    backgroundColor: "#ffffff80",
+    padding: 10,
+    borderRadius: 5,
+    borderWidth: 2,
+    borderColor: '#fff',
+    margin: 10,
     },
     registerContainer: {
       flexDirection: "row", 
@@ -123,6 +146,8 @@ export default function LogIn() {
       marginRight: 5, 
     },
     registerLink: {
-      color: "#525fe1", 
+      color: "#4d82bc", 
+      fontWeight: 'bold',
+      textDecorationLine: "underline",
     },
   });
