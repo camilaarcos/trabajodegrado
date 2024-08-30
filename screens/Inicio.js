@@ -6,16 +6,9 @@ export default function Inicio() {
   const navigation = useNavigation();
 
 return(
-<<<<<<< Updated upstream
     <View style={styles.container}>
       <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
         
-=======
-  
-    <View style={styles.container}>
-      <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
-      
->>>>>>> Stashed changes
         <TouchableOpacity onPress={()=> navigation.navigate('Registro de crímenes')} style={styles.boxbutton} >
               <Text>Registrar Crímen</Text>
             </TouchableOpacity>

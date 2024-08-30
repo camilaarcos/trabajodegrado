@@ -53,11 +53,8 @@ export default function SignIn() {
               <TextInput onChangeText={(text)=> setEmail(text)} style={styles.input} placeholder='ejemplo@gmail.com'/>
               <Text style={styles.email}>Contraseña</Text>
               <TextInput onChangeText={(text)=> setPassword(text)} style={styles.input} placeholder='contraseña' secureTextEntry= {true} />
-<<<<<<< Updated upstream
-=======
               <Text style={styles.email}>Confirmar Contraseña</Text>
               <TextInput onChangeText={(text) => setConfirmPassword(text)} style={styles.input} placeholder='confirmar contraseña' secureTextEntry={true} />
->>>>>>> Stashed changes
               <TouchableOpacity onPress={handleCreateAccount}  style={styles.boxbutton}>
               <Text style={styles.login}>Registrarse</Text>
               </TouchableOpacity>
