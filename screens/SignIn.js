@@ -26,6 +26,7 @@ export default function SignIn() {
       console.log('Usuario creado');
       const user = userCredential.user;
       console.log(user);
+      Alert.alert( "Usuario registrado correctamente");
     })
     .catch((error) => {
       console.log(error);
