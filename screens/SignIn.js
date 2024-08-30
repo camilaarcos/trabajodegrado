@@ -11,11 +11,16 @@ export default function SignIn() {
   const navigation = useNavigation();
   const [email, setEmail] = useState(''); 
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
   const handleCreateAccount = () => {
+    if (password !== confirmPassword) {
+      alert('Las contraseñas no coinciden');
+      return;
+    }
     createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       console.log('Usuario creado');
@@ -48,6 +53,11 @@ export default function SignIn() {
               <TextInput onChangeText={(text)=> setEmail(text)} style={styles.input} placeholder='ejemplo@gmail.com'/>
               <Text style={styles.email}>Contraseña</Text>
               <TextInput onChangeText={(text)=> setPassword(text)} style={styles.input} placeholder='contraseña' secureTextEntry= {true} />
+<<<<<<< Updated upstream
+=======
+              <Text style={styles.email}>Confirmar Contraseña</Text>
+              <TextInput onChangeText={(text) => setConfirmPassword(text)} style={styles.input} placeholder='confirmar contraseña' secureTextEntry={true} />
+>>>>>>> Stashed changes
               <TouchableOpacity onPress={handleCreateAccount}  style={styles.boxbutton}>
               <Text style={styles.login}>Registrarse</Text>
               </TouchableOpacity>

@@ -60,6 +60,14 @@ export default function LogIn() {
                 <Text style={styles.registerLink}>Regístrate</Text>
               </TouchableOpacity>
               </View>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('Inicio')}>
+                <Text style={styles.registerLink}>Olvidó su contraseña</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('Inicio')}>
+                <Text style={styles.registerLink}> Cambiar su contraseña</Text>
+              </TouchableOpacity>
             </View>
           </BlurView>
           {/* <Image source={require('../assets/logo.png')} style={styles.imageStyle} /> */}

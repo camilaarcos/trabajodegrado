@@ -7,6 +7,10 @@ import SignIn from './screens/SignIn';
 import Home from './screens/Home';
 import Inicio from './screens/Inicio';
 import Registro from './screens/Registro';
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 const Stack = createNativeStackNavigator();
 export default function App() {
 
