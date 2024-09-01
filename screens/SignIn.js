@@ -45,7 +45,7 @@ export default function SignIn() {
         marginTop: 90,
       }}>
         <Text style={styles.tittle}>Registro</Text>
-        <BlurView intensity={100} >
+        <BlurView intensity={100} style={styles.BlurPrincipal}>
           
           <View style={styles.login1}>
             <StatusBar style="auto" />
@@ -59,6 +59,7 @@ export default function SignIn() {
               <TouchableOpacity onPress={handleCreateAccount}  style={styles.boxbutton}>
               <Text style={styles.login}>Registrarse</Text>
               </TouchableOpacity>
+              <BlurView intensity={50} style={styles.blurContainer}>
               <View style={styles.registerContainer}>
               <Text style={styles.registerText}>¿Ya tienes cuenta?</Text>
               <TouchableOpacity
@@ -67,6 +68,7 @@ export default function SignIn() {
                 <Text style={styles.registerLink}>Inicia sesión</Text>
               </TouchableOpacity>
               </View>
+              </BlurView>
             </View>
           </BlurView>
         </ScrollView>
@@ -79,6 +81,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+  },
+  BlurPrincipal: {
+    borderRadius: 10,
+    overflow: 'hidden',
   },
   imagefondo: {
     width: '100%',
@@ -145,7 +151,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 10,
+    marginTop: 5,
   },
   registerText: {
     marginRight: 5,
@@ -154,5 +160,12 @@ const styles = StyleSheet.create({
     color: "#4d82bc",
     fontWeight: 'bold',
     textDecorationLine: 'underline',
+  },
+  blurContainer: {
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 5,
+    borderRadius: 5, // Bordes redondeados
+    overflow: 'hidden', // Oculta el contenido que se sale del contenedor
   },
 });

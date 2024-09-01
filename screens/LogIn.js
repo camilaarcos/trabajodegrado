@@ -6,7 +6,7 @@ import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../firebase-config';
 import { useNavigation } from '@react-navigation/native';
 
-export default function LogIn() {
+export default function LogIn({setIsLoggedIn}) {
   const navigation = useNavigation();
   const [email, setEmail] = useState(''); 
   const [password, setPassword] = useState('');
@@ -22,7 +22,8 @@ export default function LogIn() {
       const user = userCredential.user;
       console.log(user);
       Alert.alert("Inicio de sesión", "Inicio correctamente");
-      navigation.navigate('Inicio');
+      setIsLoggedIn(true);
+      navigation.navigate('MyTabs');
     })
     .catch((error) => {
       console.log(error);
@@ -42,7 +43,7 @@ export default function LogIn() {
         marginTop: 90,
       }}>
         <Text style={styles.tittle}>Inicio de sesión</Text>
-        <BlurView intensity={100}>   
+        <BlurView intensity={100} style={styles.blurPrincipal}>   
           <View style={styles.login1}>
           <Image source={require('../assets/avatar.png')} style={styles.avatar} />
               <Text style={styles.email}>Correo electrónico</Text>
@@ -52,6 +53,7 @@ export default function LogIn() {
               <TouchableOpacity onPress={handleSignIn} style={styles.boxbutton}>
               <Text style={styles.login}>Iniciar sesión</Text>
               </TouchableOpacity>
+              <BlurView intensity={50} style={styles.blurContainer}>
               <View style={styles.registerContainer}>
               <Text style={styles.registerText}>¿No tienes una cuenta?</Text>
               <TouchableOpacity
@@ -60,14 +62,14 @@ export default function LogIn() {
                 <Text style={styles.registerLink}>Regístrate</Text>
               </TouchableOpacity>
               </View>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('Inicio')}>
-                <Text style={styles.registerLink}>Olvidó su contraseña</Text>
+              <View style={styles.forgotPasswordContainer}>
+              <Text style={styles.registerText}>¿Olvidaste tu contraseña?</Text>
+              <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+                <Text style={styles.registerLink}>Recuperala</Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('Inicio')}>
-                <Text style={styles.registerLink}> Cambiar su contraseña</Text>
-              </TouchableOpacity>
+              
+              </View>
+              </BlurView>
             </View>
           </BlurView>
           {/* <Image source={require('../assets/logo.png')} style={styles.imageStyle} /> */}
@@ -81,6 +83,10 @@ export default function LogIn() {
     container: {
       flex: 1,
       alignItems: 'center',
+    },
+    blurPrincipal: {
+      borderRadius: 10,
+      overflow: 'hidden',
     },
     imagefondo: {
       width: '100%',
@@ -157,5 +163,17 @@ export default function LogIn() {
       color: "#4d82bc", 
       fontWeight: 'bold',
       textDecorationLine: "underline",
+    },
+    forgotPasswordContainer: {
+      flexDirection: 'row',
+      marginTop: 10, // Espacio entre el texto de registro y el texto de olvidar contraseña
+      alignItems: 'center',
+    },
+    blurContainer: {
+      marginVertical: 5, // Espacio vertical entre los contenedores
+      padding: 5, // Espacio interno del contenedor
+      paddingBottom: 10, // Espacio en la parte inferior del contenedor
+      borderRadius: 10, // Bordes redondeados
+      overflow: 'hidden', // Oculta el contenido que se sale del contenedor
     },
   });
