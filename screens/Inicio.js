@@ -1,6 +1,7 @@
-import {Text, View,StyleSheet, TouchableOpacity, Image } from "react-native";
+import {Text, View,StyleSheet, TouchableOpacity, Image, ScrollView } from "react-native";
 import React from "react";
 import { useNavigation } from '@react-navigation/native';
+import LottieView from 'lottie-react-native';
 import { database } from "../src/config/firebase";
 import { collection, doc, onSnapshot, orderBy, query, QuerySnapshot } from "firebase/firestore";
 import Crimenes from "../src/components/crimenes";
@@ -28,8 +29,15 @@ export default function Inicio() {
   },[]);
 
 return(
-    <View style={styles.container}>
-      <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
+  <View style={styles.containerfuera}>
+  <LottieView
+        source={require('../assets/animations/fondoanimado.json')}
+        autoPlay
+        loop
+        style={styles.animation}
+      />
+    <ScrollView contentContainerStyle={styles.container}>
+      
         
         <TouchableOpacity onPress={()=> navigation.navigate('Registro de crímenes')} style={styles.boxbutton} >
               <Text>Registrar Crímen</Text>
@@ -40,21 +48,27 @@ return(
             <Crimenes key={crimen.id} {...crimen} />
           ))}
           </View>
+        </ScrollView>
         </View>
 
 );
 
 }
 const styles = StyleSheet.create({
-  container:{ 
+  containerfuera: {
     flex: 1,
-    alignItems: 'center',
-    // backgroundColor: '#84b6f4',
+    justifyContent: 'center',
+    // alignItems: 'center',
   },
-  imagefondo: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
+  container: {
+    flexGrow: 1,
+    alignItems: 'center', // Alinea horizontalmente al centro
+    padding: 16,
+  },
+  animation: {
+    position: 'absolute',
+    width: '200%',
+    height: '200%',
   },
  boxbutton: {
   backgroundColor: "#ffffff80",
@@ -63,7 +77,7 @@ const styles = StyleSheet.create({
   borderWidth: 2,
   borderColor: '#fff',
   margin: 10,
-  marginTop: 100,
+  marginTop: 10,
   },
   crimenesContainer: {
     width: '100%',

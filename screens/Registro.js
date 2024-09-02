@@ -1,4 +1,4 @@
-import {Text, View, Image, StyleSheet, TextInput, Pressable, Platform, TouchableOpacity, Alert} from "react-native";
+import {Text, View, Image, StyleSheet, TextInput, Pressable, Platform, TouchableOpacity, Alert, ScrollView} from "react-native";
 import React, {useState} from "react";
 import { Picker} from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -49,11 +49,16 @@ export default function Registro() {
   };
 
 return(
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={{
+      flexGrow: 1,
+      alignItems: 'center',
+      padding: 16,
+    }}>
         <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
         
         <Text style={styles.tittle}>Registro de crímenes</Text>
         <Image source={require('../assets/Info.png')} style={styles.imageStyle} />
+        <Text style={styles.texto}>Seleccione el tipo de crímen</Text>
         <View style={styles.pickerContainer}>
         <Picker
         selectedValue={newItem.Tipo}
@@ -74,6 +79,7 @@ return(
         
       </Picker>
       </View>
+      <Text style={styles.texto}>Seleccione la fecha del crímen</Text>
       {showDatePicker && (
         <DateTimePicker
           value={newItem.Fecha}
@@ -94,29 +100,26 @@ return(
         </Pressable>
       )}
 
-
+      <Text style={styles.texto}>Ingrese la dirección del crímen</Text>
         <TextInput 
         onChangeText={(text)=> setNewItem({...newItem, Direccion: text})}
-        style={styles.inputContainer} placeholder="Dirección" require/>
+        style={styles.inputContainer} placeholder="calle 10 # 10 - 10 barrio fatima" require/>
         <TextInput 
         onChangeText={(text)=> setNewItem({...newItem, Observacion: text})}
         style={styles.inputObservaciones}placeholder="Observaciones" require/>
         <TouchableOpacity onPress={onSend} style={styles.boxbutton}>
               <Text style={styles.Registro}>Registrar</Text>
               </TouchableOpacity>
-        </View>
+        </ScrollView>
 );
 
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-      },
+
       imagefondo: {
-        width: '100%',
-        height: '100%',
+        // width: '100%',
+        height: '120%',
         resizeMode: 'cover',
       },
       tittle: {
@@ -125,6 +128,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 10,
         marginTop: 20,
+      },
+      texto: {
+        color: '#000',
+        fontSize: 15,
+        marginTop: 10,
       },
       imageStyle: {
         width: 200, // Ancho de la imagen
@@ -155,9 +163,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderRadius: 10,
         padding: 10,
-        marginVertical: 10,
         backgroundColor: '#ffffff90',
-        marginBottom: 20,
         fontWeight: '400',
       },
       inputObservaciones: {
@@ -170,6 +176,7 @@ const styles = StyleSheet.create({
         fontWeight: '400',
         textAlignVertical: 'top',
         padding: 10,
+        marginTop : 10,
         
       },
       registro: {
@@ -184,5 +191,6 @@ const styles = StyleSheet.create({
       borderWidth: 2,
       borderColor: '#fff',
       margin: 10,
+      alignItems: 'center',
       },
 });

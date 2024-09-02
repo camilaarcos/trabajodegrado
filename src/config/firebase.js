@@ -1,6 +1,7 @@
 import { initializeApp, getApp, getApps } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import Constants from 'expo-constants';
+import 'firebase/auth';
 const firebaseConfig = {
   apiKey: Constants.manifest?.extra?.apiKey,
   authDomain: Constants.manifest?.extra?.authDomain,

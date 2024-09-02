@@ -21,6 +21,7 @@ return(
     <View style={styles.container}>
         <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
         <Text style={styles.tittle}>Holis</Text>
+        <Image source={require('../assets/Otp.png')} style={styles.imageStyle} />
         <View>
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
           <Text style={styles.registerLink}> Cerrar sesión</Text>
@@ -48,14 +49,20 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 10,
       },
+      imageStyle: {
+        width: 200, // Ancho de la imagen
+        height: 200, // Altura de la imagen
+        marginTop: 20,
+        // alignSelf: 'flex-end',
+      },
       logoutButton: {
         backgroundColor: "#ffffff80",
-  padding: 10,
-  borderRadius: 5,
-  borderWidth: 2,
-  borderColor: '#fff',
-  margin: 10,
-  marginTop: 100,
+      padding: 10,
+      borderRadius: 5,
+      borderWidth: 2,
+      borderColor: '#fff',
+      margin: 10,
+      marginTop: 100,
       },
       registerLink: {
         color: "#000",

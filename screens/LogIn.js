@@ -65,7 +65,7 @@ export default function LogIn({setIsLoggedIn}) {
               </View>
               <View style={styles.forgotPasswordContainer}>
               <Text style={styles.registerText}>¿Olvidaste tu contraseña?</Text>
-              <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+              <TouchableOpacity onPress={() => navigation.navigate('RecoverPassword')}>
                 <Text style={styles.registerLink}>Recuperar</Text>
               </TouchableOpacity>
               

@@ -1,5 +1,6 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import LottieView from 'lottie-react-native';
 import * as React from 'react';
 
 
@@ -7,8 +8,16 @@ export default function Home() {
   const navigation = useNavigation();
 
     return (
-      <View style={styles.container}>
-        <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
+      // <View style={styles.containerafuera}>
+        
+        /* <LottieView
+        source={require('../assets/animations/y5R1ytlvl3.json')}
+        autoPlay
+        loop
+        style={styles.animation}
+      /> */
+      <ScrollView contentContainerStyle={styles.container}>
+      <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
         <Text style={styles.tittle}></Text>
         <Image source={require('../assets/Identity.png')} style={styles.imageStyle} />
         <TouchableOpacity onPress={()=> navigation.navigate('Registro de crímenes')} style={styles.boxbutton} >
@@ -31,19 +40,33 @@ export default function Home() {
               </TouchableOpacity>
               </View>
               <Image source={require('../assets/Chain.png')} style={styles.imageAbajo} />
-      </View>
+              </ScrollView>
+      // </View>
     );
   }
   const styles = StyleSheet.create({
-  container:{ 
-    flex: 1,
-    alignItems: 'center',
-    // backgroundColor: '#84b6f4',
-  },
-  imagefondo: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
+    containerfuera: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    container: {
+      flexGrow: 1,
+      alignItems: 'center', // Alinea horizontalmente al centro
+      // padding: 16,
+    },
+    imagefondo: {
+      width: '100%',
+      height: '100%',
+      resizeMode: 'cover',
+    },
+  animation: {
+    position: 'absolute',
+    width: '300%', // Escala la animación para que solo se vea el centro
+    height: '300%', // Escala la animación para que solo se vea el centro
+    top: '-60%', // Ajusta la posición vertical
+    left: '-90%', // Ajusta la posición horizontal
+    transform: [{ rotate: '90deg' }],
   },
   tittle: {
     fontFamily: "",
@@ -78,7 +101,7 @@ export default function Home() {
     marginRight: 5, 
   },
   registerLink: {
-    color: "#4d82bc", 
+    color: "#000", 
     fontWeight: 'bold',
     textDecorationLine: "underline",
   },
