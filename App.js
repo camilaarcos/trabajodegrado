@@ -37,6 +37,11 @@ function MyTabs() {
         tabBarIcon: ({ color, size }) => (
           <Ionicons name="home" color={color} size={size} />
         ),
+        headerTitle: () => (
+          <Image
+            style={{ width: 320, height: 30 }}
+            source={require('./assets/nombre.png')}
+          />),
     headerStyle: {
       backgroundColor: '#4d82bc', // Color de fondo de la cabecera
     },
@@ -50,6 +55,11 @@ function MyTabs() {
         tabBarIcon: ({ color, size }) => (
           <Ionicons name="newspaper-outline" color={color} size={size} />
         ),
+        headerTitle: () => (
+          <Image
+            style={{ width: 320, height: 30 }}
+            source={require('./assets/nombre.png')}
+          />),
     headerStyle: {
       backgroundColor: '#4d82bc', // Color de fondo de la cabecera
     },
@@ -61,6 +71,19 @@ function MyTabs() {
   }} />
       <Tab.Screen name=" " component={Registro}
        options={{
+        headerTitle: () => (
+          <Image
+            style={{ width: 320, height: 30 }}
+            source={require('./assets/nombre.png')}
+          />),
+          headerStyle: {
+            backgroundColor: '#4d82bc', // Color de fondo de la cabecera
+          },
+          headerTintColor: 'white', // Color de los botones y título en la cabecera
+          headerTitleStyle: {
+            fontWeight: 'bold', // Estilo del título
+          },
+          headerTitleAlign: 'center',
         tabBarIcon: ({ color, size, focused }) => (
           <CustomTabIcon 
             name="add" 
@@ -74,6 +97,11 @@ function MyTabs() {
         tabBarIcon: ({ color, size }) => (
           <Ionicons name="bar-chart-outline" color={color} size={size} />
         ),
+        headerTitle: () => (
+          <Image
+            style={{ width: 320, height: 30 }}
+            source={require('./assets/nombre.png')}
+          />),
     headerStyle: {
       backgroundColor: '#4d82bc', // Color de fondo de la cabecera
     },
@@ -87,6 +115,11 @@ function MyTabs() {
         tabBarIcon: ({ color, size }) => (
           <Ionicons name="person-circle-outline" color={color} size={size} />
         ),
+        headerTitle: () => (
+          <Image
+            style={{ width: 320, height: 30 }}
+            source={require('./assets/nombre.png')}
+          />),
     headerStyle: {
       backgroundColor: '#4d82bc', // Color de fondo de la cabecera
     },
@@ -155,6 +188,12 @@ function MainStack({setIsLoggedIn}) {
     headerTitleAlign: 'center', // Alineación del título
   }} />
         <Stack.Screen name="Inicio" component={Inicio}  options={{
+          headerTitle: () => (
+            <Image
+              style={{width: 320, height: 30, marginRight: 120}}
+              source={require('./assets/nombre.png')} 
+            />
+          ),
     headerStyle: {
       backgroundColor: '#4d82bc', // Color de fondo de la cabecera
     },
@@ -165,6 +204,12 @@ function MainStack({setIsLoggedIn}) {
     headerTitleAlign: 'center', // Alineación del título
   }}/>
         <Stack.Screen name="Registro de crímenes" component={Registro}  options={{
+          headerTitle: () => (
+            <Image
+              style={{width: 320, height: 30, marginRight: 120}}
+              source={require('./assets/nombre.png')} 
+            />
+          ),
     headerStyle: {
       backgroundColor: '#4d82bc', // Color de fondo de la cabecera
     },

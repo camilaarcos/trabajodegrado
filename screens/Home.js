@@ -10,7 +10,7 @@ export default function Home() {
       <View style={styles.container}>
         <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
         <Text style={styles.tittle}></Text>
-        <Image source={require('../assets/logo.png')} style={styles.imageStyle} />
+        <Image source={require('../assets/Identity.png')} style={styles.imageStyle} />
         <TouchableOpacity onPress={()=> navigation.navigate('Registro de crímenes')} style={styles.boxbutton} >
               <Text style={styles.textbutton}>Registrar Crímen</Text>
             </TouchableOpacity>
@@ -30,6 +30,7 @@ export default function Home() {
                 <Text style={styles.registerLink}>Regístrate</Text>
               </TouchableOpacity>
               </View>
+              <Image source={require('../assets/Chain.png')} style={styles.imageAbajo} />
       </View>
     );
   }
@@ -52,8 +53,8 @@ export default function Home() {
       textAlign : "center",
     },
     imageStyle: {
-      width: 100, // Ancho de la imagen
-      height: 100, // Altura de la imagen
+      width: 200, // Ancho de la imagen
+      height: 200, // Altura de la imagen
     },
   boxbutton: {
     backgroundColor: "#ffffff80",
@@ -62,7 +63,7 @@ export default function Home() {
     borderWidth: 2,
     borderColor: '#fff',
     margin: 10,
-    marginTop: 100,
+    marginTop: 50,
   },
   textbutton:{
     fontWeight: "bold",
@@ -81,5 +82,10 @@ export default function Home() {
     fontWeight: 'bold',
     textDecorationLine: "underline",
   },
-   
+  imageAbajo: {
+    marginTop: 50,
+    width: 100, // Ancho de la imagen
+    height: 100, // Altura de la imagen
+    alignSelf: 'flex-end',
+  },
   });

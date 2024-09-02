@@ -51,14 +51,17 @@ export default function Registro() {
 return(
     <View style={styles.container}>
         <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
-        <Text style={styles.tittle}>Registro</Text>
-
+        
+        <Text style={styles.tittle}>Registro de crímenes</Text>
+        <Image source={require('../assets/Info.png')} style={styles.imageStyle} />
+        <View style={styles.pickerContainer}>
         <Picker
         selectedValue={newItem.Tipo}
         style={styles.picker}
         onValueChange={(itemValue) => setNewItem({ ...newItem, Tipo: itemValue })}
+        itemStyle={styles.pickerItem}
       >
-        <Picker.Item label="Tipo de crímen" value="" />
+        <Picker.Item label="          Tipo de crímen" value="" />
         <Picker.Item label="Accidente de tránsito" value="AccidentedeTránsito" />
         <Picker.Item label="Acoso Sexual" value="AcosoSexual" />
         <Picker.Item label="Amenazas" value="Amenazas" />
@@ -70,7 +73,7 @@ return(
         <Picker.Item label="Violencia Intrafamiliar" value="ViolenciaIntrafamiliar" />
         
       </Picker>
-
+      </View>
       {showDatePicker && (
         <DateTimePicker
           value={newItem.Fecha}
@@ -94,10 +97,10 @@ return(
 
         <TextInput 
         onChangeText={(text)=> setNewItem({...newItem, Direccion: text})}
-        style={styles.inputContainer} placeholder="Dirección"/>
+        style={styles.inputContainer} placeholder="Dirección" require/>
         <TextInput 
         onChangeText={(text)=> setNewItem({...newItem, Observacion: text})}
-        style={styles.inputObservaciones} />
+        style={styles.inputObservaciones}placeholder="Observaciones" require/>
         <TouchableOpacity onPress={onSend} style={styles.boxbutton}>
               <Text style={styles.Registro}>Registrar</Text>
               </TouchableOpacity>
@@ -121,20 +124,30 @@ const styles = StyleSheet.create({
         color: '#4d82bc',
         fontWeight: 'bold',
         marginBottom: 10,
+        marginTop: 20,
       },
-      picker: {
+      imageStyle: {
+        width: 200, // Ancho de la imagen
+        height: 200, // Altura de la imagen
+      },
+      pickerContainer: {
         width: 250,
-        height: 40,
-        borderColor: '#fff',
-        borderWidth: 2,
+        height: 50,
         borderRadius: 10,
         overflow: 'hidden',
-        padding: 10,
-        marginVertical: 10,
+        borderColor: '#fff',
+        borderWidth: 2,
         backgroundColor: '#ffffff90',
-        marginBottom: 20,
-        fontWeight: '400',
       },
+      picker: {
+        color: 'gray', // Color del texto del Picker
+
+      },
+      pickerItem: {
+    fontSize: 18,
+    color: 'red', // Color del texto de los elementos del Picker
+    height: 44, // Altura de los elementos del Picker
+  },
       inputContainer: {
         width: 250,
         height: 40,
@@ -153,11 +166,10 @@ const styles = StyleSheet.create({
         borderColor: '#fff',
         borderWidth: 2,
         borderRadius: 10,
-        // padding: 10,
-        // marginVertical: 10,
         backgroundColor: '#ffffff90',
-        // marginBottom: 20,
         fontWeight: '400',
+        textAlignVertical: 'top',
+        padding: 10,
         
       },
       registro: {

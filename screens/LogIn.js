@@ -42,10 +42,11 @@ export default function LogIn({setIsLoggedIn}) {
         alignItems: 'center',
         marginTop: 90,
       }}>
-        <Text style={styles.tittle}>Inicio de sesión</Text>
+        
         <BlurView intensity={100} style={styles.blurPrincipal}>   
           <View style={styles.login1}>
-          <Image source={require('../assets/avatar.png')} style={styles.avatar} />
+          <Text style={styles.tittle}>Inicio de sesión</Text>
+          <Image source={require('../assets/Password-Security.png')} style={styles.avatar} />
               <Text style={styles.email}>Correo electrónico</Text>
               <TextInput onChangeText={(text)=> setEmail(text)} style={styles.input} placeholder='ejemplo@gmail.com'/>
               <Text style={styles.email}>Contraseña</Text>
@@ -53,7 +54,7 @@ export default function LogIn({setIsLoggedIn}) {
               <TouchableOpacity onPress={handleSignIn} style={styles.boxbutton}>
               <Text style={styles.login}>Iniciar sesión</Text>
               </TouchableOpacity>
-              <BlurView intensity={50} style={styles.blurContainer}>
+
               <View style={styles.registerContainer}>
               <Text style={styles.registerText}>¿No tienes una cuenta?</Text>
               <TouchableOpacity
@@ -65,11 +66,11 @@ export default function LogIn({setIsLoggedIn}) {
               <View style={styles.forgotPasswordContainer}>
               <Text style={styles.registerText}>¿Olvidaste tu contraseña?</Text>
               <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-                <Text style={styles.registerLink}>Recuperala</Text>
+                <Text style={styles.registerLink}>Recuperar</Text>
               </TouchableOpacity>
               
               </View>
-              </BlurView>
+
             </View>
           </BlurView>
           {/* <Image source={require('../assets/logo.png')} style={styles.imageStyle} /> */}
@@ -85,6 +86,7 @@ export default function LogIn({setIsLoggedIn}) {
       alignItems: 'center',
     },
     blurPrincipal: {
+      height: '80%',
       borderRadius: 10,
       overflow: 'hidden',
     },
@@ -107,7 +109,7 @@ export default function LogIn({setIsLoggedIn}) {
     },
     login1: {
       width: 350,
-      height: 500,
+      height: '100%',
       borderColor: '#4d82bc',
       borderWidth: 2,
       borderRadius: 10,
@@ -117,7 +119,7 @@ export default function LogIn({setIsLoggedIn}) {
     avatar: {
       width: 100,
       height: 100,
-      borderRadius: 50,
+      // borderRadius: 50,
       marginBottom: 10,
     },
     email: {
@@ -154,7 +156,7 @@ export default function LogIn({setIsLoggedIn}) {
       flexDirection: "row", 
       alignItems: "center", 
       justifyContent: "center", 
-      marginTop: 10, 
+      marginTop: 20, 
     },
     registerText: {
       marginRight: 5, 
@@ -170,6 +172,7 @@ export default function LogIn({setIsLoggedIn}) {
       alignItems: 'center',
     },
     blurContainer: {
+      marginTop: 20, // Espacio entre el contenedor de inicio de sesión y el contenedor de registro
       marginVertical: 5, // Espacio vertical entre los contenedores
       padding: 5, // Espacio interno del contenedor
       paddingBottom: 10, // Espacio en la parte inferior del contenedor

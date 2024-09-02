@@ -42,14 +42,15 @@ export default function SignIn() {
         width: '100%',
         height: '100%',
         alignItems: 'center',
-        marginTop: 90,
+        marginTop: 70,
       }}>
-        <Text style={styles.tittle}>Registro</Text>
+        
         <BlurView intensity={100} style={styles.BlurPrincipal}>
           
           <View style={styles.login1}>
             <StatusBar style="auto" />
-            <Image source={require('../assets/avatar.png')} style={styles.avatar} />
+            <Text style={styles.tittle}>Registro de usuario</Text>
+            <Image source={require('../assets/Valid-Ids.png')} style={styles.avatar} />
               <Text style={styles.email}>Correo electrónico</Text>
               <TextInput onChangeText={(text)=> setEmail(text)} style={styles.input} placeholder='ejemplo@gmail.com'/>
               <Text style={styles.email}>Contraseña</Text>
@@ -59,7 +60,6 @@ export default function SignIn() {
               <TouchableOpacity onPress={handleCreateAccount}  style={styles.boxbutton}>
               <Text style={styles.login}>Registrarse</Text>
               </TouchableOpacity>
-              <BlurView intensity={50} style={styles.blurContainer}>
               <View style={styles.registerContainer}>
               <Text style={styles.registerText}>¿Ya tienes cuenta?</Text>
               <TouchableOpacity
@@ -68,7 +68,6 @@ export default function SignIn() {
                 <Text style={styles.registerLink}>Inicia sesión</Text>
               </TouchableOpacity>
               </View>
-              </BlurView>
             </View>
           </BlurView>
         </ScrollView>
@@ -83,6 +82,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   BlurPrincipal: {
+    height: '90%',
     borderRadius: 10,
     overflow: 'hidden',
   },
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   },
   login1: {
     width: 350,
-    height: 500,
+    height: '100%',
     borderColor: '#4d82bc',
     borderWidth: 2,
     borderRadius: 10,
@@ -115,13 +115,13 @@ const styles = StyleSheet.create({
   avatar: {
     width: 100,
     height: 100,
-    borderRadius: 50,
     marginBottom: 10,
   },
   email: {
     fontSize: 17,
     color: '#4d82bc',
     fontWeight: 'bold',
+    marginTop: 10,
   },
   input: {
     width: 250,
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 5,
+    marginTop: 10,
   },
   registerText: {
     marginRight: 5,
@@ -167,5 +167,6 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     borderRadius: 5, // Bordes redondeados
     overflow: 'hidden', // Oculta el contenido que se sale del contenedor
+    marginTop: 20,
   },
 });

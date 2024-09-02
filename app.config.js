@@ -1,4 +1,4 @@
-import 'dontenv/config';
+import 'dotenv/config';
 export default{
   "expo": {
     "name": "proyecto",
