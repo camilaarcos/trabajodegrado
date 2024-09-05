@@ -12,7 +12,7 @@ import Registro from './screens/Registro';
 import Detalles from './screens/Detalles';
 import Mapas from './screens/Mapas';
 import Perfil from './screens/Perfil';
-import RecoverPassword from './screens/RecuperarConstraseña';
+import RecoverPassword from './screens/RecuperarContraseña';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();

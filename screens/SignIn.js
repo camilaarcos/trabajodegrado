@@ -52,7 +52,7 @@ export default function SignIn() {
             <Text style={styles.tittle}>Registro de usuario</Text>
             <Image source={require('../assets/Valid-Ids.png')} style={styles.avatar} />
               <Text style={styles.email}>Correo electrónico</Text>
-              <TextInput onChangeText={(text)=> setEmail(text)} style={styles.input} placeholder='ejemplo@gmail.com'/>
+              <TextInput onChangeText={(text)=> setEmail(text)} style={styles.input} placeholder='ejemplo@gmail.com' keyboardType='email-address'/>
               <Text style={styles.email}>Contraseña</Text>
               <TextInput onChangeText={(text)=> setPassword(text)} style={styles.input} placeholder='contraseña' secureTextEntry= {true} />
               <Text style={styles.email}>Confirmar Contraseña</Text>

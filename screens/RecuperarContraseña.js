@@ -1,19 +1,43 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import { FIREBASE_AUTH } from '../firebase-config';
 import { useNavigation } from '@react-navigation/native';
-const RecoverPassword = ({ navigation }) => {
-  const [email, setEmail] = useState('');
+import { validateEmail } from '../utils/Ayudas';
+import { passwordReset } from '../utils/Acciones';
 
-  const handleRecoverPassword = async () => {
-    try {
-    await FIREBASE_AUTH.sendPasswordResetEmail(email);
-      Alert.alert('Éxito', 'Correo de recuperación enviado');
-      navigation.navigate('LogIn');
-    } catch (error) {
-      Alert.alert('Error', 'No se pudo enviar el correo de recuperación');
+
+export default function RecoverPassword  () {
+  const [email, setEmail] = useState('');
+  const [errorEmail, setErrorEmail] = useState('');
+  const navigation = useNavigation();
+
+
+  const validateData = () => {
+    setErrorEmail('');
+    let valid = true;
+
+    if(!validateEmail(email)){
+      setErrorEmail('Correo electrónico inválido');
+      valid = false;
     }
+    return valid;
   };
+
+  
+  const handleRecoverPassword = async () => {
+    if(!validateData()){
+      return;
+    }
+    const result = await passwordReset(email);
+
+    if(!result.statusResponse){
+      Alert.alert('Error', result.error || 'Este correo electrónico no está registrado');
+      return;
+    }
+    Alert.alert('Correo enviado', 'Revise su bandeja de entrada para cambiar su contraseña');
+    navigation.navigate('Inicio de sesión');
+  };
+
+ 
 
   return (
     <View style={styles.container}>
@@ -23,9 +47,12 @@ const RecoverPassword = ({ navigation }) => {
         placeholder="Correo electrónico"
         onChangeText={setEmail}
         value={email}
+        errorMessage={errorEmail}
+        keyboardType='email-address'
+
       />
       <TouchableOpacity onPress={handleRecoverPassword} style={styles.button}>
-        <Text style={styles.buttonText}>Enviar</Text>
+        <Text style={styles.buttonText}>Recuperar Contraseña</Text>
       </TouchableOpacity>
     </View>
   );
@@ -61,4 +88,3 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RecoverPassword;

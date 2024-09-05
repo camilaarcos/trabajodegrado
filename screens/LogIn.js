@@ -48,7 +48,7 @@ export default function LogIn({setIsLoggedIn}) {
           <Text style={styles.tittle}>Inicio de sesión</Text>
           <Image source={require('../assets/Password-Security.png')} style={styles.avatar} />
               <Text style={styles.email}>Correo electrónico</Text>
-              <TextInput onChangeText={(text)=> setEmail(text)} style={styles.input} placeholder='ejemplo@gmail.com'/>
+              <TextInput onChangeText={(text)=> setEmail(text)} style={styles.input} placeholder='ejemplo@gmail.com' keyboardType='email-address'/>
               <Text style={styles.email}>Contraseña</Text>
               <TextInput onChangeText={(text)=> setPassword(text)} style={styles.input} placeholder='contraseña' secureTextEntry= {true} />
               <TouchableOpacity onPress={handleSignIn} style={styles.boxbutton}>
