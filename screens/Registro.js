@@ -126,7 +126,9 @@ return(
         style={styles.inputContainer} placeholder="calle 10 # 10 - 10 barrio fatima" require/>
         <TextInput 
         onChangeText={(text)=> setNewItem({...newItem, Observacion: text})}
-        style={styles.inputObservaciones}placeholder="Observaciones" require/>
+        style={styles.inputObservaciones}placeholder="Observaciones"
+        multiline={true}
+         require/>
         <TouchableOpacity onPress={onSend} style={styles.boxbutton}>
               <Text style={styles.Registro}>Registrar</Text>
               </TouchableOpacity>
@@ -147,7 +149,7 @@ const styles = StyleSheet.create({
         color: '#4d82bc',
         fontWeight: 'bold',
         marginBottom: 10,
-        marginTop: 20,
+        // marginTop: 20,
       },
       texto: {
         color: '#000',
@@ -155,8 +157,8 @@ const styles = StyleSheet.create({
         marginTop: 10,
       },
       imageStyle: {
-        width: 200, // Ancho de la imagen
-        height: 200, // Altura de la imagen
+        width: 200, 
+        height: 200, 
       },
       pickerContainer: {
         width: 250,
@@ -168,14 +170,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff90',
       },
       picker: {
-        color: 'gray', // Color del texto del Picker
+        color: 'gray', 
 
       },
       pickerItem: {
-    fontSize: 18,
-    color: 'red', // Color del texto de los elementos del Picker
-    height: 44, // Altura de los elementos del Picker
-  },
+        color: 'black',
+        fontSize: 15,
+      },
       inputContainer: {
         width: 250,
         height: 40,
@@ -199,8 +200,8 @@ const styles = StyleSheet.create({
         marginTop : 10,
         
       },
-      registro: {
-        color: "#4d82bc",
+      Registro: {
+        color: "#000",
         fontWeight: 'bold',
   
       },

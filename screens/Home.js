@@ -52,7 +52,7 @@ export default function Home() {
     },
     container: {
       flexGrow: 1,
-      alignItems: 'center', // Alinea horizontalmente al centro
+      alignItems: 'center', 
       // padding: 16,
     },
     imagefondo: {
@@ -62,10 +62,10 @@ export default function Home() {
     },
   animation: {
     position: 'absolute',
-    width: '300%', // Escala la animación para que solo se vea el centro
-    height: '300%', // Escala la animación para que solo se vea el centro
-    top: '-60%', // Ajusta la posición vertical
-    left: '-90%', // Ajusta la posición horizontal
+    width: '300%', 
+    height: '300%', 
+    top: '-60%', 
+    left: '-90%', 
     transform: [{ rotate: '90deg' }],
   },
   tittle: {
@@ -76,8 +76,8 @@ export default function Home() {
       textAlign : "center",
     },
     imageStyle: {
-      width: 200, // Ancho de la imagen
-      height: 200, // Altura de la imagen
+      width: 200, 
+      height: 200,
     },
   boxbutton: {
     backgroundColor: "#ffffff80",
@@ -107,8 +107,8 @@ export default function Home() {
   },
   imageAbajo: {
     marginTop: 50,
-    width: 100, // Ancho de la imagen
-    height: 100, // Altura de la imagen
+    width: 100, 
+    height: 100, 
     alignSelf: 'flex-end',
   },
   });

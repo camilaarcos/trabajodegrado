@@ -17,7 +17,6 @@ export default function MostrarCrimen(props) {
             const data = docSnap.data();
             setCrimen(data);
 
-            // Convertir el objeto Timestamp a una instancia de Date y luego a una cadena de texto
             if (data && data.Fecha) {
                 const fechaDate = new Date(data.Fecha.seconds * 1000);
                 setFecha(fechaDate.toLocaleDateString());
@@ -43,10 +42,16 @@ return(
         
         <BlurView intensity={100} style={styles.blurPrincipal}> 
             <View style={styles.contenedorcentro}>
-        <Text style={styles.tittle}>{crimen.Tipo}</Text>
-        <Text>Fecha: {fecha}</Text>
-        <Text>Dirección: {crimen.Direccion}</Text>
-        <Text>Observación: {crimen.Observacion}</Text>
+            <Text style={styles.tittle}>{crimen.Tipo}</Text>
+            <View style={styles.contenedorinfo}>
+        <Text style={styles.info}>
+         <Text style={styles.tittleinfo}>Fecha:</Text>  {fecha}
+          </Text>
+        <Text style={styles.info}>
+        <Text style={styles.tittleinfo}>Dirección:</Text>  {crimen.Direccion}</Text>
+        <Text style={styles.info}>
+        <Text style={styles.tittleinfo}>Observación:</Text>  {crimen.Observacion}</Text>
+        </View>
         </View>
           </BlurView>
         </ScrollView>
@@ -84,5 +89,19 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
         alignItems: 'center',
+      },
+      contenedorinfo: {
+        width: '100%',
+        marginTop: 10,
+      },
+      info: {
+        fontSize: 20,
+        color: '#000',
+        marginTop: 20,
+      },
+      tittleinfo:{
+        fontSize: 20,
+        color: '#000',
+        fontWeight: 'bold',
       },
 });

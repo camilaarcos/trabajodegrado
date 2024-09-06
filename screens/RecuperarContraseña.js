@@ -56,6 +56,7 @@ export default function RecoverPassword  () {
       <View style={styles.login1}>
       <Text style={styles.tittle}>Recuperar Contraseña</Text>
       <Image source={require('../assets/Security.png')} style={styles.avatar} />
+      <Text>Ingresa el correo electrónico asociado</Text>
       <TextInput
         style={styles.input}
         placeholder="Correo electrónico"
@@ -134,7 +135,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   buttonText: {
-    color: "#4d82bc",
+    color: "#000",
       fontWeight: 'bold',
   },
   

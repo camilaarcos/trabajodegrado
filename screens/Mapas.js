@@ -8,7 +8,7 @@ export default function Mapas() {
 return(
     <View style={styles.container}>
         <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
-        <Text style={styles.tittle}>Holis</Text>
+        <Text style={styles.tittle}>Mapificación</Text>
         </View>
 );
 
@@ -28,6 +28,6 @@ const styles = StyleSheet.create({
         fontSize: 30,
         color: '#4d82bc',
         fontWeight: 'bold',
-        marginBottom: 10,
+        marginTop: 10,
       },
 });

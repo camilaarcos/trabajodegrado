@@ -2,11 +2,12 @@ import {Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
 import * as React from 'react';
 import { FIREBASE_AUTH } from "../firebase-config";
 import { useNavigation } from '@react-navigation/native';
+import {getCurrentUser} from '../utils/Acciones';
 
 
 export default function Perfil() {
     const navigation = useNavigation();
-
+    const user = getCurrentUser();
     const handleLogout = async () => {
         try {
           await FIREBASE_AUTH.signOut();
@@ -22,8 +23,11 @@ return(
         <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
         <Text style={styles.tittle}>Información</Text>
         <Image source={require('../assets/Otp.png')} style={styles.imageStyle} />
+        <View style={styles.containercorreo}>
         <Text style={styles.texto}>Correo electrónico asociado: </Text>
-        <View>
+        <Text style={styles.correo}>{user.email}</Text>
+        </View>
+        <View style={styles.enlaces}>
         <TouchableOpacity
                 onPress={() => navigation.navigate('Cambiar Contraseña')}
               >
@@ -59,6 +63,9 @@ const styles = StyleSheet.create({
         width: 200, 
         height: 200, 
       },
+      enlaces: {
+        marginTop: 50,
+      },
       logoutButton: {
         backgroundColor: "#ffffff80",
       padding: 10,
@@ -67,9 +74,13 @@ const styles = StyleSheet.create({
       borderColor: '#fff',
       margin: 10,
       },
+      containercorreo: {
+        alignItems: 'center',
+      },
       texto: {
         fontSize: 20,
         color: '#000',
+        fontWeight: 'bold',
       },
       registerLink: {
         color: "#000",
@@ -78,5 +89,6 @@ const styles = StyleSheet.create({
       },
       OutLink: {
         color: "#000",
+        fontWeight: 'bold',
       },
 });

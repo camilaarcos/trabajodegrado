@@ -27,7 +27,7 @@ export default function LogIn({setIsLoggedIn}) {
     })
     .catch((error) => {
       console.log(error);
-      Alert.alert(error.message);
+      Alert.alert("Inicio de sesión", "Error al iniciar sesión, verifica información");
     });
   } 
 
@@ -50,7 +50,7 @@ export default function LogIn({setIsLoggedIn}) {
               <Text style={styles.email}>Correo electrónico</Text>
               <TextInput onChangeText={(text)=> setEmail(text)} style={styles.input} placeholder='ejemplo@gmail.com' keyboardType='email-address'/>
               <Text style={styles.email}>Contraseña</Text>
-              <TextInput onChangeText={(text)=> setPassword(text)} style={styles.input} placeholder='contraseña' secureTextEntry= {true} />
+              <TextInput onChangeText={(text)=> setPassword(text)} style={styles.input} placeholder='contraseña' secureTextEntry= {true} keyboardType='numbers-and-punctuation'/>
               <TouchableOpacity onPress={handleSignIn} style={styles.boxbutton}>
               <Text style={styles.login}>Iniciar sesión</Text>
               </TouchableOpacity>
@@ -101,8 +101,8 @@ export default function LogIn({setIsLoggedIn}) {
       marginBottom: 10,
     },
     imageStyle: {
-      width: 100, // Ancho de la imagen
-      height: 100, // Altura de la imagen
+      width: 100, 
+      height: 100, 
       marginTop: 20,
       alignSelf: 'flex-end',
     },
@@ -123,7 +123,7 @@ export default function LogIn({setIsLoggedIn}) {
     },
     email: {
       fontSize: 17,
-      color: '#4d82bc',
+      color: '#000',
       fontWeight: 'bold',
     },
     input: {
@@ -139,7 +139,7 @@ export default function LogIn({setIsLoggedIn}) {
       fontWeight: '400',
     },
     login: {
-      color: "#4d82bc",
+      color: "#000",
       fontWeight: 'bold',
 
     },
@@ -161,21 +161,21 @@ export default function LogIn({setIsLoggedIn}) {
       marginRight: 5, 
     },
     registerLink: {
-      color: "#4d82bc", 
+      color: "#000", 
       fontWeight: 'bold',
       textDecorationLine: "underline",
     },
     forgotPasswordContainer: {
       flexDirection: 'row',
-      marginTop: 10, // Espacio entre el texto de registro y el texto de olvidar contraseña
+      marginTop: 10, 
       alignItems: 'center',
     },
     blurContainer: {
-      marginTop: 20, // Espacio entre el contenedor de inicio de sesión y el contenedor de registro
-      marginVertical: 5, // Espacio vertical entre los contenedores
-      padding: 5, // Espacio interno del contenedor
-      paddingBottom: 10, // Espacio en la parte inferior del contenedor
-      borderRadius: 10, // Bordes redondeados
-      overflow: 'hidden', // Oculta el contenido que se sale del contenedor
+      marginTop: 20,
+      marginVertical: 5, 
+      padding: 5, 
+      paddingBottom: 10, 
+      borderRadius: 10, 
+      overflow: 'hidden', 
     },
   });

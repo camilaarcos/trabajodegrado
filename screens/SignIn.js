@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   },
   email: {
     fontSize: 17,
-    color: '#4d82bc',
+    color: '#000',
     fontWeight: 'bold',
     marginTop: 10,
   },
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
   },
   login: {
-    color: "#4d82bc",
+    color: "#000",
     fontWeight: 'bold',
   },
  boxbutton: {
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   registerLink: {
-    color: "#4d82bc",
+    color: "#000",
     fontWeight: 'bold',
     textDecorationLine: 'underline',
   },

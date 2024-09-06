@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   buttonText: {
-    color: "#4d82bc",
+    color: "#000",
       fontWeight: 'bold',
   },
   
