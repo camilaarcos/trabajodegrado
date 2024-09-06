@@ -11,7 +11,7 @@ export default function Perfil() {
         try {
           await FIREBASE_AUTH.signOut();
           console.log('Cerrando sesión...');
-          navigation.navigate('Home'); // Navega a la pantalla de inicio de sesión
+          navigation.navigate('Home'); 
         } catch (error) {
           console.error('Error al cerrar sesión:', error);
         }
@@ -20,11 +20,17 @@ export default function Perfil() {
 return(
     <View style={styles.container}>
         <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
-        <Text style={styles.tittle}>Holis</Text>
+        <Text style={styles.tittle}>Información</Text>
         <Image source={require('../assets/Otp.png')} style={styles.imageStyle} />
+        <Text style={styles.texto}>Correo electrónico asociado: </Text>
         <View>
+        <TouchableOpacity
+                onPress={() => navigation.navigate('Cambiar Contraseña')}
+              >
+                <Text style={styles.registerLink}>Cambiar Contraseña</Text>
+              </TouchableOpacity>
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-          <Text style={styles.registerLink}> Cerrar sesión</Text>
+          <Text style={styles.OutLink}> Cerrar sesión</Text>
         </TouchableOpacity>
     </View>
         </View>
@@ -47,13 +53,11 @@ const styles = StyleSheet.create({
         fontSize: 30,
         color: '#4d82bc',
         fontWeight: 'bold',
-        marginBottom: 10,
+        marginTop: 10,
       },
       imageStyle: {
-        width: 200, // Ancho de la imagen
-        height: 200, // Altura de la imagen
-        marginTop: 20,
-        // alignSelf: 'flex-end',
+        width: 200, 
+        height: 200, 
       },
       logoutButton: {
         backgroundColor: "#ffffff80",
@@ -62,9 +66,17 @@ const styles = StyleSheet.create({
       borderWidth: 2,
       borderColor: '#fff',
       margin: 10,
-      marginTop: 100,
+      },
+      texto: {
+        fontSize: 20,
+        color: '#000',
       },
       registerLink: {
+        color: "#000",
+        fontWeight: 'bold',
+        textDecorationLine: "underline",
+      },
+      OutLink: {
         color: "#000",
       },
 });

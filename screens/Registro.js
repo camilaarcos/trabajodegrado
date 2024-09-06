@@ -5,7 +5,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import {database} from '../src/config/firebase';
 import {collection, addDoc} from 'firebase/firestore';
 import { useNavigation } from "@react-navigation/native";
-
+import { isEmpty, size } from 'lodash'
 
 export default function Registro() {
   const navigation = useNavigation();
@@ -18,13 +18,33 @@ export default function Registro() {
   const [Fecha, setFecha] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
 
+
+
+  const validateForm = () => {
+    let isValid = true
+    // if(isEmpty(newItem.Tipo)) {
+    //     Alert.alert('Error', 'Debes seleccionar un tipo de crimen.')
+    //     isValid = false
+    // }
+    // if(isEmpty(newItem.Fecha)) {
+    //     Alert.alert('Error', 'Debes seleccionar una fecha.')
+    //     isValid = false
+    // }
+    // if(isEmpty(newItem.Direccion)) {
+    //     Alert.alert('Error', 'Debes ingresar una dirección.')
+    //     isValid = false
+    // }
+  }
   const onSend = async() => {
+  //   if (!validateForm()) {
+  //     return
+  // }
     try {
       await addDoc(collection(database, 'crimenes'), newItem);
       Alert.alert("Registro de crímen", "Registro correctamente");
       navigation.goBack();
     } catch (error) {
-      console.error("Error adding document: ", error);
+      console.error("Error registando crímen: ", error);
     }
   };
 
