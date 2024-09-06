@@ -73,7 +73,6 @@ export default function LogIn({setIsLoggedIn}) {
 
             </View>
           </BlurView>
-          {/* <Image source={require('../assets/logo.png')} style={styles.imageStyle} /> */}
         </ScrollView>
       
     </View>

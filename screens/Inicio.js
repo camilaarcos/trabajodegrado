@@ -6,7 +6,7 @@ import { database } from "../src/config/firebase";
 import { collection, doc, onSnapshot, orderBy, query, QuerySnapshot } from "firebase/firestore";
 import Crimenes from "../src/components/crimenes";
 
-export default function Inicio() {
+export default function Inicio(props) {
   const navigation = useNavigation();
   const [crimenes, setCrimenes] = React.useState([]);
 
@@ -43,9 +43,12 @@ return(
               <Text>Registrar Crímen</Text>
             </TouchableOpacity>
 
-        <View style={styles.crimenesContainer}>
+        <View >
           {crimenes.map((crimen) => (
-            <Crimenes key={crimen.id} {...crimen} />
+            <TouchableOpacity  key={crimen.id} style={styles.boxbutton}
+            onPress={()=>props.navigation.navigate('MostrarCrimen',{crimenesId:crimen.id})}>
+              <Text style={styles.textoCrimen}>{crimen.Tipo}</Text>
+            </TouchableOpacity>
           ))}
           </View>
         </ScrollView>

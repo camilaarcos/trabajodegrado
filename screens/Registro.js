@@ -87,15 +87,15 @@ return(
         itemStyle={styles.pickerItem}
       >
         <Picker.Item label="          Tipo de crímen" value="" />
-        <Picker.Item label="Accidente de tránsito" value="AccidentedeTránsito" />
-        <Picker.Item label="Acoso Sexual" value="AcosoSexual" />
+        <Picker.Item label="Accidente de tránsito" value="Accidente de Tránsito" />
+        <Picker.Item label="Acoso Sexual" value="Acoso Sexual" />
         <Picker.Item label="Amenazas" value="Amenazas" />
         <Picker.Item label="Extorsión" value="Extorsión" />
         <Picker.Item label="Homicidio" value="Homicidio" />
         <Picker.Item label="Hurto" value="Hurto" />
         <Picker.Item label="Suicidio" value="Suicidio" />
         <Picker.Item label="Violencia" value="Violencia" />
-        <Picker.Item label="Violencia Intrafamiliar" value="ViolenciaIntrafamiliar" />
+        <Picker.Item label="Violencia Intrafamiliar" value="Violencia Intrafamiliar" />
         
       </Picker>
       </View>
