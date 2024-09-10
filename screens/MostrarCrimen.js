@@ -50,6 +50,8 @@ return(
         <Text style={styles.info}>
         <Text style={styles.tittleinfo}>Dirección:</Text>  {crimen.Direccion}</Text>
         <Text style={styles.info}>
+        <Text style={styles.tittleinfo}>Barrio:</Text>  {crimen.Barrio}</Text>
+        <Text style={styles.info}>
         <Text style={styles.tittleinfo}>Observación:</Text>  {crimen.Observacion}</Text>
         </View>
         </View>

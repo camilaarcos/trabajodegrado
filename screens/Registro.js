@@ -13,6 +13,7 @@ export default function Registro() {
     Tipo: ' ',
     Fecha: new Date(),
     Direccion: ' ',
+    Barrio: ' ',
     Observacion: ' ',
   });
   const [Fecha, setFecha] = useState(new Date());
@@ -113,7 +114,7 @@ return(
         <Pressable onPress={toggleDatePicker}>
         <TextInput
         style={styles.inputContainer}
-        placeholder="Fecha"
+        placeholder={newItem.Fecha.toDateString()}
         value={Fecha}
         onChangeText={setFecha}
         editable={false}/>
@@ -123,7 +124,10 @@ return(
       <Text style={styles.texto}>Ingrese la dirección del crímen</Text>
         <TextInput 
         onChangeText={(text)=> setNewItem({...newItem, Direccion: text})}
-        style={styles.inputContainer} placeholder="calle 10 # 10 - 10 barrio fatima" require/>
+        style={styles.inputContainer} placeholder="Dirección" require/>
+        <TextInput
+        onChangeText={(text)=> setNewItem({...newItem, Barrio: text})}
+        style={styles.inputContainerbarrio} placeholder="Barrio" require/>
         <TextInput 
         onChangeText={(text)=> setNewItem({...newItem, Observacion: text})}
         style={styles.inputObservaciones}placeholder="Observaciones"
@@ -149,7 +153,6 @@ const styles = StyleSheet.create({
         color: '#4d82bc',
         fontWeight: 'bold',
         marginBottom: 10,
-        // marginTop: 20,
       },
       texto: {
         color: '#000',
@@ -186,6 +189,17 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: '#ffffff90',
         fontWeight: '400',
+      },
+      inputContainerbarrio: {
+        width: 250,
+        height: 40,
+        borderColor: '#fff',
+        borderWidth: 2,
+        borderRadius: 10,
+        padding: 10,
+        backgroundColor: '#ffffff90',
+        fontWeight: '400',
+        marginTop: 10,
       },
       inputObservaciones: {
         width: 250,
