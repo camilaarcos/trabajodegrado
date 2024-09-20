@@ -1,79 +1,171 @@
-import {Text, View, Image, StyleSheet, ScrollView, Button } from "react-native";
+import {Text, View, TouchableOpacity, Image, StyleSheet, ScrollView } from "react-native";
 import React, { useState, useEffect } from "react";
-import { Picker} from '@react-native-picker/picker';
 import { database } from "../src/config/firebase";
 import { collection, doc, onSnapshot, orderBy, query, QuerySnapshot } from "firebase/firestore";
-import Crimenes from "../src/components/crimenes";
+import { useNavigation } from '@react-navigation/native';
+import SelectDropdown from 'react-native-select-dropdown';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-const ejemploCrimenes = [
-  { id: 1, tipo: 'Robo', fecha: '2023-01-01', barrio: 'Centro' },
-  { id: 2, tipo: 'Asalto', fecha: '2023-01-02', barrio: 'Norte' },
-  // Agrega más datos de ejemplo según sea necesario
-];
 
-export default function Detalles({crimenes = ejemploCrimenes}) {
-  const [tipo, setTipo] = useState('');
-  const [fecha, setFecha] = useState('');
-  const [barrio, setBarrio] = useState('');
-  const [filteredCrimenes, setFilteredCrimenes] = useState(crimenes);
-  const [tipos, setTipos] = useState([]);
-  const [fechas, setFechas] = useState([]);
-  const [barrios, setBarrios] = useState([]);
+export default function Detalles() {
+
+  const navigation = useNavigation();
+  const [crimenes, setCrimenes] = useState([]);
+  const [filteredCrimenes, setFilteredCrimenes] = useState([]);
+  const [selectedTipo, setSelectedTipo] = useState(null);
+  const [selectedFecha, setSelectedFecha] = useState(null);
+  const [selectedBarrio, setSelectedBarrio] = useState(null);
 
   useEffect(() => {
-    // Extraer valores únicos para tipo, fecha y barrio
-    const tiposUnicos = [...new Set(crimenes.map(crimen => crimen.tipo))];
-    const fechasUnicas = [...new Set(crimenes.map(crimen => crimen.fecha))];
-    const barriosUnicos = [...new Set(crimenes.map(crimen => crimen.barrio))];
+    const collectionRef = collection(database, 'crimenes');
+    const q = query(collectionRef, orderBy('Fecha', 'asc'));
 
-    setTipos(tiposUnicos);
-    setFechas(fechasUnicas);
-    setBarrios(barriosUnicos);
-  }, [crimenes]);
+    const unsubscribe = onSnapshot(q, QuerySnapshot =>{
+      const crimenesData =
+        QuerySnapshot.docs.map(doc => {
+        const data = doc.data();
+        let fechaString = '';
+        if (data && data.Fecha) {
+          const fechaDate = new Date(data.Fecha.seconds * 1000);
+          fechaString = fechaDate.toLocaleDateString();
+        }
+        return {
+          id: doc.id,
+          Tipo: data.Tipo,
+          Fecha: fechaString,
+          Barrio: data.Barrio,
+        };
+      });
+      setCrimenes(crimenesData);
+      setFilteredCrimenes(crimenesData);
+      
+    });
+    return unsubscribe;
+  },[]);
 
-  const filtrarCrimenes = () => {
-    let filtrados = crimenes;
-    if (tipo) {
-      filtrados = filtrados.filter(crimen => crimen.tipo === tipo);
-    }
-    if (fecha) {
-      filtrados = filtrados.filter(crimen => crimen.fecha === fecha);
-    }
-    if (barrio) {
-      filtrados = filtrados.filter(crimen => crimen.barrio === barrio);
-    }
-    setFilteredCrimenes(filtrados);
+  const tipos = ["Tipo de crimen", ...new Set(crimenes.map(crimen => crimen.Tipo))];
+  const barrios = ["Barrio", ...new Set(crimenes.map(crimen => crimen.Barrio))];
+  const fechas = ["Fecha", ...new Set(crimenes.map(crimen => crimen.Fecha))];
+
+  const filterChangeTipo = (selectedItem) => {
+    setSelectedTipo(selectedItem);
+    filterCrimenes(selectedItem, selectedFecha, selectedBarrio);
   };
+
+  const filterChangeBarrio = (selectedItem) => {
+    setSelectedBarrio(selectedItem);
+    filterCrimenes(selectedTipo, selectedFecha, selectedItem);
+  };
+
+  const filterChangeFecha = (selectedItem) => {
+    setSelectedFecha(selectedItem);
+    filterCrimenes(selectedTipo, selectedItem, selectedBarrio);
+  };
+
+  const filterCrimenes = (tipo, fecha, barrio) => {
+    let filtered = crimenes;
+    if (tipo && tipo !== "Tipo de crimen") {
+      filtered = filtered.filter(crimen => crimen.Tipo === tipo);
+    }
+    if (fecha && fecha !== "Fecha") {
+      filtered = filtered.filter(crimen => crimen.Fecha === fecha);
+    }
+    if (barrio && barrio !== "Barrio") {
+      filtered = filtered.filter(crimen => crimen.Barrio === barrio);
+    }
+    setFilteredCrimenes(filtered);
+  };
+
+
 return(
   <ScrollView contentContainerStyle={styles.container}>
         <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
         <Text style={styles.tittle}>Detalles de los crímenes</Text>
-
-        <Picker selectedValue={tipo} onValueChange={(itemValue) => setTipo(itemValue)}>
-        <Picker.Item label="Seleccione Tipo" value="" />
-        {tipos.map((tipo, index) => (
-          <Picker.Item key={index} label={tipo} value={tipo} />
-        ))}
-      </Picker>
-      <Picker selectedValue={fecha} onValueChange={(itemValue) => setFecha(itemValue)}>
-        <Picker.Item label="Seleccione Fecha" value="" />
-        {fechas.map((fecha, index) => (
-          <Picker.Item key={index} label={fecha} value={fecha} />
-        ))}
-      </Picker>
-      <Picker selectedValue={barrio} onValueChange={(itemValue) => setBarrio(itemValue)}>
-        <Picker.Item label="Seleccione Barrio" value="" />
-        {barrios.map((barrio, index) => (
-          <Picker.Item key={index} label={barrio} value={barrio} />
-        ))}
-      </Picker>
-      <Button title="Filtrar" onPress={filtrarCrimenes} />
-
-        <View style={styles.crimenesContainer}>
-          {crimenes.map((crimen) => (
-            <Crimenes key={crimen.id} {...crimen} />
-          ))}
+        <Text style={styles.texto}>Filtros</Text>
+        <SelectDropdown
+        data={tipos}
+        onSelect={filterChangeTipo}
+        renderButton={(selectedItem, isOpened) => (
+          <View style={styles.dropdownButtonStyle}>
+            {selectedItem && (
+              <Icon name={selectedItem.icon}  />
+            )}
+            <Text >
+              {(selectedItem ) || "Tipo de crimen"}
+            </Text>
+            <Icon name={isOpened ? "chevron-up" : "chevron-down"} />
           </View>
+        )}
+        renderItem={(item, index, isSelected) => (
+          <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: '#D2D9DF' }) }}>
+            <Icon name={item.icon} style={styles.dropdownItemIconStyle} />
+            <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
+          </View>
+        )}
+        showsVerticalScrollIndicator={true}
+        dropdownStyle={styles.dropdownMenuStyle}
+        
+      />
+      <SelectDropdown
+        data={fechas}
+        onSelect={filterChangeFecha}
+        defaultButtonText="Selecciona una fecha"
+        buttonStyle={styles.dropdownButton}
+        buttonTextStyle={styles.dropdownButtonText}
+        renderButton={(selectedItem, isOpened) => (
+          <View style={styles.dropdownButtonStyle}>
+            {selectedItem && (
+              <Icon name={selectedItem.icon}  />
+            )}
+            <Text >
+              {(selectedItem ) || "Fecha"}
+            </Text>
+            <Icon name={isOpened ? "chevron-up" : "chevron-down"} />
+          </View>
+        )}
+        renderItem={(item, index, isSelected) => (
+          <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: '#D2D9DF' }) }}>
+            <Icon name={item.icon} style={styles.dropdownItemIconStyle} />
+            <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
+          </View>
+        )}
+        showsVerticalScrollIndicator={true}
+        dropdownStyle={styles.dropdownMenuStyle}
+      />
+
+      <SelectDropdown
+        data={barrios}
+        onSelect={filterChangeBarrio}
+        renderButton={(selectedItem, isOpened) => (
+          <View style={styles.dropdownButtonStyle}>
+            {selectedItem && (
+              <Icon name={selectedItem.icon}  />
+            )}
+            <Text >
+              {(selectedItem ) || "Barrio"}
+            </Text>
+            <Icon name={isOpened ? "chevron-up" : "chevron-down"} />
+          </View>
+        )}
+        renderItem={(item, index, isSelected) => (
+          <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: '#D2D9DF' }) }}>
+             <Icon name={item.icon} style={styles.dropdownItemIconStyle} />
+            <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
+          </View>
+        )}
+        showsVerticalScrollIndicator={true}
+        dropdownStyle={styles.dropdownMenuStyle}
+        
+      />
+
+      {filteredCrimenes.map((crimen) => (
+        <TouchableOpacity key={crimen.id} style={styles.crimenesContainer}
+          onPress={() => navigation.navigate('MostrarCrimen', { crimenesId: crimen.id })}>
+          <Text style={styles.textoCrimen}>{crimen.Tipo}</Text>
+        </TouchableOpacity>
+      ))}
+
+        
           </ScrollView>
 );
 
@@ -95,9 +187,71 @@ const styles = StyleSheet.create({
         color: '#4d82bc',
         fontWeight: 'bold',
         marginTop: 10,
+        marginBottom: 10,
       },
-       crimenesContainer: {
+      texto: {
+        color: '#000',
+        fontSize: 20,
+        marginBottom: 10,
+        fontWeight: 'bold',
+      },
+      crimenesContainer: {
         width: '100%',
+        backgroundColor: '#ffffff80',
         padding: 10,
+        alignItems: 'flex-start',
+        // marginVertical: 5,
+        borderBottomWidth: 1,
+        borderBottomColor: '#000',
+    
+      },
+      textoCrimen: {
+        fontSize: 20,
+        color: '#000',
+        fontWeight: 'bold',
+      },
+      dropdownButtonStyle: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        width: 250,
+        height: 43,
+        borderColor: '#fff',
+        borderWidth: 2,
+        borderRadius: 10,
+        padding: 10,
+        backgroundColor: '#ffffff90',
+        fontWeight: '400',
+        marginBottom: 10,
+      },
+
+      dropdownItemStyle: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 10,
+        backgroundColor: '#ffffff',
+        width: 300,
+        borderColor: 'grey',
+        borderWidth: 1,
+      },
+      dropdownItemIconStyle: {
+        fontSize: 16,
+        color: '#000',
+        marginRight: 10,
+      },
+      dropdownItemTxtStyle: {
+        fontSize: 16,
+        color: '#000',
+      },
+      dropdownMenuStyle: {
+        position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: [{ translateX: -150 }, { translateY: -150 }],
+      width: 300,
+      zIndex: 1000,
+      height: 500,
+        borderRadius: 5,
+        backgroundColor: '#ffffff',
       },
 });

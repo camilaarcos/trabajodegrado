@@ -1,15 +1,13 @@
 import {Text, View, Image, StyleSheet, TextInput, Pressable, Platform, TouchableOpacity, Alert, ScrollView} from "react-native";
 import React, {useState} from "react";
-import { Picker} from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {database} from '../src/config/firebase';
 import {collection, addDoc} from 'firebase/firestore';
 import { useNavigation } from "@react-navigation/native";
 import SelectDropdown from 'react-native-select-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import FontAwesome from 'react-native-vector-icons/FontAwesome'; // Verifica que el nombre del paquete y el ícono sean correctos
-
-import { isEmpty, size } from 'lodash'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'; 
+import { data, dataBarrio } from '../utils/Ayudas';
 
 export default function Registro() {
   const navigation = useNavigation();
@@ -23,175 +21,7 @@ export default function Registro() {
   const [Fecha, setFecha] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
 
-  const data = [
-    { title: "Accidente de Tránsito", icon: "car" },
-    { title: "Acoso Sexual", icon: "ban" },
-    { title: "Amenazas", icon: "exclamation-triangle" },
-    { title: "Extorsión", icon: "money" },
-    { title: "Homicidio", icon: "user-times" },
-    { title: "Hurto", icon: "hand-paper-o" },
-    { title: "Suicidio", icon: "meh-o" },
-    { title: "Violencia", icon: "hand-rock-o" },
-    { title: "Violencia Intrafamiliar", icon: "home" },
-  ];
-
-  const dataBarrio = [
-    { title: "Agua clara" },
-    { title: "Aguirre" },
-    { title: "Alameda" },
-    { title: "Alameda II" },
-    { title: "Alvernia" },
-    { title: "Asoagrin" },
-    { title: "Bello Horizonte" },
-    { title: "Avenida Cali" },
-    { title: "Bolivar" },
-    { title: "Bosques de Maracaibo" },
-    { title: "Buenos Aires" },
-    { title: "Casa Huertas" },
-    { title: "Centro" },
-    { title: "Cespedes" },
-    { title: "Chiminangos" },
-    { title: "Ciudad Campestre" },
-    { title: "Ciudad Las Palmas" },
-    { title: "Comfamiliar" },
-    { title: "Comuneros" },
-    { title: "Conjunto La Villa" },
-    { title: "Conjunto Lusitania" },
-    { title: "Corazon del Valle" },
-    { title: "Departamental" },
-    { title: "Diablos Rojos" },
-    { title: "Diablos Rojos II" },
-    { title: "Doce de octubre" },
-    { title: "Dorado" },
-    { title: "El Bosque" },
-    { title: "El Bosquecito" },
-    { title: "El Condor" },
-    { title: "El Condor II" },
-    { title: "El Descanso" },
-    { title: "El Lago" },
-    { title: "El Laguito" },
-    { title: "El Limonar" },
-    { title: "El Palmar" },
-    { title: "El Paraiso" },
-    { title: "El Pinar" },
-    { title: "El Refugio" },
-    { title: "El Retiro" },
-    { title: "Entre Rios" },
-    { title: "Escobar" },
-    { title: "Esperanza" },
-    { title: "Estambul" },
-    { title: "Farfan" },
-    { title: "Fatima" },
-    { title: "Flor de la Campana" },
-    { title: "Franciscanos" },
-    { title: "Guayacanes" },
-    { title: "Horizonte" },
-    { title: "Internacional" },
-    { title: "Jardin" },
-    { title: "Jazmin" },
-    { title: "Jorge Eliecer Gaitan" },
-    { title: "José Antonio Galan" },
-    { title: "Juan de Lemus" },
-    { title: "Juan XXIII" },
-    { title: "La Bastilla" },
-    { title: "La Campiña" },
-    { title: "La Ceiba" },
-    { title: "La Graciela" },
-    { title: "La Independencia" },
-    { title: "La Inmaculada" },
-    { title: "La Merced" },
-    { title: "La Paz" },
-    { title: "La Quinta" },
-    { title: "La Rivera" },
-    { title: "La Santa Cruz" },
-    { title: "La Trinidad" },
-    { title: "Las Acacias" },
-    { title: "Las Americas" },
-    { title: "Las Brisas" },
-    { title: "Las Delicias" },
-    { title: "Las Nieves" },
-    { title: "Las Olas" },
-    { title: "Las Veraneras" },
-    { title: "Laureles" },
-    { title: "Laureles II" },
-    { title: "Los Olmos" },
-    { title: "Los Tolues" },
-    { title: "Maracaibo" },
-    { title: "Marandua" },
-    { title: "Maria Clara" },
-    { title: "Miraflores" },
-    { title: "Morales" },
-    { title: "Moralito" },
-    { title: "Municipal" },
-    { title: "Nariño" },
-    { title: "Nuevo Alvernia" },
-    { title: "Nuevo Morales" },
-    { title: "Nuevo Principe" },
-    { title: "Palobonito" },
-    { title: "Panamericano" },
-    { title: "Playas" },
-    { title: "Popular" },
-    { title: "Portales del Rio" },
-    { title: "Prados del Norte" },
-    { title: "Primero de Mayo" },
-    { title: "Principe" },
-    { title: "Progresar" },
-    { title: "Pueblo Nuevo" },
-    { title: "Quintas de San Felipe" },
-    { title: "Rio Paila" },
-    { title: "Rojas" },
-    { title: "Ruben Cruz Velez" },
-    { title: "Sajonia" },
-    { title: "Salesianos" },
-    { title: "Saman del Norte" },
-    { title: "San Antonio" },
-    { title: "San Benito" },
-    { title: "San Carlos" },
-    { title: "San Luis" },
-    { title: "San Marino" },
-    { title: "San Pedro Claver" },
-    { title: "San Vicente de Paul" },
-    { title: "Santa Isabel" },
-    { title: "Santa Rita del Rio" },
-    { title: "Senderos Villa Liliana" },
-    { title: "Siete de Agosto" },
-    { title: "Tercer Milenio" },
-    { title: "Tomas Uribe Uribe" },
-    { title: "Urbanizacion Lomitas" },
-    { title: "Urbanizacion Peñaranda" },
-    { title: "Urbanizacion Santa Lucia" },
-    { title: "Victoria" },
-    { title: "Villa Campestre" },
-    { title: "Villa Colombia" },
-    { title: "Villa del Lago" },
-    { title: "Villa del Rio" },
-    { title: "Villa del Sur" },
-    { title: "Villa Liliana" },
-    { title: "Villanueva" },
-
-
-  ];
-
-
-  const validateForm = () => {
-    let isValid = true
-    // if(isEmpty(newItem.Tipo)) {
-    //     Alert.alert('Error', 'Debes seleccionar un tipo de crimen.')
-    //     isValid = false
-    // }
-    // if(isEmpty(newItem.Fecha)) {
-    //     Alert.alert('Error', 'Debes seleccionar una fecha.')
-    //     isValid = false
-    // }
-    // if(isEmpty(newItem.Direccion)) {
-    //     Alert.alert('Error', 'Debes ingresar una dirección.')
-    //     isValid = false
-    // }
-  }
   const onSend = async() => {
-  //   if (!validateForm()) {
-  //     return
-  // }
     try {
       await addDoc(collection(database, 'crimenes'), newItem);
       Alert.alert("Registro de crímen", "Registro correctamente");
@@ -243,15 +73,15 @@ return(
         renderButton={(selectedItem, isOpened) => (
           <View style={styles.dropdownButtonStyle}>
             {selectedItem && (
-              <Icon name={selectedItem.icon} style={styles.dropdownButtonIconStyle} />
+              <Icon name={selectedItem.icon}  />
             )}
-            <Text style={styles.dropdownButtonTxtStyle}>
+            <Text >
               {(selectedItem && selectedItem.title) || "Tipo de crimen"}
             </Text>
-            <Icon name={isOpened ? "chevron-up" : "chevron-down"} style={styles.dropdownButtonArrowStyle} />
+            <Icon name={isOpened ? "chevron-up" : "chevron-down"} />
           </View>
         )}
-        renderItem={(item, isSelected) => (
+        renderItem={(item, index, isSelected) => (
           <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: '#D2D9DF' }) }}>
             <Icon name={item.icon} style={styles.dropdownItemIconStyle} />
             <Text style={styles.dropdownItemTxtStyle}>{item.title}</Text>
@@ -369,9 +199,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         padding: 10,
-        backgroundColor: '#ffffff90',
+        backgroundColor: '#ffffff',
         width: 300,
-        borderColor: '#fff',
+        borderColor: 'grey',
         borderWidth: 1,
       },
       dropdownItemIconStyle: {
@@ -392,7 +222,7 @@ const styles = StyleSheet.create({
       zIndex: 1000,
       height: 500,
         borderRadius: 5,
-        backgroundColor: '#ffffff90',
+        backgroundColor: '#ffffff',
       },
       inputContainer: {
         width: 250,

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { BlurView } from 'expo-blur';
 import {database} from '../src/config/firebase';
-import { collection, doc, getDoc, onSnapshot, orderBy, query, QuerySnapshot } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 
 export default function MostrarCrimen(props) {
     const navigation = useNavigation();

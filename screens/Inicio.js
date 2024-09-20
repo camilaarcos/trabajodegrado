@@ -1,16 +1,16 @@
 import {Text, View,StyleSheet, TouchableOpacity, Image, ScrollView } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigation } from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
 import { database } from "../src/config/firebase";
 import { collection, doc, onSnapshot, orderBy, query, QuerySnapshot } from "firebase/firestore";
-import Crimenes from "../src/components/crimenes";
+
 
 export default function Inicio(props) {
   const navigation = useNavigation();
-  const [crimenes, setCrimenes] = React.useState([]);
+  const [crimenes, setCrimenes] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const collectionRef = collection(database, 'crimenes');
     const q = query(collectionRef, orderBy('Fecha', 'asc'));
 
@@ -18,10 +18,7 @@ export default function Inicio(props) {
       setCrimenes(
         QuerySnapshot.docs.map(doc => ({
           id: doc.id,
-          Tipo: doc.data().Tipo,
-          Fecha: doc.data().Fecha.toDate().toDateString(),
-          Direccion: doc.data().Direccion,
-          Observacion: doc.data().Observacion,
+          Tipo: doc.data().Tipo
         }))
       )
     })

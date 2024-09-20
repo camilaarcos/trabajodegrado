@@ -15,6 +15,7 @@ export default function LogIn({setIsLoggedIn}) {
   const auth = getAuth(app);
 
 
+
   const handleSignIn = () => {
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {

@@ -6,6 +6,8 @@ import { getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../firebase-config';
 import { useNavigation } from '@react-navigation/native';
+import {collection, addDoc} from 'firebase/firestore';
+import { database} from '../src/config/firebase';
 
 export default function SignIn() {
   const navigation = useNavigation();
@@ -16,23 +18,27 @@ export default function SignIn() {
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
-  const handleCreateAccount = () => {
+  const handleCreateAccount = async() => {
     if (password !== confirmPassword) {
       alert('Las contraseñas no coinciden');
       return;
     }
-    createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
+    try {
       console.log('Usuario creado');
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       console.log(user);
-      Alert.alert( "Usuario registrado correctamente");
-    })
-    .catch((error) => {
+      Alert.alert("Usuario registrado correctamente");
+
+      const userCollectionRef = collection(database, 'usuarios');
+      await addDoc(userCollectionRef, { uid: user.uid, correo: email, rol: 'usuario' });
+    } catch (error) {
       console.log(error);
       Alert.alert(error.message);
-    });
+    }
+     
   }
+
 
   return (
     <View style={styles.container}>
