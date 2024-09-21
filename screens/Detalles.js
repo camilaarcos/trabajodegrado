@@ -5,7 +5,7 @@ import { collection, doc, onSnapshot, orderBy, query, QuerySnapshot } from "fire
 import { useNavigation } from '@react-navigation/native';
 import SelectDropdown from 'react-native-select-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import { styles } from './Registro';
 
 export default function Detalles() {
 
@@ -78,10 +78,12 @@ export default function Detalles() {
 
 
 return(
-  <ScrollView contentContainerStyle={styles.container}>
-        <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
-        <Text style={styles.tittle}>Detalles de los crímenes</Text>
-        <Text style={styles.texto}>Filtros</Text>
+  <ScrollView contentContainerStyle={{ flexGrow: 1,
+        alignItems: 'center',
+        padding: 16,}}>
+        <Image source={require('../assets/fondo.png')} style={[styles2.imagefondo, StyleSheet.absoluteFill]} />
+        <Text style={styles2.tittle}>Detalles de los crímenes</Text>
+        <Text style={styles2.texto}>Filtros</Text>
         <SelectDropdown
         data={tipos}
         onSelect={filterChangeTipo}
@@ -109,9 +111,6 @@ return(
       <SelectDropdown
         data={fechas}
         onSelect={filterChangeFecha}
-        defaultButtonText="Selecciona una fecha"
-        buttonStyle={styles.dropdownButton}
-        buttonTextStyle={styles.dropdownButtonText}
         renderButton={(selectedItem, isOpened) => (
           <View style={styles.dropdownButtonStyle}>
             {selectedItem && (
@@ -137,7 +136,7 @@ return(
         data={barrios}
         onSelect={filterChangeBarrio}
         renderButton={(selectedItem, isOpened) => (
-          <View style={styles.dropdownButtonStyle}>
+          <View style={[styles.dropdownButtonStyle, styles2.dropdownButtonStyle]}>
             {selectedItem && (
               <Icon name={selectedItem.icon}  />
             )}
@@ -159,9 +158,9 @@ return(
       />
 
       {filteredCrimenes.map((crimen) => (
-        <TouchableOpacity key={crimen.id} style={styles.crimenesContainer}
+        <TouchableOpacity key={crimen.id} style={styles2.crimenesContainer}
           onPress={() => navigation.navigate('MostrarCrimen', { crimenesId: crimen.id })}>
-          <Text style={styles.textoCrimen}>{crimen.Tipo}</Text>
+          <Text style={styles2.textoCrimen}>{crimen.Tipo}</Text>
         </TouchableOpacity>
       ))}
 
@@ -171,12 +170,7 @@ return(
 
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    alignItems: 'center', 
-    padding: 16,
-  },
+export const styles2 = StyleSheet.create({
       imagefondo: {
         width: '120%',
         height: '120%',
@@ -200,7 +194,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff80',
         padding: 10,
         alignItems: 'flex-start',
-        // marginVertical: 5,
         borderBottomWidth: 1,
         borderBottomColor: '#000',
     
@@ -211,47 +204,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
       },
       dropdownButtonStyle: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        width: 250,
-        height: 43,
-        borderColor: '#fff',
-        borderWidth: 2,
-        borderRadius: 10,
-        padding: 10,
-        backgroundColor: '#ffffff90',
-        fontWeight: '400',
         marginBottom: 10,
-      },
-
-      dropdownItemStyle: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        padding: 10,
-        backgroundColor: '#ffffff',
-        width: 300,
-        borderColor: 'grey',
-        borderWidth: 1,
-      },
-      dropdownItemIconStyle: {
-        fontSize: 16,
-        color: '#000',
-        marginRight: 10,
-      },
-      dropdownItemTxtStyle: {
-        fontSize: 16,
-        color: '#000',
-      },
-      dropdownMenuStyle: {
-        position: 'absolute',
-      top: '50%',
-      left: '50%',
-      transform: [{ translateX: -150 }, { translateY: -150 }],
-      width: 300,
-      zIndex: 1000,
-      height: 500,
-        borderRadius: 5,
-        backgroundColor: '#ffffff',
       },
 });

@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { actualizaContraseña, reauthenticate } from '../utils/Acciones';
 import { isEmpty, size } from 'lodash'
 import CustomAlert from '../src/componentes/Alertas';
-
+import { styles } from './LogIn';
 export default function CambiarContraseña  () {
     const [newPassword, setNewPassword] = useState('');
     const [currentPassword, setCurrentPassword] = useState('');
@@ -93,7 +93,7 @@ const validateForm = () => {
                 marginTop: 90,
               }}>
             
-            <BlurView intensity={100} style={styles.blurPrincipal}>   
+            <BlurView intensity={100} style={styles2.blurPrincipal}>   
               <View style={styles.login1}>
                 <Text style={styles.tittle}>Cambiar Contraseña</Text>
                   <Image source={require('../assets/Security.png')} style={styles.avatar} />
@@ -124,8 +124,8 @@ const validateForm = () => {
                           password={true}
                           secureTextEntry={!showPassword}
                         />
-                          <TouchableOpacity onPress={onSubmit} style={styles.button}>
-                            <Text style={styles.buttonText}>Cambiar Contraseña</Text>
+                          <TouchableOpacity onPress={onSubmit} style={styles.boxbutton}>
+                            <Text style={styles.login}>Cambiar Contraseña</Text>
                           </TouchableOpacity>
                             <CustomAlert
                               visible={alertVisible}
@@ -141,68 +141,11 @@ const validateForm = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-  },
+const styles2 = StyleSheet.create({
   blurPrincipal: {
-    height: '80%',
-    borderRadius: 10,
-    overflow: 'hidden',
+    height: '70%',
+      borderRadius: 10,
+      overflow: 'hidden',
   },
-  imagefondo: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
-  },
-  login1: {
-    width: 350,
-    height: '100%',
-    borderColor: '#4d82bc',
-    borderWidth: 2,
-    borderRadius: 10,
-    padding: 10,
-    alignItems: 'center',
-  },
-  tittle: {
-    marginTop: 60,
-    fontSize: 20,
-    color: '#4d82bc',
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  avatar: {
-    width: 100,
-    height: 100,
-    // borderRadius: 50,
-    marginBottom: 10,
-  },
-  input: {
-    width: 250,
-    height: 40,
-    borderColor: '#fff',
-    borderWidth: 2,
-    borderRadius: 10,
-    padding: 10,
-    marginVertical: 10,
-    backgroundColor: '#ffffff90',
-    marginBottom: 20,
-    fontWeight: '400',
-    alignSelf: 'center',
-  },
-  button: {
-    backgroundColor: "#ffffff80",
-    padding: 10,
-    borderRadius: 5,
-    borderWidth: 2,
-    borderColor: '#fff',
-    margin: 10,
-  },
-  buttonText: {
-    color: "#000",
-      fontWeight: 'bold',
-  },
-  
 });
 

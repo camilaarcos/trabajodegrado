@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigation } from '@react-navigation/native';
 import { FIREBASE_DB } from "../src/config/firebase";
 import { collection, doc, onSnapshot, orderBy, query, QuerySnapshot } from "firebase/firestore";
-
+import { styles2 } from './Detalles';
 
 export default function Inicio(props) {
   const navigation = useNavigation();
@@ -26,18 +26,20 @@ export default function Inicio(props) {
   },[]);
 
 return(
-    <ScrollView contentContainerStyle={styles.container}>
-      <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
+    <ScrollView contentContainerStyle={{flexGrow: 1,
+          alignItems: 'center', 
+          padding: 16,}}>
+      <Image source={require('../assets/fondo.png')} style={[styles2.imagefondo, StyleSheet.absoluteFill]} />
         
-        <TouchableOpacity onPress={()=> navigation.navigate('Registro de crímenes')} style={styles.boxbutton} >
-              <Text style={styles.texto}>Registrar Crímen</Text>
+        <TouchableOpacity onPress={()=> navigation.navigate('Registro de crímenes')} style={styles3.boxbutton} >
+              <Text style={styles3.texto}>Registrar Crímen</Text>
             </TouchableOpacity>
 
 
           {crimenes.map((crimen) => (
-            <TouchableOpacity  key={crimen.id} style={styles.crimenesContainer}
+            <TouchableOpacity  key={crimen.id} style={styles2.crimenesContainer}
             onPress={()=>props.navigation.navigate('MostrarCrimen',{crimenesId:crimen.id})}>
-              <Text style={styles.textoCrimen}>{crimen.Tipo}</Text>
+              <Text style={styles2.textoCrimen}>{crimen.Tipo}</Text>
             </TouchableOpacity>
           ))}
           
@@ -46,23 +48,8 @@ return(
 );
 
 }
-const styles = StyleSheet.create({
+const styles3 = StyleSheet.create({
 
-  container: {
-    flexGrow: 1,
-    alignItems: 'center', 
-    padding: 16,
-  },
-  imagefondo: {
-    width: '120%',
-    height: '120%',
-    resizeMode: 'cover',
-  },
-  animation: {
-    position: 'absolute',
-    width: '200%',
-    height: '200%',
-  },
  boxbutton: {
   backgroundColor: "#ffffff80",
   padding: 10,
@@ -75,21 +62,6 @@ const styles = StyleSheet.create({
   texto: {
     color: '#000',
     fontSize: 20,
-    fontWeight: 'bold',
-  },
-  crimenesContainer: {
-    width: '100%',
-    backgroundColor: '#ffffff80',
-    padding: 10,
-    alignItems: 'flex-start',
-    // marginVertical: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: '#000',
-
-  },
-  textoCrimen: {
-    fontSize: 20,
-    color: '#000',
     fontWeight: 'bold',
   },
 });

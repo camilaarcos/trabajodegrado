@@ -1,6 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import LottieView from 'lottie-react-native';
 import * as React from 'react';
 
 
@@ -8,14 +7,6 @@ export default function Home() {
   const navigation = useNavigation();
 
     return (
-      // <View style={styles.containerafuera}>
-        
-        /* <LottieView
-        source={require('../assets/animations/y5R1ytlvl3.json')}
-        autoPlay
-        loop
-        style={styles.animation}
-      /> */
       <ScrollView contentContainerStyle={styles.container}>
       <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
         <Text style={styles.tittle}></Text>
@@ -41,10 +32,9 @@ export default function Home() {
               </View>
               <Image source={require('../assets/Chain.png')} style={styles.imageAbajo} />
               </ScrollView>
-      // </View>
     );
   }
-  const styles = StyleSheet.create({
+  export const styles = StyleSheet.create({
     containerfuera: {
       flex: 1,
       justifyContent: 'center',
@@ -53,7 +43,6 @@ export default function Home() {
     container: {
       flexGrow: 1,
       alignItems: 'center', 
-      // padding: 16,
     },
     imagefondo: {
       width: '100%',

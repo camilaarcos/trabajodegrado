@@ -183,7 +183,7 @@ return(
 
 }
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
 
       imagefondo: {
         // width: '100%',

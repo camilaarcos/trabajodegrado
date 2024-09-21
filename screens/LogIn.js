@@ -97,7 +97,7 @@ export default function LogIn({setIsLoggedIn}) {
   );
 }
 
-  const styles = StyleSheet.create({
+ export const styles = StyleSheet.create({
     container: {
       flex: 1,
       alignItems: 'center',
@@ -136,7 +136,6 @@ export default function LogIn({setIsLoggedIn}) {
     avatar: {
       width: 100,
       height: 100,
-      // borderRadius: 50,
       marginBottom: 10,
     },
     email: {

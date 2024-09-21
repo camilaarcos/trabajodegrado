@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import {collection, addDoc} from 'firebase/firestore';
 import CustomAlert from '../src/componentes/Alertas';
 import { validateEmail } from '../utils/Ayudas';
+import { styles } from './LogIn';
 export default function SignIn() {
   const navigation = useNavigation();
   const [email, setEmail] = useState(''); 
@@ -79,7 +80,7 @@ export default function SignIn() {
         marginTop: 70,
       }}>
         
-        <BlurView intensity={100} style={styles.BlurPrincipal}>
+        <BlurView intensity={100} style={styles2.BlurPrincipal2}>
           
           <View style={styles.login1}>
             <StatusBar style="auto" />
@@ -101,7 +102,7 @@ export default function SignIn() {
                 message={alertMessage}
                 onClose={handleCloseAlert}
               />
-              <View style={styles.registerContainer}>
+              <View style={styles2.registerContainer2}>
               <Text style={styles.registerText}>¿Ya tienes cuenta?</Text>
               <TouchableOpacity
                 onPress={() => navigation.navigate('Inicio de sesión')}
@@ -117,97 +118,17 @@ export default function SignIn() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  BlurPrincipal: {
+const styles2 = StyleSheet.create({
+  
+  BlurPrincipal2: {
     height: '90%',
     borderRadius: 10,
     overflow: 'hidden',
   },
-  imagefondo: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
-  },
-  tittle: {
-    fontSize: 30,
-    color: '#4d82bc',
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  imageStyle: {
-    width: 100, // Ancho de la imagen
-    height: 100, // Altura de la imagen
-    marginTop: 20,
-    alignSelf: 'flex-end',
-  },
-  login1: {
-    width: 350,
-    height: '100%',
-    borderColor: '#4d82bc',
-    borderWidth: 2,
-    borderRadius: 10,
-    padding: 10,
-    alignItems: 'center',
-  },
-  avatar: {
-    width: 100,
-    height: 100,
-    marginBottom: 10,
-  },
-  email: {
-    fontSize: 17,
-    color: '#000',
-    fontWeight: 'bold',
-    marginTop: 10,
-  },
-  input: {
-    width: 250,
-    height: 40,
-    borderColor: '#fff',
-    borderWidth: 2,
-    borderRadius: 10,
-    padding: 10,
-    marginVertical: 10,
-    backgroundColor: '#ffffff90',
-    marginBottom: 20,
-    fontWeight: '400',
-  },
-  login: {
-    color: "#000",
-    fontWeight: 'bold',
-  },
- boxbutton: {
-    backgroundColor: "#ffffff80",
-    padding: 10,
-    borderRadius: 5,
-    borderWidth: 2,
-    borderColor: '#fff',
-    margin: 10,
-  },
-  registerContainer: {
+  registerContainer2: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     marginTop: 10,
-  },
-  registerText: {
-    marginRight: 5,
-  },
-  registerLink: {
-    color: "#000",
-    fontWeight: 'bold',
-    textDecorationLine: 'underline',
-  },
-  blurContainer: {
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingBottom: 5,
-    borderRadius: 5, // Bordes redondeados
-    overflow: 'hidden', // Oculta el contenido que se sale del contenedor
-    marginTop: 20,
   },
 });
