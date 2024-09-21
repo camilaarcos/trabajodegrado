@@ -1,7 +1,6 @@
 import {Text, View,StyleSheet, TouchableOpacity, Image, ScrollView } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useNavigation } from '@react-navigation/native';
-import LottieView from 'lottie-react-native';
 import { database } from "../src/config/firebase";
 import { collection, doc, onSnapshot, orderBy, query, QuerySnapshot } from "firebase/firestore";
 
@@ -20,19 +19,13 @@ export default function Inicio(props) {
           id: doc.id,
           Tipo: doc.data().Tipo
         }))
-      )
+      );
+      
     })
     return unsubscribe;
   },[]);
 
 return(
-  // <View style={styles.containerfuera}>
-  // <LottieView
-  //       source={require('../assets/animations/fondoanimado.json')}
-  //       autoPlay
-  //       loop
-  //       style={styles.animation}
-  //     />
     <ScrollView contentContainerStyle={styles.container}>
       <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
         
@@ -47,18 +40,14 @@ return(
               <Text style={styles.textoCrimen}>{crimen.Tipo}</Text>
             </TouchableOpacity>
           ))}
-      
+          
         </ScrollView>
-        // </View>
 
 );
 
 }
 const styles = StyleSheet.create({
-  containerfuera: {
-    flex: 1,
-    justifyContent: 'center',
-  },
+
   container: {
     flexGrow: 1,
     alignItems: 'center', 

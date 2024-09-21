@@ -4,13 +4,16 @@ import { View, Text, TextInput, ScrollView, TouchableOpacity, StyleSheet, Alert,
 import { useNavigation } from '@react-navigation/native';
 import { validateEmail } from '../utils/Ayudas';
 import { passwordReset } from '../utils/Acciones';
-
+import CustomAlert from '../src/componentes/Alertas';
 
 export default function RecoverPassword  () {
   const [email, setEmail] = useState('');
   const [errorEmail, setErrorEmail] = useState('');
   const navigation = useNavigation();
-
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertIcon, setAlertIcon] = useState(null);
+  const [RecuperarSuccess, setRecuperarSuccess] = useState(false);
 
   const validateData = () => {
     setErrorEmail('');
@@ -18,6 +21,9 @@ export default function RecoverPassword  () {
 
     if(!validateEmail(email)){
       setErrorEmail('Correo electrónico inválido');
+      setAlertMessage('Correo electrónico inválido');
+      setAlertIcon(require('../assets/alert.png'));
+      setAlertVisible(true);
       valid = false;
     }
     return valid;
@@ -31,11 +37,23 @@ export default function RecoverPassword  () {
     const result = await passwordReset(email);
 
     if(!result.statusResponse){
-      Alert.alert('Error', result.error || 'Este correo electrónico no está registrado');
+      setAlertMessage('Error, intentado más tarde.');
+      setAlertIcon(require('../assets/error.png'));
+      setAlertVisible(true);
       return;
     }
-    Alert.alert('Correo enviado', 'Revise su bandeja de entrada para cambiar su contraseña');
-    navigation.navigate('Inicio de sesión');
+    setAlertMessage('Revise su bandeja de entrada para cambiar su contraseña');
+    setAlertIcon(require('../assets/success.png'));
+    setAlertVisible(true);
+    setRecuperarSuccess(true);
+   
+  };
+
+  const handleCloseAlert = () => {
+    setAlertVisible(false);
+    if(RecuperarSuccess){
+      navigation.navigate('Inicio de sesión');
+    }
   };
 
  
@@ -69,6 +87,13 @@ export default function RecoverPassword  () {
       <TouchableOpacity onPress={handleRecoverPassword} style={styles.button}>
         <Text style={styles.buttonText}>Recuperar Contraseña</Text>
       </TouchableOpacity>
+      <CustomAlert
+      visible={alertVisible}
+      title="Recuperar Contraseña"
+      message={alertMessage}
+      icon={alertIcon}
+      onClose={handleCloseAlert}
+    />
       </View>
       </BlurView>
         </ScrollView>

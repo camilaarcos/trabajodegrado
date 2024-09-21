@@ -16,6 +16,7 @@
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.10.0",
     "@react-navigation/stack": "^6.4.0",
+    "@types/react": "~18.2.79",
     "dotenv": "^16.4.5",
     "expo": "~51.0.18",
     "expo-blur": "~13.0.2",
@@ -27,6 +28,7 @@
     "react-native": "0.74.3",
     "react-native-date-picker": "^5.0.7",
     "react-native-element-dropdown": "^2.12.1",
+    "react-native-elements": "^3.4.3",
     "react-native-fast-image": "^8.6.3",
     "react-native-gesture-handler": "^2.18.1",
     "react-native-modal-selector": "^2.1.2",
@@ -36,7 +38,8 @@
     "react-native-select-dropdown": "^4.0.1",
     "react-native-svg": "^15.6.0",
     "react-native-vector-icons": "^10.1.0",
-    "react-navigation": "^5.0.0"
+    "react-navigation": "^5.0.0",
+    "typescript": "~5.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

@@ -1,4 +1,4 @@
-import {Text, View, Image, StyleSheet, TextInput, Pressable, Platform, TouchableOpacity, Alert, ScrollView} from "react-native";
+import {Text, View, Image, StyleSheet, TextInput, Pressable, Platform, TouchableOpacity, ScrollView} from "react-native";
 import React, {useState} from "react";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {database} from '../src/config/firebase';
@@ -8,7 +8,8 @@ import SelectDropdown from 'react-native-select-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'; 
 import { data, dataBarrio } from '../utils/Ayudas';
-
+import Loading from "../src/componentes/loading";
+import CustomAlert from "../src/componentes/Alertas";
 export default function Registro() {
   const navigation = useNavigation();
   const [newItem,setNewItem] = React.useState({
@@ -20,14 +21,25 @@ export default function Registro() {
   });
   const [Fecha, setFecha] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertIcon, setAlertIcon] = useState(null);
+  const [Registrosuccess, setRegistroSuccess] = useState(false);
 
   const onSend = async() => {
+    setLoading(true);
     try {
       await addDoc(collection(database, 'crimenes'), newItem);
-      Alert.alert("Registro de crímen", "Registro correctamente");
-      navigation.goBack();
+      setAlertMessage('Registro correctamente');
+      setAlertIcon(require('../assets/success.png'));
+      setAlertVisible(true);
+      setRegistroSuccess(true);
     } catch (error) {
       console.error("Error registando crímen: ", error);
+      setAlertMessage('Error al registrar el crímen');
+      setAlertIcon(require('../assets/error.png'));
+      setAlertVisible(true);
     }
   };
 
@@ -51,6 +63,12 @@ export default function Registro() {
     }
   };
 
+  const handleCloseAlert = () => {
+    setAlertVisible(false);
+    if(Registrosuccess){
+      navigation.goBack();
+    }
+  };
 
 return(
     <ScrollView contentContainerStyle={{
@@ -153,6 +171,14 @@ return(
         <TouchableOpacity onPress={onSend} style={styles.boxbutton}>
               <Text style={styles.Registro}>Registrar</Text>
               </TouchableOpacity>
+              <CustomAlert
+              visible={alertVisible}
+              title="Registro de crímenes"
+              message={alertMessage}
+              icon={alertIcon}
+              onClose={handleCloseAlert}
+            />
+              <Loading isVisible={loading} text="Cargando..."/>
         </ScrollView>
 );
 

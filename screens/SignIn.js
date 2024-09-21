@@ -1,6 +1,6 @@
 import { BlurView } from 'expo-blur';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TouchableOpacity,ScrollView, TextInput, View, Alert, Image } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity,ScrollView, TextInput, View, Image } from 'react-native';
 import React, { useState} from "react";
 import { getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
@@ -8,36 +8,67 @@ import { firebaseConfig } from '../firebase-config';
 import { useNavigation } from '@react-navigation/native';
 import {collection, addDoc} from 'firebase/firestore';
 import { database} from '../src/config/firebase';
-
+import CustomAlert from '../src/componentes/Alertas';
+import { validateEmail } from '../utils/Ayudas';
 export default function SignIn() {
   const navigation = useNavigation();
   const [email, setEmail] = useState(''); 
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertIcon, setAlertIcon] = useState(null);
+  const [siginSuccess, setsiginSuccess] = useState(false);
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
   const handleCreateAccount = async() => {
-    if (password !== confirmPassword) {
-      alert('Las contraseñas no coinciden');
+    if (!validateEmail(email)) {
+      setAlertMessage('Correo electrónico inválido');
+      setAlertIcon(require('../assets/alert.png'));
+      setAlertVisible(true);
       return;
+    }
+    if (password !== confirmPassword) {
+      setAlertMessage('Las contraseñas no coinciden');
+      setAlertIcon(require('../assets/alert.png'));
+      setAlertVisible(true);
+      return;
+    }
+    if (confirmPassword.length < 6) {
+      setAlertMessage('La contraseña debe tener al menos 6 carácteres');
+      setAlertIcon(require('../assets/alert.png'));
+      setAlertVisible(true);
+      return;  
     }
     try {
       console.log('Usuario creado');
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       console.log(user);
-      Alert.alert("Usuario registrado correctamente");
-
+      setAlertMessage('Usuario registrado correctamente');
+      setAlertIcon(require('../assets/success.png'));
+      setAlertVisible(true);
+      setsiginSuccess(true);
       const userCollectionRef = collection(database, 'usuarios');
       await addDoc(userCollectionRef, { uid: user.uid, correo: email, rol: 'usuario' });
     } catch (error) {
       console.log(error);
-      Alert.alert(error.message);
+      setAlertMessage('Error al registrar el usuario');
+      setAlertIcon(require('../assets/error.png'));
+      setAlertVisible(true);
+      setsiginSuccess(false);
     }
      
   }
+
+  const handleCloseAlert = () => {
+    setAlertVisible(false);
+    if(siginSuccess){
+      navigation.navigate('Inicio de sesión');
+    }
+  };
 
 
   return (
@@ -66,6 +97,13 @@ export default function SignIn() {
               <TouchableOpacity onPress={handleCreateAccount}  style={styles.boxbutton}>
               <Text style={styles.login}>Registrarse</Text>
               </TouchableOpacity>
+              <CustomAlert
+                visible={alertVisible}
+                title="Registro de Usuario"
+                icon={alertIcon}
+                message={alertMessage}
+                onClose={handleCloseAlert}
+              />
               <View style={styles.registerContainer}>
               <Text style={styles.registerText}>¿Ya tienes cuenta?</Text>
               <TouchableOpacity

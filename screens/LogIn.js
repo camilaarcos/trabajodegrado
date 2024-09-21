@@ -1,16 +1,19 @@
 import { BlurView } from 'expo-blur';
-import { StyleSheet, Text, TouchableOpacity,ScrollView, TextInput, View, Alert, Image } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity,ScrollView, TextInput, View, Image } from 'react-native';
 import React, { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../firebase-config';
 import { useNavigation } from '@react-navigation/native';
-
+import CustomAlert from '../src/componentes/Alertas';
 export default function LogIn({setIsLoggedIn}) {
   const navigation = useNavigation();
   const [email, setEmail] = useState(''); 
   const [password, setPassword] = useState('');
-
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertIcon, setAlertIcon] = useState(null);
+  const [isLoginSuccessful, setIsLoginSuccessful] = useState(false);
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
@@ -22,15 +25,26 @@ export default function LogIn({setIsLoggedIn}) {
       console.log('Usuario logueado');
       const user = userCredential.user;
       console.log(user);
-      Alert.alert("Inicio de sesión", "Inicio correctamente");
-      setIsLoggedIn(true);
-      navigation.navigate('MyTabs');
+      setAlertMessage("Inició correctamente");
+      setAlertIcon(require('../assets/success.png')); 
+      setAlertVisible(true);
+      setIsLoginSuccessful(true);
     })
     .catch((error) => {
       console.log(error);
-      Alert.alert("Inicio de sesión", "Error al iniciar sesión, verifica información");
+      setAlertMessage("Error al iniciar sesión, verifica información");
+      setAlertIcon(require('../assets/error.png')); 
+      setAlertVisible(true);
+      setIsLoginSuccessful(false);
     });
   } 
+  const handleCloseAlert = () => {
+    setAlertVisible(false);
+    if (isLoginSuccessful) {
+      setIsLoggedIn(true);
+      navigation.navigate('MyTabs');
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -55,7 +69,13 @@ export default function LogIn({setIsLoggedIn}) {
               <TouchableOpacity onPress={handleSignIn} style={styles.boxbutton}>
               <Text style={styles.login}>Iniciar sesión</Text>
               </TouchableOpacity>
-
+              <CustomAlert
+                visible={alertVisible}
+                title="Sesión"
+                message={alertMessage}
+                icon={alertIcon}
+                onClose={handleCloseAlert}
+              />
               <View style={styles.registerContainer}>
               <Text style={styles.registerText}>¿No tienes una cuenta?</Text>
               <TouchableOpacity
