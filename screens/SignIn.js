@@ -3,11 +3,9 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TouchableOpacity,ScrollView, TextInput, View, Image } from 'react-native';
 import React, { useState} from "react";
 import { getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
-import { initializeApp } from 'firebase/app';
-import { firebaseConfig } from '../firebase-config';
+import { FIREBASE_AUTH, FIREBASE_DB } from '../src/config/firebase';
 import { useNavigation } from '@react-navigation/native';
 import {collection, addDoc} from 'firebase/firestore';
-import { database} from '../src/config/firebase';
 import CustomAlert from '../src/componentes/Alertas';
 import { validateEmail } from '../utils/Ayudas';
 export default function SignIn() {
@@ -20,8 +18,7 @@ export default function SignIn() {
   const [alertIcon, setAlertIcon] = useState(null);
   const [siginSuccess, setsiginSuccess] = useState(false);
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+  const auth = FIREBASE_AUTH;
 
   const handleCreateAccount = async() => {
     if (!validateEmail(email)) {
@@ -51,7 +48,7 @@ export default function SignIn() {
       setAlertIcon(require('../assets/success.png'));
       setAlertVisible(true);
       setsiginSuccess(true);
-      const userCollectionRef = collection(database, 'usuarios');
+      const userCollectionRef = collection(FIREBASE_DB, 'usuarios');
       await addDoc(userCollectionRef, { uid: user.uid, correo: email, rol: 'usuario' });
     } catch (error) {
       console.log(error);

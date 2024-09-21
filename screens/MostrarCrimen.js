@@ -2,7 +2,7 @@ import {Text, View, Image, StyleSheet, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { BlurView } from 'expo-blur';
-import {database} from '../src/config/firebase';
+import {FIREBASE_DB} from '../src/config/firebase';
 import { doc, getDoc } from "firebase/firestore";
 
 export default function MostrarCrimen(props) {
@@ -12,7 +12,7 @@ export default function MostrarCrimen(props) {
     const [fecha, setFecha] = useState("");
     const getCrimen = async (id) => {
         try {
-            const docRef = doc(database, 'crimenes', id);
+            const docRef = doc(FIREBASE_DB, 'crimenes', id);
             const docSnap = await getDoc(docRef);
             const data = docSnap.data();
             setCrimen(data);

@@ -1,7 +1,7 @@
 import {Text, View,StyleSheet, TouchableOpacity, Image, ScrollView } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useNavigation } from '@react-navigation/native';
-import { database } from "../src/config/firebase";
+import { FIREBASE_DB } from "../src/config/firebase";
 import { collection, doc, onSnapshot, orderBy, query, QuerySnapshot } from "firebase/firestore";
 
 
@@ -10,7 +10,7 @@ export default function Inicio(props) {
   const [crimenes, setCrimenes] = useState([]);
 
   useEffect(() => {
-    const collectionRef = collection(database, 'crimenes');
+    const collectionRef = collection(FIREBASE_DB, 'crimenes');
     const q = query(collectionRef, orderBy('Fecha', 'asc'));
 
     const unsubscribe = onSnapshot(q, QuerySnapshot =>{

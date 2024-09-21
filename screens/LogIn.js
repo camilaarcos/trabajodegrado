@@ -2,8 +2,7 @@ import { BlurView } from 'expo-blur';
 import { StyleSheet, Text, TouchableOpacity,ScrollView, TextInput, View, Image } from 'react-native';
 import React, { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { initializeApp } from 'firebase/app';
-import { firebaseConfig } from '../firebase-config';
+import { FIREBASE_AUTH } from '../src/config/firebase'; 
 import { useNavigation } from '@react-navigation/native';
 import CustomAlert from '../src/componentes/Alertas';
 export default function LogIn({setIsLoggedIn}) {
@@ -14,9 +13,7 @@ export default function LogIn({setIsLoggedIn}) {
   const [alertMessage, setAlertMessage] = useState('');
   const [alertIcon, setAlertIcon] = useState(null);
   const [isLoginSuccessful, setIsLoginSuccessful] = useState(false);
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
+  const auth = FIREBASE_AUTH;
 
 
   const handleSignIn = () => {

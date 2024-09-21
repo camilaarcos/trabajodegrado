@@ -1,5 +1,4 @@
-import { FIREBASE_AUTH } from "../firebase-config";
-import firebase from "firebase/app";
+import { FIREBASE_AUTH } from '../src/config/firebase';
 import "firebase/auth";
 import {getAuth, EmailAuthProvider, reauthenticateWithCredential, updatePassword, sendPasswordResetEmail
   } from 'firebase/auth';

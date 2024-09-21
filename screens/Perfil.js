@@ -1,6 +1,6 @@
 import {Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
 import * as React from 'react';
-import { FIREBASE_AUTH } from "../firebase-config";
+import { FIREBASE_AUTH } from "../src/config/firebase";
 import { useNavigation } from '@react-navigation/native';
 import {getCurrentUser} from '../utils/Acciones';
 

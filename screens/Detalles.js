@@ -1,6 +1,6 @@
 import {Text, View, TouchableOpacity, Image, StyleSheet, ScrollView } from "react-native";
 import React, { useState, useEffect } from "react";
-import { database } from "../src/config/firebase";
+import { FIREBASE_DB } from "../src/config/firebase";
 import { collection, doc, onSnapshot, orderBy, query, QuerySnapshot } from "firebase/firestore";
 import { useNavigation } from '@react-navigation/native';
 import SelectDropdown from 'react-native-select-dropdown';
@@ -17,25 +17,25 @@ export default function Detalles() {
   const [selectedBarrio, setSelectedBarrio] = useState(null);
 
   useEffect(() => {
-    const collectionRef = collection(database, 'crimenes');
+    const collectionRef = collection(FIREBASE_DB, 'crimenes');
     const q = query(collectionRef, orderBy('Fecha', 'asc'));
 
     const unsubscribe = onSnapshot(q, QuerySnapshot =>{
       const crimenesData =
         QuerySnapshot.docs.map(doc => {
-        const data = doc.data();
-        let fechaString = '';
-        if (data && data.Fecha) {
-          const fechaDate = new Date(data.Fecha.seconds * 1000);
-          fechaString = fechaDate.toLocaleDateString();
-        }
-        return {
-          id: doc.id,
-          Tipo: data.Tipo,
-          Fecha: fechaString,
-          Barrio: data.Barrio,
-        };
-      });
+          const data = doc.data();
+          let fechaString = '';
+            if (data && data.Fecha) {
+              const fechaDate = new Date(data.Fecha.seconds * 1000);
+              fechaString = fechaDate.toLocaleDateString();
+            }
+            return {
+              id: doc.id,
+              Tipo: data.Tipo,
+              Fecha: fechaString,
+              Barrio: data.Barrio,
+            };
+        });
       setCrimenes(crimenesData);
       setFilteredCrimenes(crimenesData);
       

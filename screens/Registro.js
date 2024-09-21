@@ -1,14 +1,14 @@
 import {Text, View, Image, StyleSheet, TextInput, Pressable, Platform, TouchableOpacity, ScrollView} from "react-native";
 import React, {useState} from "react";
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {database} from '../src/config/firebase';
+import {FIREBASE_DB} from '../src/config/firebase';
 import {collection, addDoc} from 'firebase/firestore';
 import { useNavigation } from "@react-navigation/native";
 import SelectDropdown from 'react-native-select-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'; 
 import { data, dataBarrio } from '../utils/Ayudas';
-import Loading from "../src/componentes/loading";
+// import Loading from "../src/componentes/loading";
 import CustomAlert from "../src/componentes/Alertas";
 export default function Registro() {
   const navigation = useNavigation();
@@ -21,16 +21,16 @@ export default function Registro() {
   });
   const [Fecha, setFecha] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const [alertIcon, setAlertIcon] = useState(null);
   const [Registrosuccess, setRegistroSuccess] = useState(false);
 
   const onSend = async() => {
-    setLoading(true);
+    // setLoading(true);
     try {
-      await addDoc(collection(database, 'crimenes'), newItem);
+      await addDoc(collection(FIREBASE_DB, 'crimenes'), newItem);
       setAlertMessage('Registro correctamente');
       setAlertIcon(require('../assets/success.png'));
       setAlertVisible(true);
@@ -173,12 +173,11 @@ return(
               </TouchableOpacity>
               <CustomAlert
               visible={alertVisible}
-              title="Registro de crímenes"
               message={alertMessage}
               icon={alertIcon}
               onClose={handleCloseAlert}
             />
-              <Loading isVisible={loading} text="Cargando..."/>
+              {/* <Loading isVisible={loading} text="Cargando..."/> */}
         </ScrollView>
 );
 

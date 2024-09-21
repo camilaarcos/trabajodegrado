@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BlurView } from 'expo-blur';
-import { View, Text, TextInput, ScrollView, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
+import { View, Text, TextInput, ScrollView, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { actualizaContraseña, reauthenticate } from '../utils/Acciones';
 import { isEmpty, size } from 'lodash'
@@ -80,64 +80,63 @@ const validateForm = () => {
     return isValid;
 }
 
- 
 
   return (
     <View style={styles.container}>
-      <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
-      
-      <ScrollView contentContainerStyle={{
-        flex: 1,
-        width: '100%',
-        height: '100%',
-        alignItems: 'center',
-        marginTop: 90,
-      }}>
+        <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
         
-        <BlurView intensity={100} style={styles.blurPrincipal}>   
-      <View style={styles.login1}>
-      <Text style={styles.tittle}>Cambiar Contraseña</Text>
-      <Image source={require('../assets/Security.png')} style={styles.avatar} />
-      <TextInput
-        style={styles.input}
-        placeholder="Contraseña actual"
-        onChangeText={setCurrentPassword}
-        value={currentPassword}
-        errorMessage={errorCurrentPassword}
-        password={true}
-        secureTextEntry={!showPassword}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Contraseña Nueva"
-        onChangeText={setNewPassword}
-        value={newPassword}
-        errorMessage={errorNewPassword}
-        password={true}
-        secureTextEntry={!showPassword}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Confirmar Contraseña Nueva"
-        onChangeText={setConfirmPassword}
-        value={confirmPassword}
-        errorMessage={errorConfirmPassword}
-        password={true}
-        secureTextEntry={!showPassword}
-      />
-      <TouchableOpacity onPress={onSubmit} style={styles.button}>
-        <Text style={styles.buttonText}>Cambiar Contraseña</Text>
-      </TouchableOpacity>
-      <CustomAlert
-        visible={alertVisible}
-        title="Cambiar Contraseña"
-        message={alertMessage}
-        icon={alertIcon}
-        onClose={() => setAlertVisible(false)}
-      />
-      </View>
-      </BlurView>
-        </ScrollView>
+          <ScrollView contentContainerStyle={{
+                flex: 1,
+                width: '100%',
+                height: '100%',
+                alignItems: 'center',
+                marginTop: 90,
+              }}>
+            
+            <BlurView intensity={100} style={styles.blurPrincipal}>   
+              <View style={styles.login1}>
+                <Text style={styles.tittle}>Cambiar Contraseña</Text>
+                  <Image source={require('../assets/Security.png')} style={styles.avatar} />
+                    <TextInput
+                      style={styles.input}
+                      placeholder="Contraseña actual"
+                      onChangeText={setCurrentPassword}
+                      value={currentPassword}
+                      errorMessage={errorCurrentPassword}
+                      password={true}
+                      secureTextEntry={!showPassword}
+                    />
+                      <TextInput
+                        style={styles.input}
+                        placeholder="Contraseña Nueva"
+                        onChangeText={setNewPassword}
+                        value={newPassword}
+                        errorMessage={errorNewPassword}
+                        password={true}
+                        secureTextEntry={!showPassword}
+                      />
+                        <TextInput
+                          style={styles.input}
+                          placeholder="Confirmar Contraseña Nueva"
+                          onChangeText={setConfirmPassword}
+                          value={confirmPassword}
+                          errorMessage={errorConfirmPassword}
+                          password={true}
+                          secureTextEntry={!showPassword}
+                        />
+                          <TouchableOpacity onPress={onSubmit} style={styles.button}>
+                            <Text style={styles.buttonText}>Cambiar Contraseña</Text>
+                          </TouchableOpacity>
+                            <CustomAlert
+                              visible={alertVisible}
+                              title="Cambiar Contraseña"
+                              message={alertMessage}
+                              icon={alertIcon}
+                              onClose={() => setAlertVisible(false)}
+                            />
+              </View>
+            </BlurView>
+          </ScrollView>
     </View>
   );
 };
