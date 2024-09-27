@@ -1,28 +1,23 @@
 import {Text, View,StyleSheet, TouchableOpacity, Image, ScrollView } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useNavigation } from '@react-navigation/native';
-import { FIREBASE_DB } from "../src/config/firebase";
-import { collection, doc, onSnapshot, orderBy, query, QuerySnapshot } from "firebase/firestore";
+import { FIREBASE_DB} from "../src/config/firebase";
+import { collection, doc, onSnapshot, orderBy, query, QuerySnapshot, getDoc } from "firebase/firestore";
 import { styles2 } from './Detalles';
-
+import { fetchCrimenes } from "../utils/Acciones";
 export default function Inicio(props) {
   const navigation = useNavigation();
   const [crimenes, setCrimenes] = useState([]);
 
   useEffect(() => {
-    const collectionRef = collection(FIREBASE_DB, 'crimenes');
-    const q = query(collectionRef, orderBy('Fecha', 'asc'));
-
-    const unsubscribe = onSnapshot(q, QuerySnapshot =>{
-      setCrimenes(
-        QuerySnapshot.docs.map(doc => ({
-          id: doc.id,
-          Tipo: doc.data().Tipo
-        }))
-      );
-      
-    })
-    return unsubscribe;
+    const unsubscribe = fetchCrimenes((result) => {
+      if (result.statusResponse) {
+        setCrimenes(result.data);
+      } else {
+        console.log(result.error);
+      }
+    });
+    return () => unsubscribe();
   },[]);
 
 return(
@@ -30,7 +25,7 @@ return(
           alignItems: 'center', 
           padding: 16,}}>
       <Image source={require('../assets/fondo.png')} style={[styles2.imagefondo, StyleSheet.absoluteFill]} />
-        
+
         <TouchableOpacity onPress={()=> navigation.navigate('Registro de crímenes')} style={styles3.boxbutton} >
               <Text style={styles3.texto}>Registrar Crímen</Text>
             </TouchableOpacity>

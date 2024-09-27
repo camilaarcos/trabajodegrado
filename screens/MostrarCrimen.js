@@ -1,15 +1,22 @@
-import {Text, View, Image, StyleSheet, ScrollView } from "react-native";
+import {Text, View, Image, StyleSheet, ScrollView, TouchableOpacity, Alert, TextInput} from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { BlurView } from 'expo-blur';
 import {FIREBASE_DB} from '../src/config/firebase';
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
+import { fetchUserRole} from "../utils/Acciones";
 
 export default function MostrarCrimen(props) {
     const navigation = useNavigation();
-
     const [crimen, setCrimen] = useState({});
     const [fecha, setFecha] = useState("");
+    const [userRole, setUserRole] = useState('');
+    const [isEditing, setIsEditing] = useState(false);
+    const [tipo, setTipo] = useState("");
+    const [barrio, setBarrio] = useState("");
+    const [direccion, setDireccion] = useState(""); 
+    const [observacion, setObservacion] = useState("");
+ 
     const getCrimen = async (id) => {
         try {
             const docRef = doc(FIREBASE_DB, 'crimenes', id);
@@ -21,13 +28,59 @@ export default function MostrarCrimen(props) {
                 const fechaDate = new Date(data.Fecha.seconds * 1000);
                 setFecha(fechaDate.toLocaleDateString());
             }
+            setTipo(data.Tipo || '');
+            setDireccion(data.Direccion || '');
+            setBarrio(data.Barrio || '');
+            setObservacion(data.Observacion || '');
         } catch (error) {
             console.error("Error obteniendo crimen: ", error);
         }
     };
+    const getUserRole = async () => {
+      const result = await fetchUserRole();
+      if (result.statusResponse) {
+        setUserRole(result.data);
+      }
+    };
     useEffect(() => {
         getCrimen(props.route.params.crimenesId);
+        getUserRole();
     },[]);
+
+    const handleEditCrimen = async () => {
+      if (isEditing) {
+          try {
+            const docRef = doc(FIREBASE_DB, 'crimenes', props.route.params.crimenesId);
+            await updateDoc(docRef, {
+                Tipo: tipo,
+                Direccion: direccion,
+                Barrio: barrio,
+                Observacion: observacion
+            });
+            Alert.alert("Crimen actualizado", "El crimen ha sido actualizado exitosamente.");
+            setIsEditing(false);
+            getCrimen(props.route.params.crimenesId);
+            navigation.goBack();
+        } catch (error) {
+            console.error("Error al actualizar el crimen:", error);
+            Alert.alert("Error", "Hubo un problema al actualizar el crimen.");
+        }
+      } else {
+        setIsEditing(true);
+     }
+    };
+  
+    const handleDeleteCrimen = async (id) => {
+      try {
+        const docRef = doc(FIREBASE_DB, 'crimenes', id);
+        await deleteDoc(docRef);
+        Alert.alert("Crimen eliminado", "El crimen ha sido eliminado exitosamente.");
+        navigation.goBack();
+    } catch (error) {
+        console.error("Error al eliminar el crimen:", error);
+        Alert.alert("Error", "Hubo un problema al eliminar el crimen.");
+    }
+    };
 
 return(
     <View style={styles.container}>
@@ -42,17 +95,63 @@ return(
         
         <BlurView intensity={100} style={styles.blurPrincipal}> 
             <View style={styles.contenedorcentro}>
+            {userRole === 'usuario' && (
+        <Text>Este texto solo lo ve un usuario con rol de usuario</Text>
+      )}
+      {userRole === 'admin' && (
+        <Text>Este texto solo lo ve un usuario con rol de admin</Text>
+      )}
             <Text style={styles.tittle}>{crimen.Tipo}</Text>
             <View style={styles.contenedorinfo}>
-        <Text style={styles.info}>
-         <Text style={styles.tittleinfo}>Fecha:</Text>  {fecha}
-          </Text>
-        <Text style={styles.info}>
-        <Text style={styles.tittleinfo}>Dirección:</Text>  {crimen.Direccion}</Text>
-        <Text style={styles.info}>
-        <Text style={styles.tittleinfo}>Barrio:</Text>  {crimen.Barrio}</Text>
-        <Text style={styles.info}>
-        <Text style={styles.tittleinfo}>Observación:</Text>  {crimen.Observacion}</Text>
+            {isEditing ? (
+                            <>
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="Tipo"
+                                    value={tipo}
+                                    onChangeText={setTipo}
+                                />
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="Dirección"
+                                    value={direccion}
+                                    onChangeText={setDireccion}
+                                />
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="Barrio"
+                                    value={barrio}
+                                    onChangeText={setBarrio}
+                                />
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="Observación"
+                                    value={observacion}
+                                    onChangeText={setObservacion}
+                                />
+                            </>
+                        ) : (
+                            <>
+                                <Text style={styles.info}>
+                                    <Text style={styles.tittleinfo}>Fecha:</Text>  {fecha}
+                                </Text>
+                                <Text style={styles.info}>
+                                    <Text style={styles.tittleinfo}>Dirección:</Text>  {crimen.Direccion}
+                                </Text>
+                                <Text style={styles.info}>
+                                    <Text style={styles.tittleinfo}>Barrio:</Text>  {crimen.Barrio}
+                                </Text>
+                                <Text style={styles.info}>
+                                    <Text style={styles.tittleinfo}>Observación:</Text>  {crimen.Observacion}
+                                </Text>
+                            </>
+                        )}
+        <TouchableOpacity onPress={handleEditCrimen} style={styles.boxbutton}>
+        <Text style={styles.login}>{isEditing ? "Guardar" : "Editar"}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={()=> handleDeleteCrimen(props.route.params?.crimenesId)} style={styles.boxbutton}>
+        <Text style={styles.login}>Eliminar</Text>
+        </TouchableOpacity>
         </View>
         </View>
           </BlurView>

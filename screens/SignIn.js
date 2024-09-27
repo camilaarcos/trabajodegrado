@@ -5,12 +5,13 @@ import React, { useState} from "react";
 import { getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
 import { FIREBASE_AUTH, FIREBASE_DB } from '../src/config/firebase';
 import { useNavigation } from '@react-navigation/native';
-import {collection, addDoc} from 'firebase/firestore';
+import {collection, setDoc, doc} from 'firebase/firestore';
 import CustomAlert from '../src/componentes/Alertas';
 import { validateEmail } from '../utils/Ayudas';
 import { styles } from './LogIn';
 export default function SignIn() {
   const navigation = useNavigation();
+  const [name, setName] = useState('');
   const [email, setEmail] = useState(''); 
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -49,8 +50,8 @@ export default function SignIn() {
       setAlertIcon(require('../assets/success.png'));
       setAlertVisible(true);
       setsiginSuccess(true);
-      const userCollectionRef = collection(FIREBASE_DB, 'usuarios');
-      await addDoc(userCollectionRef, { uid: user.uid, correo: email, rol: 'usuario' });
+      const userDocRef = doc(FIREBASE_DB, 'usuarios', user.uid);
+      await setDoc(userDocRef, { uid: user.uid, nombre:name, correo: email, rol: 'usuario' });
     } catch (error) {
       console.log(error);
       setAlertMessage('Error al registrar el usuario');
@@ -86,6 +87,8 @@ export default function SignIn() {
             <StatusBar style="auto" />
             <Text style={styles.tittle}>Registro de usuario</Text>
             <Image source={require('../assets/Valid-Ids.png')} style={styles.avatar} />
+            <Text style={styles.email}>Nombre</Text>
+              <TextInput onChangeText={(text)=> setName(text)} style={styles.input} placeholder='Nombre'/>
               <Text style={styles.email}>Correo electrónico</Text>
               <TextInput onChangeText={(text)=> setEmail(text)} style={styles.input} placeholder='ejemplo@gmail.com' keyboardType='email-address'/>
               <Text style={styles.email}>Contraseña</Text>

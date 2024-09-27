@@ -1,13 +1,14 @@
 import {Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FIREBASE_AUTH } from "../src/config/firebase";
 import { useNavigation } from '@react-navigation/native';
 import {getCurrentUser} from '../utils/Acciones';
-
+import { fetchUserName } from "../utils/Acciones";
 
 export default function Perfil() {
     const navigation = useNavigation();
     const user = getCurrentUser();
+    const [name, setName] = React.useState('');
     const handleLogout = async () => {
         try {
           await FIREBASE_AUTH.signOut();
@@ -18,12 +19,26 @@ export default function Perfil() {
         }
       };
 
+      useEffect(() => {
+        const getUserName = async () => {
+          const result = await fetchUserName();
+          if (result.statusResponse) {
+            setName(result.data);
+          } else {
+            console.log(result.error);
+          }
+        };
+    
+        getUserName();
+      }, []);
+
 return(
     <View style={styles.container}>
         <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
         <Text style={styles.tittle}>Información</Text>
         <Image source={require('../assets/Otp.png')} style={styles.imageStyle} />
         <View style={styles.containercorreo}>
+        <Text style={styles.texto}>Nombre: {name} </Text>
         <Text style={styles.texto}>Correo electrónico asociado: </Text>
         <Text style={styles.correo}>{user.email}</Text>
         </View>

@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import SelectDropdown from 'react-native-select-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { styles } from './Registro';
-
+import { fetchCrimenes } from "../utils/Acciones";
 export default function Detalles() {
 
   const navigation = useNavigation();
@@ -17,30 +17,15 @@ export default function Detalles() {
   const [selectedBarrio, setSelectedBarrio] = useState(null);
 
   useEffect(() => {
-    const collectionRef = collection(FIREBASE_DB, 'crimenes');
-    const q = query(collectionRef, orderBy('Fecha', 'asc'));
-
-    const unsubscribe = onSnapshot(q, QuerySnapshot =>{
-      const crimenesData =
-        QuerySnapshot.docs.map(doc => {
-          const data = doc.data();
-          let fechaString = '';
-            if (data && data.Fecha) {
-              const fechaDate = new Date(data.Fecha.seconds * 1000);
-              fechaString = fechaDate.toLocaleDateString();
-            }
-            return {
-              id: doc.id,
-              Tipo: data.Tipo,
-              Fecha: fechaString,
-              Barrio: data.Barrio,
-            };
-        });
-      setCrimenes(crimenesData);
-      setFilteredCrimenes(crimenesData);
-      
+    const unsubscribe = fetchCrimenes((result) => {
+      if (result.statusResponse) {
+        setCrimenes(result.data);
+        setFilteredCrimenes(result.data);
+      } else {
+        console.log(result.error);
+      }
     });
-    return unsubscribe;
+    return () => unsubscribe();
   },[]);
 
   const tipos = ["Tipo de crimen", ...new Set(crimenes.map(crimen => crimen.Tipo))];
