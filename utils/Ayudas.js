@@ -14,7 +14,6 @@ export const data = [
   { title: "Violencia", icon: "hand-rock-o" },
   { title: "Violencia Intrafamiliar", icon: "home" },
 ];
-
 export const dataBarrio = [
   { title: "Agua clara" },
   { title: "Aguirre" },

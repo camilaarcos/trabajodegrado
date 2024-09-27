@@ -15,6 +15,7 @@ import Perfil from './screens/Perfil';
 import RecoverPassword from './screens/RecuperarContraseña';
 import CambiarContraseña from './screens/CambiarContraseña';
 import MostrarCrimen from './screens/MostrarCrimen';
+import MostrarUsuario from './screens/MostrarUsuario';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -255,6 +256,22 @@ function MainStack({setIsLoggedIn}) {
     headerTitleAlign: 'center', // Alineación del título
   }}/>
   <Stack.Screen name="MostrarCrimen" component={MostrarCrimen}  options={{
+          headerTitle: () => (
+            <Image
+              style={{width: 320, height: 30, marginRight: 120}}
+              source={require('./assets/nombre.png')} 
+            />
+          ),
+    headerStyle: {
+      backgroundColor: '#4d82bc', // Color de fondo de la cabecera
+    },
+    headerTintColor: '#000', // Color de los botones y título en la cabecera
+    headerTitleStyle: {
+      fontWeight: 'bold', // Estilo del título
+    },
+    headerTitleAlign: 'center', // Alineación del título
+  }}/>
+  <Stack.Screen name="MostrarUsuario" component={MostrarUsuario}  options={{
           headerTitle: () => (
             <Image
               style={{width: 320, height: 30, marginRight: 120}}

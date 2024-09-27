@@ -1,14 +1,17 @@
-import {Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
+import {Text, View, Image, StyleSheet, TouchableOpacity} from "react-native";
 import React, { useState, useEffect } from 'react';
-import { FIREBASE_AUTH } from "../src/config/firebase";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../src/config/firebase";
 import { useNavigation } from '@react-navigation/native';
-import {getCurrentUser} from '../utils/Acciones';
-import { fetchUserName } from "../utils/Acciones";
+import {fetchUsuarios, fetchUserData} from '../utils/Acciones';
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 export default function Perfil() {
     const navigation = useNavigation();
-    const user = getCurrentUser();
+    const [modalVisible, setModalVisible] = useState(false);
     const [name, setName] = React.useState('');
+    const [usuarios, setUsuarios] = useState([]);
+    const [userRole, setUserRole] = useState('');
+    const [email, setEmail] = useState('');
     const handleLogout = async () => {
         try {
           await FIREBASE_AUTH.signOut();
@@ -20,17 +23,34 @@ export default function Perfil() {
       };
 
       useEffect(() => {
-        const getUserName = async () => {
-          const result = await fetchUserName();
+        const getUserData = async () => {
+          const result = await fetchUserData();
           if (result.statusResponse) {
-            setName(result.data);
+              setName(result.data.nombre);
+              setEmail(result.data.correo);
+              setUserRole(result.data.rol);
           } else {
-            console.log(result.error);
+              console.log(result.error);
           }
-        };
-    
-        getUserName();
+      };
+
+      getUserData();
+      const unsubscribe = fetchUsuarios((result) => {
+        if (result.statusResponse) {
+            setUsuarios(result.data);
+
+        } else {
+            console.log(result.error);
+        }
+    });
+
+    return () => unsubscribe();
       }, []);
+
+      const handleUser = async () => {
+        setModalVisible(true);
+            
+      };
 
 return(
     <View style={styles.container}>
@@ -40,8 +60,20 @@ return(
         <View style={styles.containercorreo}>
         <Text style={styles.texto}>Nombre: {name} </Text>
         <Text style={styles.texto}>Correo electrónico asociado: </Text>
-        <Text style={styles.correo}>{user.email}</Text>
+        <Text style={styles.correo}>{email}</Text>
+        <Text style={styles.texto}>Rol: {userRole}</Text>
         </View>
+        {userRole === 'admin' && (
+                              <>
+        <Text style={styles.texto}>Usuarios Registrados</Text>
+        {usuarios.map((usuario) => (
+            <TouchableOpacity  key={usuario.id} style={styles.crimenesContainer}
+            onPress={()=>navigation.navigate('MostrarUsuario', { usuarioId: usuario.id })}>
+              <Text style={styles.textoCrimen}>{usuario.nombre}</Text>
+            </TouchableOpacity>
+          ))}
+        </>
+                            )}
         <View style={styles.enlaces}>
         <TouchableOpacity
                 onPress={() => navigation.navigate('Cambiar Contraseña')}
@@ -52,6 +84,24 @@ return(
           <Text style={styles.OutLink}> Cerrar sesión</Text>
         </TouchableOpacity>
     </View>
+    {/* <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>Nombre: {name2}</Text>
+              <Text style={styles.modalText}>Correo: {email2}</Text>
+              <Text style={styles.modalText}>Rol: {userRole2}</Text>
+              <TouchableOpacity
+                style={styles.modalButton}
+                onPress={() => setModalVisible(!modalVisible)}>
+                <Text style={styles.textStyle}>Cerrar</Text>
+              </TouchableOpacity>
+              </View>
+          </Modal> */}
         </View>
     
 );
@@ -106,4 +156,20 @@ const styles = StyleSheet.create({
         color: "#000",
         fontWeight: 'bold',
       },
+      modalView: {
+        marginTop: 200,
+        margin: 20,
+        backgroundColor: '#ffffff',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+    },
 });

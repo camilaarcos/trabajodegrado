@@ -45,45 +45,31 @@ export const passwordReset = async (email) => {
     return result;
 };
 
-export const fetchUserRole = async () => {
+  export const fetchUserData = async (uid) => {
     const result = { statusResponse: true, data: null, error: null };
     const auth = FIREBASE_AUTH;
     const user = auth.currentUser;
     try {
-      const userDocRef = doc(FIREBASE_DB, 'usuarios', user.uid);
-      const userDoc = await getDoc(userDocRef);
-  
-      if (userDoc.exists()) {
-        result.data = userDoc.data().rol;
-      } else {
-        result.statusResponse = false;
-      }
-    } catch (error) {
-      result.statusResponse = false;
-      result.error = error.message;
-    }
-    return result;
-  };
+        const userDocRef = doc(FIREBASE_DB, 'usuarios', user.uid);
+        const userDoc = await getDoc(userDocRef);
 
-  export const fetchUserName = async () => {
-    const result = { statusResponse: true, data: null, error: null };
-    const auth = FIREBASE_AUTH;
-    const user = auth.currentUser;
-    try {
-      const userDocRef = doc(FIREBASE_DB, 'usuarios', user.uid);
-      const userDoc = await getDoc(userDocRef);
-  
-      if (userDoc.exists()) {
-        result.data = userDoc.data().nombre;
-      } else {
-        result.statusResponse = false;
-      }
+        if (userDoc.exists()) {
+            const userData = userDoc.data();
+            result.data = {
+                id: uid,
+                rol: userData.rol,
+                nombre: userData.nombre,
+                correo: userData.correo
+            };
+        } else {
+            result.statusResponse = false;
+        }
     } catch (error) {
-      result.statusResponse = false;
-      result.error = error.message;
+        result.statusResponse = false;
+        result.error = error.message;
     }
     return result;
-  };
+};
 
 export const fetchCrimenes = (callback) => {
     const collectionRef = collection(FIREBASE_DB, 'crimenes');
@@ -102,6 +88,8 @@ export const fetchCrimenes = (callback) => {
               Tipo: data.Tipo,
               Fecha: fechaString,
               Barrio: data.Barrio,
+              Direccion: data.Direccion,
+              Observacion: data.Observacion,
             };
       });
       callback({ statusResponse: true, data: crimenes });
@@ -110,6 +98,29 @@ export const fetchCrimenes = (callback) => {
     });
   
     return unsubscribe;
+};
+
+export const fetchUsuarios = (callback) => {
+  const collectionRef = collection(FIREBASE_DB, 'usuarios');
+  const q = query(collectionRef);
+
+  const unsubscribe = onSnapshot(q, (querySnapshot) => {
+    const usuarios = querySnapshot.docs.map(doc => {
+      const data = doc.data();
+          return {
+            id: doc.id,
+            uid: data.uid,
+            nombre: data.nombre,
+            correo: data.correo,
+            rol: data.rol,
+          };
+    });
+    callback({ statusResponse: true, data: usuarios });
+  }, (error) => {
+    callback({ statusResponse: false, error: error.message });
+  });
+
+  return unsubscribe;
 };
 
 

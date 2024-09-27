@@ -1,13 +1,18 @@
-import {Text, View, Image, StyleSheet, ScrollView, TouchableOpacity, Alert, TextInput} from "react-native";
+import {Text, View, Image, StyleSheet, ScrollView, Modal, TouchableOpacity, Alert, TextInput} from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { BlurView } from 'expo-blur';
 import {FIREBASE_DB} from '../src/config/firebase';
+import SelectDropdown from 'react-native-select-dropdown';
 import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
-import { fetchUserRole} from "../utils/Acciones";
+import {fetchUserData} from "../utils/Acciones";
+import { data, dataBarrio } from "../utils/Ayudas";
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 export default function MostrarCrimen(props) {
     const navigation = useNavigation();
+    const [modalVisible, setModalVisible] = useState(false);
     const [crimen, setCrimen] = useState({});
     const [fecha, setFecha] = useState("");
     const [userRole, setUserRole] = useState('');
@@ -36,38 +41,43 @@ export default function MostrarCrimen(props) {
             console.error("Error obteniendo crimen: ", error);
         }
     };
-    const getUserRole = async () => {
-      const result = await fetchUserRole();
-      if (result.statusResponse) {
-        setUserRole(result.data);
-      }
-    };
+
     useEffect(() => {
         getCrimen(props.route.params.crimenesId);
-        getUserRole();
+        const getUserData = async () => {
+          const result = await fetchUserData();
+          if (result.statusResponse) {
+              setUserRole(result.data.rol);
+          } else {
+              console.log(result.error);
+          }
+        };
+
+        getUserData();
     },[]);
 
     const handleEditCrimen = async () => {
-      if (isEditing) {
-          try {
-            const docRef = doc(FIREBASE_DB, 'crimenes', props.route.params.crimenesId);
-            await updateDoc(docRef, {
-                Tipo: tipo,
-                Direccion: direccion,
-                Barrio: barrio,
-                Observacion: observacion
-            });
-            Alert.alert("Crimen actualizado", "El crimen ha sido actualizado exitosamente.");
-            setIsEditing(false);
-            getCrimen(props.route.params.crimenesId);
-            navigation.goBack();
-        } catch (error) {
-            console.error("Error al actualizar el crimen:", error);
-            Alert.alert("Error", "Hubo un problema al actualizar el crimen.");
-        }
-      } else {
-        setIsEditing(true);
-     }
+      setModalVisible(true);
+          
+    };
+
+    const handleSaveCrimen = async () => {
+      try {
+        const docRef = doc(FIREBASE_DB, 'crimenes', props.route.params.crimenesId);
+        await updateDoc(docRef, {
+            Tipo: tipo,
+            Direccion: direccion,
+            Barrio: barrio,
+            Observacion: observacion
+        });
+        Alert.alert("Crimen actualizado", "El crimen ha sido actualizado exitosamente.");
+        setModalVisible(false);
+        getCrimen(props.route.params.crimenesId);
+        // navigation.goBack();
+    } catch (error) {
+        console.error("Error al actualizar el crimen:", error);
+        Alert.alert("Error", "Hubo un problema al actualizar el crimen.");
+    }
     };
   
     const handleDeleteCrimen = async (id) => {
@@ -95,43 +105,8 @@ return(
         
         <BlurView intensity={100} style={styles.blurPrincipal}> 
             <View style={styles.contenedorcentro}>
-            {userRole === 'usuario' && (
-        <Text>Este texto solo lo ve un usuario con rol de usuario</Text>
-      )}
-      {userRole === 'admin' && (
-        <Text>Este texto solo lo ve un usuario con rol de admin</Text>
-      )}
             <Text style={styles.tittle}>{crimen.Tipo}</Text>
             <View style={styles.contenedorinfo}>
-            {isEditing ? (
-                            <>
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder="Tipo"
-                                    value={tipo}
-                                    onChangeText={setTipo}
-                                />
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder="Dirección"
-                                    value={direccion}
-                                    onChangeText={setDireccion}
-                                />
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder="Barrio"
-                                    value={barrio}
-                                    onChangeText={setBarrio}
-                                />
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder="Observación"
-                                    value={observacion}
-                                    onChangeText={setObservacion}
-                                />
-                            </>
-                        ) : (
-                            <>
                                 <Text style={styles.info}>
                                     <Text style={styles.tittleinfo}>Fecha:</Text>  {fecha}
                                 </Text>
@@ -144,19 +119,100 @@ return(
                                 <Text style={styles.info}>
                                     <Text style={styles.tittleinfo}>Observación:</Text>  {crimen.Observacion}
                                 </Text>
+                            </View>
+                            <View>
+                            {userRole === 'admin' && (
+                              <>
+                              <Text>Este texto solo lo ve un usuario con rol de admin</Text>
+      
+                            <TouchableOpacity onPress={handleEditCrimen} style={styles.boxbutton}>
+                              <Text style={styles.login}>Editar</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=> handleDeleteCrimen(props.route.params?.crimenesId)} style={styles.boxbutton}>
+                             <Text style={styles.login}>Eliminar</Text>
+                            </TouchableOpacity>
                             </>
-                        )}
-        <TouchableOpacity onPress={handleEditCrimen} style={styles.boxbutton}>
-        <Text style={styles.login}>{isEditing ? "Guardar" : "Editar"}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={()=> handleDeleteCrimen(props.route.params?.crimenesId)} style={styles.boxbutton}>
-        <Text style={styles.login}>Eliminar</Text>
-        </TouchableOpacity>
-        </View>
-        </View>
-          </BlurView>
-        </ScrollView>
-        </View>
+                            )}
+                            </View>
+                            </View>
+                            
+                            
+          <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}>
+          <View style={styles.modalView}>
+          <Text style={styles.info}>Tipo</Text>
+                                  <SelectDropdown
+                                      data={data}
+                                      onSelect={(selectedItem, index) => {
+                                          setTipo(selectedItem.title);
+                                      }}
+                                      renderButton={(selectedItem, isOpened) => (
+                                        <View style={styles.dropdownButtonStyle}>
+                                          <Text style={styles.dropdownButtonTxtStyle}>
+                                            {(selectedItem && selectedItem.title) || "Tipo"}
+                                          </Text>
+                                          <Icon name={isOpened ? "chevron-up" : "chevron-down"} style={styles.dropdownButtonArrowStyle} />
+                                        </View>
+                                      )}
+                                      renderItem={(item, index, isSelected) => (
+                                        <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: '#D2D9DF' }) }}>
+                                          <Icon name={item.icon} style={styles.dropdownItemIconStyle} />
+                                          <Text style={styles.dropdownItemTxtStyle}>{item.title}</Text>
+                                        </View>
+                                      )}
+                                      showsVerticalScrollIndicator={true}
+                                      dropdownStyle={styles.dropdownMenuStyle}
+                                    />
+                                    <Text style={styles.info}>Dirección:</Text>
+                                  <TextInput
+                                      style={styles.input}
+                                      placeholder="Dirección"
+                                      value={direccion}
+                                      onChangeText={setDireccion}
+                                  />
+                                  <Text style={styles.info}>Barrio:</Text>
+                                  <SelectDropdown
+                                      data={dataBarrio}
+                                      onSelect={(selectedItem, index) => {
+                                          setBarrio(selectedItem.title);
+                                      }}
+                                      renderButton={(selectedItem, isOpened) => (
+                                        <View style={styles.dropdownButtonStyle}>
+                                          <Text style={styles.dropdownButtonTxtStyle}>
+                                            {(selectedItem && selectedItem.title) || "Barrio"}
+                                          </Text>
+                                          <Icon name={isOpened ? "chevron-up" : "chevron-down"} style={styles.dropdownButtonArrowStyle} />
+                                        </View>
+                                      )}
+                                      renderItem={(item, index, isSelected) => (
+                                        <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: '#D2D9DF' }) }}>
+                                          <Icon name={item.icon} style={styles.dropdownItemIconStyle} />
+                                          <Text style={styles.dropdownItemTxtStyle}>{item.title}</Text>
+                                        </View>
+                                      )}
+                                      showsVerticalScrollIndicator={true}
+                                      dropdownStyle={styles.dropdownMenuStyle}
+                                    />
+                                    <Text style={styles.info}>Observaciones: </Text>
+                                  <TextInput
+                                      style={styles.input}
+                                      placeholder="Observación"
+                                      value={observacion}
+                                      onChangeText={setObservacion}
+                                  />
+                                  <TouchableOpacity onPress={handleSaveCrimen} style={styles.boxbutton}>
+                          <Text style={styles.login}>Guardar</Text>
+                      </TouchableOpacity>
+          </View>
+          </Modal>
+            </BlurView>
+          </ScrollView>
+          </View>
 );
 
 }
@@ -205,4 +261,20 @@ const styles = StyleSheet.create({
         color: '#000',
         fontWeight: 'bold',
       },
+      modalView: {
+        marginTop: 200,
+        margin: 20,
+        backgroundColor: '#ffffff',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+    },
 });
