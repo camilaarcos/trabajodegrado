@@ -2,12 +2,13 @@ import {Text, View, Image, StyleSheet, ScrollView, Modal, TouchableOpacity, Aler
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { BlurView } from 'expo-blur';
-import {FIREBASE_DB} from '../src/config/firebase';
+import {FIREBASE_DB, FIREBASE_AUTH} from '../src/config/firebase';
 import SelectDropdown from 'react-native-select-dropdown';
 import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import {fetchUserData} from "../utils/Acciones";
 import { data, dataBarrio } from "../utils/Ayudas";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { deleteUser, updateEmail } from "firebase/auth";
 
 export default function MostrarUsuario(props) {
     const navigation = useNavigation();
@@ -17,6 +18,7 @@ export default function MostrarUsuario(props) {
     const [nombre, setNombre] = useState('');
     const [correo, setCorreo] = useState('');
     const [rol, setRol] = useState('');
+    const auth = FIREBASE_AUTH;
  
     const getUsuario = async (uid) => {
         try {
@@ -54,6 +56,10 @@ export default function MostrarUsuario(props) {
 
     const handleSaveUsuario = async () => {
       try {
+        // const user = auth.currentUser; // Obtén el usuario actual
+        // if (user !== user.email) {
+        //   await updateEmail(user, correo); // Actualiza el correo en la autenticación
+        // }
         const docRef = doc(FIREBASE_DB, 'usuarios', props.route.params?.usuarioId);
         await updateDoc(docRef, {
             nombre: nombre,
@@ -74,6 +80,10 @@ export default function MostrarUsuario(props) {
       try {
         const docRef = doc(FIREBASE_DB, 'usuarios', id);
         await deleteDoc(docRef);
+        const user = auth().currentUser; 
+        if (user) {
+          await deleteUser(user); 
+        }
         Alert.alert("usuario eliminado", "El usuario ha sido eliminado exitosamente.");
         navigation.goBack();
     } catch (error) {
