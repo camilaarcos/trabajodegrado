@@ -6,7 +6,7 @@ import {FIREBASE_DB, FIREBASE_AUTH} from '../src/config/firebase';
 import SelectDropdown from 'react-native-select-dropdown';
 import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import {fetchUserData} from "../utils/Acciones";
-import { data, dataBarrio } from "../utils/Ayudas";
+import { dataRol } from "../utils/Ayudas";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { deleteUser, updateEmail } from "firebase/auth";
 
@@ -114,7 +114,7 @@ return(
                                 </Text>
                             </View>
                             <View>
-                            {userRole === 'admin' && (
+                            {userRole === 'Administrador' && (
                               <>
                               <View style={styles.contenedorbutton}>
                             <TouchableOpacity onPress={handleEditUsuario} style={styles.boxbutton}>
@@ -153,13 +153,29 @@ return(
                                       value={correo}
                                       onChangeText={setCorreo}
                                   />
-                                  <Text style={styles.infomodal}>Rol:</Text>
-                                  <TextInput
-                                      style={styles.input}
-                                      placeholder="rol"
-                                      value={rol}
-                                      onChangeText={setRol}
-                                  />
+                                  <Text style={styles.infomodal}>{usuario.rol}</Text>
+                                  <SelectDropdown
+                                      data={dataRol}
+                                      onSelect={(selectedItem, index) => {
+                                          setRol(selectedItem.title);
+                                      }}
+                                      renderButton={(selectedItem, isOpened) => (
+                                        <View style={styles.dropdownButtonStyle}>
+                                          <Text style={styles.dropdownButtonTxtStyle}>
+                                            {(selectedItem && selectedItem.title) || "Rol Nuevo"}
+                                          </Text>
+                                          <Icon name={isOpened ? "chevron-up" : "chevron-down"} style={styles.dropdownButtonArrowStyle} />
+                                        </View>
+                                      )}
+                                      renderItem={(item, index, isSelected) => (
+                                        <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: '#D2D9DF' }) }}>
+                                          <Icon name={item.icon} style={styles.dropdownItemIconStyle} />
+                                          <Text style={styles.dropdownItemTxtStyle}>{item.title}</Text>
+                                        </View>
+                                      )}
+                                      showsVerticalScrollIndicator={true}
+                                      dropdownStyle={styles.dropdownMenuStyle}
+                                    />
                                   <View style={styles.contenedorbutton}>
                                   <TouchableOpacity onPress={handleSaveUsuario} style={styles.boxbutton2}>
                           <Text style={styles.textbutton}>Guardar</Text>
@@ -283,5 +299,36 @@ const styles = StyleSheet.create({
       borderWidth: 2,
       borderColor: '#dfe9f5',
       marginHorizontal: 20,
+    },
+    dropdownButtonStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      backgroundColor: '#a7aed3',
+      marginTop: 10,
+      width: 300,
+      borderRadius: 5,
+    },
+    dropdownButtonTxtStyle: {
+      fontSize: 20,
+      color: '#000',
+    },
+    dropdownItemStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      padding: 10,
+      borderWidth: 0.5,
+    },
+    dropdownItemTxtStyle: {
+      fontSize: 20,
+      color: '#000',
+    },
+    dropdownMenuStyle: {
+      position: 'absolute',
+    left: '50%',
+    transform: [{ translateX: -150 }],
+    width: 300,
+      borderRadius: 5,
+      backgroundColor: '#ffffff',
     },
 });

@@ -40,35 +40,9 @@ function MyTabs() {
         tabBarIcon: ({ color, size }) => (
           <Ionicons name="home" color={color} size={size} />
         ),
-        headerTitle: () => (
-          <Image
-            style={{ width: 320, height: 30 }}
-            source={require('./assets/nombre.png')}
-          />),
-    headerStyle: {
-      backgroundColor: '#4d82bc', // Color de fondo de la cabecera
-    },
-    headerTintColor: 'white', // Color de los botones y título en la cabecera
-    headerTitleStyle: {
-      fontWeight: 'bold', // Estilo del título
-    },
-    headerTitleAlign: 'center', // Alineación del título
   }}/>
       <Tab.Screen name=" " component={Registro}
        options={{
-        headerTitle: () => (
-          <Image
-            style={{ width: 320, height: 30 }}
-            source={require('./assets/nombre.png')}
-          />),
-          headerStyle: {
-            backgroundColor: '#4d82bc', // Color de fondo de la cabecera
-          },
-          headerTintColor: 'white', // Color de los botones y título en la cabecera
-          headerTitleStyle: {
-            fontWeight: 'bold', // Estilo del título
-          },
-          headerTitleAlign: 'center',
         tabBarIcon: ({ color, size, focused }) => (
           <CustomTabIcon 
             name="add" 
@@ -82,19 +56,11 @@ function MyTabs() {
         tabBarIcon: ({ color, size }) => (
           <Ionicons name="bar-chart-outline" color={color} size={size} />
         ),
-        headerTitle: () => (
-          <Image
-            style={{ width: 320, height: 30 }}
-            source={require('./assets/nombre.png')}
-          />),
-    headerStyle: {
-      backgroundColor: '#4d82bc', // Color de fondo de la cabecera
-    },
-    headerTintColor: 'white', // Color de los botones y título en la cabecera
-    headerTitleStyle: {
-      fontWeight: 'bold', // Estilo del título
-    },
-    headerTitleAlign: 'center', // Alineación del título
+  }} />
+  <Tab.Screen name="Perfil" component={Perfil}options={{
+        tabBarIcon: ({ color, size }) => (
+          <Ionicons name="bar-chart-outline" color={color} size={size} />
+        ),
   }} />
     </Tab.Navigator>
   );
@@ -103,169 +69,19 @@ function MyTabs() {
 function MainStack({setIsLoggedIn}) {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={Home} options={{
-        headerTitle: () => (
-          <Image
-            style={{ width: 320, height: 30 }}
-            source={require('./assets/nombre.png')}
-          />
-        ),
-        headerStyle: {
-          backgroundColor: '#4d82bc', // Color de fondo de la cabecera
-        },
-        headerTintColor: '#000', // Color de los botones y título en la cabecera
-        headerTitleStyle: {
-          fontWeight: 'bold', // Estilo del título
-        },
-        headerTitleAlign: 'center', // Alineación del título
-      }} />
+      <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="MyTabs" component={MyTabs} options={{ headerShown: false }} />
-      <Stack.Screen name="Inicio de sesión" options={{
-          headerTitle: () => (
-            <Image
-              style={{width: 320, height: 30, marginRight: 120}}
-              source={require('./assets/nombre.png')} 
-            />
-          ),
-    headerStyle: {
-      backgroundColor: '#4d82bc', // Color de fondo de la cabecera
-    },
-    headerTintColor: '#000', // Color de los botones y título en la cabecera
-    headerTitleStyle: {
-      fontWeight: 'bold', // Estilo del título
-    },
-    headerTitleAlign: 'center', // Alineación del título
-  }}>
+      <Stack.Screen name="Inicio de sesión" >
       {props => <LogIn {...props} setIsLoggedIn={setIsLoggedIn} />}
         </Stack.Screen> 
-        <Stack.Screen name="Registrarse" component={SignIn} options={{
-          headerTitle: () => (
-            <Image
-              style={{width: 320, height: 30, marginRight: 120}}
-              source={require('./assets/nombre.png')} 
-            />
-          ),
-    headerStyle: {
-      backgroundColor: '#4d82bc', // Color de fondo de la cabecera
-    },
-    headerTintColor: '#000', // Color de los botones y título en la cabecera
-    headerTitleStyle: {
-      fontWeight: 'bold', // Estilo del título
-    },
-    headerTitleAlign: 'center', // Alineación del título
-  }} />
-        <Stack.Screen name="Inicio" component={Inicio}  options={{
-          headerTitle: () => (
-            <Image
-              style={{width: 320, height: 30, marginRight: 120}}
-              source={require('./assets/nombre.png')} 
-            />
-          ),
-    headerStyle: {
-      backgroundColor: '#4d82bc', // Color de fondo de la cabecera
-    },
-    headerTintColor: '#000', // Color de los botones y título en la cabecera
-    headerTitleStyle: {
-      fontWeight: 'bold', // Estilo del título
-    },
-    headerTitleAlign: 'center', // Alineación del título
-  }}/>
-  <Stack.Screen name="RecoverPassword" component={RecoverPassword}  options={{
-          headerTitle: () => (
-            <Image
-              style={{width: 320, height: 30, marginRight: 120}}
-              source={require('./assets/nombre.png')} 
-            />
-          ),
-    headerStyle: {
-      backgroundColor: '#4d82bc', // Color de fondo de la cabecera
-    },
-    headerTintColor: '#000', // Color de los botones y título en la cabecera
-    headerTitleStyle: {
-      fontWeight: 'bold', // Estilo del título
-    },
-    headerTitleAlign: 'center', // Alineación del título
-  }}/>
-  <Stack.Screen name="Cambiar Contraseña" component={CambiarContraseña}  options={{
-          headerTitle: () => (
-            <Image
-              style={{width: 320, height: 30, marginRight: 120}}
-              source={require('./assets/nombre.png')} 
-            />
-          ),
-    headerStyle: {
-      backgroundColor: '#4d82bc', // Color de fondo de la cabecera
-    },
-    headerTintColor: '#000', // Color de los botones y título en la cabecera
-    headerTitleStyle: {
-      fontWeight: 'bold', // Estilo del título
-    },
-    headerTitleAlign: 'center', // Alineación del título
-  }}/>
-        <Stack.Screen name="Registro de crímenes" component={Registro}  options={{
-          headerTitle: () => (
-            <Image
-              style={{width: 320, height: 30, marginRight: 120}}
-              source={require('./assets/nombre.png')} 
-            />
-          ),
-    headerStyle: {
-      backgroundColor: '#4d82bc', // Color de fondo de la cabecera
-    },
-    headerTintColor: '#000', // Color de los botones y título en la cabecera
-    headerTitleStyle: {
-      fontWeight: 'bold', // Estilo del título
-    },
-    headerTitleAlign: 'center', // Alineación del título
-  }}/>
-  <Stack.Screen name="MostrarCrimen" component={MostrarCrimen}  options={{
-          headerTitle: () => (
-            <Image
-              style={{width: 320, height: 30, marginRight: 120}}
-              source={require('./assets/nombre.png')} 
-            />
-          ),
-    headerStyle: {
-      backgroundColor: '#4d82bc', // Color de fondo de la cabecera
-    },
-    headerTintColor: '#000', // Color de los botones y título en la cabecera
-    headerTitleStyle: {
-      fontWeight: 'bold', // Estilo del título
-    },
-    headerTitleAlign: 'center', // Alineación del título
-  }}/>
-  <Stack.Screen name="MostrarUsuario" component={MostrarUsuario}  options={{
-          headerTitle: () => (
-            <Image
-              style={{width: 320, height: 30, marginRight: 120}}
-              source={require('./assets/nombre.png')} 
-            />
-          ),
-    headerStyle: {
-      backgroundColor: '#4d82bc', // Color de fondo de la cabecera
-    },
-    headerTintColor: '#000', // Color de los botones y título en la cabecera
-    headerTitleStyle: {
-      fontWeight: 'bold', // Estilo del título
-    },
-    headerTitleAlign: 'center', // Alineación del título
-  }}/>
-  <Stack.Screen name="Perfil" component={Perfil}  options={{
-          headerTitle: () => (
-            <Image
-              style={{width: 320, height: 30, marginRight: 120}}
-              source={require('./assets/nombre.png')} 
-            />
-          ),
-    headerStyle: {
-      backgroundColor: '#4d82bc', // Color de fondo de la cabecera
-    },
-    headerTintColor: '#000', // Color de los botones y título en la cabecera
-    headerTitleStyle: {
-      fontWeight: 'bold', // Estilo del título
-    },
-    headerTitleAlign: 'center', // Alineación del título
-  }}/>
+        <Stack.Screen name="Registrarse" component={SignIn}  />
+        <Stack.Screen name="Inicio" component={Inicio}  />
+  <Stack.Screen name="RecoverPassword" component={RecoverPassword}  />
+  <Stack.Screen name="Cambiar Contraseña" component={CambiarContraseña} />
+  <Stack.Screen name="Registro de crímenes" component={Registro} />
+  <Stack.Screen name="MostrarCrimen" component={MostrarCrimen} />
+  <Stack.Screen name="MostrarUsuario" component={MostrarUsuario}/>
+  <Stack.Screen name="Perfil" component={Perfil}/>
   
     </Stack.Navigator>
   );

@@ -83,7 +83,6 @@ const validateForm = () => {
 
   return (
     <View style={styles.container}>
-        <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
         
           <ScrollView contentContainerStyle={{
                 flex: 1,

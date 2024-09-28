@@ -57,12 +57,12 @@ return(
         <Text style={styles.tittle}>Perfil usuario</Text>
         <Image source={require('../assets/Otp.png')} style={styles.imageStyle} />
         <View style={styles.containercorreo}>
-        <Text style={styles.nombre}><Text style={styles.texto}>Nombre: </Text>  {name}</Text>
+        <Text style={styles.nombre}><Text style={styles.texto}>Nombre: </Text>{name}</Text>
         <Text style={styles.texto}>Correo electrónico asociado: </Text>
         <Text style={styles.nombre}>{email}</Text>
-        <Text style={styles.nombre}><Text style={styles.texto}>Rol: </Text>  {userRole}</Text>
+        <Text style={styles.nombre}><Text style={styles.texto}>Rol: </Text>{userRole}</Text>
         </View>
-        {userRole === 'admin' && (
+        {userRole === 'Administrador' && (
                               <>
         <View style={styles.containerUsuarios}>
         <Text style={styles.texto}>Usuarios Registrados</Text>
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
       },
       logoutButton: {
-        backgroundColor: "#ffffff80",
+      backgroundColor: "#ffffff80",
       padding: 10,
       borderRadius: 5,
       borderWidth: 2,
@@ -119,7 +119,11 @@ const styles = StyleSheet.create({
       margin: 10,
       },
       containercorreo: {
-        alignItems: 'center',
+        width: '100%',
+        backgroundColor: '#ffffff80',
+        padding: 10,
+        borderRadius: 5,
+        marginTop: 10,
       },
       texto: {
         fontSize: 20,

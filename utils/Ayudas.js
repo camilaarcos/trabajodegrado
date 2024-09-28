@@ -150,4 +150,8 @@ export const dataBarrio = [
 
 
 ];
+export const dataRol = [
+{ title: "Administrador" },
+{ title: "Usuario" },
+];
 

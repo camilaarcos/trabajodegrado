@@ -21,6 +21,7 @@ export default function MostrarCrimen(props) {
     const [barrio, setBarrio] = useState("");
     const [direccion, setDireccion] = useState(""); 
     const [observacion, setObservacion] = useState("");
+    const [inputHeight, setInputHeight] = useState(40);
  
     const getCrimen = async (id) => {
         try {
@@ -120,7 +121,7 @@ return(
                                 </Text>
                 </View>
                             <View>
-                            {userRole === 'admin' && (
+                            {userRole === 'Administrador' && (
                               <>      
                             <View style={styles.contenedorbutton}>
                             <TouchableOpacity onPress={handleEditCrimen} style={styles.boxbutton}>
@@ -204,6 +205,10 @@ return(
                                       placeholder="Observación"
                                       value={observacion}
                                       onChangeText={setObservacion}
+                                      multiline={true}
+                                      onContentSizeChange={(event) => {
+                                        setInputHeight(event.nativeEvent.contentSize.height);
+                                      }}
                                   />
                                   <View style={styles.contenedorbutton}>
                                             <TouchableOpacity onPress={handleSaveCrimen} style={styles.boxbutton2}>
