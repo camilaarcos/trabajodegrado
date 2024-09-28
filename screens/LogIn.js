@@ -45,7 +45,6 @@ export default function LogIn({setIsLoggedIn}) {
 
   return (
     <View style={styles.container}>
-      <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
       
       <ScrollView contentContainerStyle={{
         flex: 1,
@@ -58,7 +57,7 @@ export default function LogIn({setIsLoggedIn}) {
         <BlurView intensity={100} style={styles.blurPrincipal}>   
           <View style={styles.login1}>
           <Text style={styles.tittle}>Inicio de sesión</Text>
-          <Image source={require('../assets/Password-Security.png')} style={styles.avatar} />
+          <Image source={require('../assets/avatar.png')} style={styles.avatar} />
               <Text style={styles.email}>Correo electrónico</Text>
               <TextInput onChangeText={(text)=> setEmail(text)} style={styles.input} placeholder='ejemplo@gmail.com' keyboardType='email-address'/>
               <Text style={styles.email}>Contraseña</Text>
@@ -101,6 +100,7 @@ export default function LogIn({setIsLoggedIn}) {
     container: {
       flex: 1,
       alignItems: 'center',
+      backgroundColor: '#dfe9f5',
     },
     blurPrincipal: {
       height: '80%',

@@ -72,7 +72,6 @@ export default function SignIn() {
 
   return (
     <View style={styles.container}>
-      <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
       <ScrollView contentContainerStyle={{
         flex: 1,
         width: '100%',
@@ -86,15 +85,15 @@ export default function SignIn() {
           <View style={styles.login1}>
             <StatusBar style="auto" />
             <Text style={styles.tittle}>Registro de usuario</Text>
-            <Image source={require('../assets/Valid-Ids.png')} style={styles.avatar} />
+            <Image source={require('../assets/avatar.png')} style={styles.avatar} />
             <Text style={styles.email}>Nombre</Text>
               <TextInput onChangeText={(text)=> setName(text)} style={styles.input} placeholder='Nombre'/>
               <Text style={styles.email}>Correo electrónico</Text>
               <TextInput onChangeText={(text)=> setEmail(text)} style={styles.input} placeholder='ejemplo@gmail.com' keyboardType='email-address'/>
               <Text style={styles.email}>Contraseña</Text>
-              <TextInput onChangeText={(text)=> setPassword(text)} style={styles.input} placeholder='contraseña' secureTextEntry= {true} />
+              <TextInput onChangeText={(text)=> setPassword(text)} style={styles.input} placeholder='Contraseña' secureTextEntry= {true} />
               <Text style={styles.email}>Confirmar Contraseña</Text>
-              <TextInput onChangeText={(text) => setConfirmPassword(text)} style={styles.input} placeholder='confirmar contraseña' secureTextEntry={true} />
+              <TextInput onChangeText={(text) => setConfirmPassword(text)} style={styles.input} placeholder='Confirmar contraseña' secureTextEntry={true} />
               <TouchableOpacity onPress={handleCreateAccount}  style={styles.boxbutton}>
               <Text style={styles.login}>Registrarse</Text>
               </TouchableOpacity>
@@ -132,6 +131,5 @@ const styles2 = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 10,
   },
 });

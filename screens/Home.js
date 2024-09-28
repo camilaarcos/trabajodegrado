@@ -8,11 +8,9 @@ export default function Home() {
 
     return (
       <ScrollView contentContainerStyle={styles.container}>
-      <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
-        <Text style={styles.tittle}></Text>
-        <Image source={require('../assets/Identity.png')} style={styles.imageStyle} />
+        <Text style={styles.tittle}>Bienvenidos a CrimenCraft</Text>
         <TouchableOpacity onPress={()=> navigation.navigate('Registro de crímenes')} style={styles.boxbutton} >
-              <Text style={styles.textbutton}>Registrar Crímen</Text>
+          <Text style={styles.textbutton}>Registrar Crímen</Text>
             </TouchableOpacity>
               <View style={styles.registerContainer}>
               <Text style={styles.registerText}>¿Ya tienes cuenta?</Text>
@@ -30,52 +28,32 @@ export default function Home() {
                 <Text style={styles.registerLink}>Regístrate</Text>
               </TouchableOpacity>
               </View>
-              <Image source={require('../assets/Chain.png')} style={styles.imageAbajo} />
               </ScrollView>
     );
   }
   export const styles = StyleSheet.create({
-    containerfuera: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
     container: {
       flexGrow: 1,
       alignItems: 'center', 
+      backgroundColor: '#dfe9f5',
     },
-    imagefondo: {
-      width: '100%',
-      height: '100%',
-      resizeMode: 'cover',
-    },
-  animation: {
-    position: 'absolute',
-    width: '300%', 
-    height: '300%', 
-    top: '-60%', 
-    left: '-90%', 
-    transform: [{ rotate: '90deg' }],
-  },
   tittle: {
     fontFamily: "",
      fontSize: 30,
      fontWeight: "bold",
-      marginTop: 50,
+      marginTop: 20,
       textAlign : "center",
     },
-    imageStyle: {
-      width: 200, 
-      height: 200,
-    },
   boxbutton: {
-    backgroundColor: "#ffffff80",
-    padding: 10,
-    borderRadius: 5,
+    backgroundColor: "#FF000080",
+    padding: 5,
+    paddingVertical: 45,
+    borderRadius: 90,
     borderWidth: 2,
-    borderColor: '#fff',
-    margin: 10,
-    marginTop: 50,
+    borderColor: 'red',
+    marginTop: 30,
+    marginBottom: 30,
+
   },
   textbutton:{
     fontWeight: "bold",
@@ -84,7 +62,7 @@ export default function Home() {
     flexDirection: "row", 
     alignItems: "center", 
     justifyContent: "center", 
-    marginTop: 10, 
+    marginTop: 30,
   },
   registerText: {
     marginRight: 5, 
@@ -93,11 +71,5 @@ export default function Home() {
     color: "#000", 
     fontWeight: 'bold',
     textDecorationLine: "underline",
-  },
-  imageAbajo: {
-    marginTop: 50,
-    width: 100, 
-    height: 100, 
-    alignSelf: 'flex-end',
   },
   });

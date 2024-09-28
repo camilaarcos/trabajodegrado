@@ -1,4 +1,4 @@
-import { Text, View, Image, StyleSheet } from "react-native";
+import { Text, View, Image, StyleSheet, ScrollView } from "react-native";
 import React from "react";
 import MapView, { Marker } from "react-native-maps";
 
@@ -11,8 +11,10 @@ export default function Mapas() {
   };
 
   return (
-    <View style={styles.container}>
-      <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
+    <ScrollView contentContainerStyle={{ flexGrow: 1,
+      alignItems: 'center',
+      padding: 16,
+      backgroundColor: '#dfe9f5'}}>
       <Text style={styles.tittle}>Mapificación</Text>
       <MapView
         style={styles.map}
@@ -23,7 +25,7 @@ export default function Mapas() {
           title={"Ubicación seleccionada"}
         />
       </MapView>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -31,11 +33,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-  },
-  imagefondo: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
+    backgroundColor: '#dfe9f5',
   },
   tittle: {
     fontSize: 30,

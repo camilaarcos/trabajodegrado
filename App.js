@@ -9,7 +9,6 @@ import SignIn from './screens/SignIn';
 import Home from './screens/Home';
 import Inicio from './screens/Inicio';
 import Registro from './screens/Registro';
-import Detalles from './screens/Detalles';
 import Mapas from './screens/Mapas';
 import Perfil from './screens/Perfil';
 import RecoverPassword from './screens/RecuperarContraseña';
@@ -55,24 +54,6 @@ function MyTabs() {
     },
     headerTitleAlign: 'center', // Alineación del título
   }}/>
-   <Tab.Screen name="Detalles" component={Detalles}options={{
-        tabBarIcon: ({ color, size }) => (
-          <Ionicons name="newspaper-outline" color={color} size={size} />
-        ),
-        headerTitle: () => (
-          <Image
-            style={{ width: 320, height: 30 }}
-            source={require('./assets/nombre.png')}
-          />),
-    headerStyle: {
-      backgroundColor: '#4d82bc', // Color de fondo de la cabecera
-    },
-    headerTintColor: 'white', // Color de los botones y título en la cabecera
-    headerTitleStyle: {
-      fontWeight: 'bold', // Estilo del título
-    },
-    headerTitleAlign: 'center', // Alineación del título
-  }} />
       <Tab.Screen name=" " component={Registro}
        options={{
         headerTitle: () => (
@@ -100,24 +81,6 @@ function MyTabs() {
   <Tab.Screen name="Mapas" component={Mapas}options={{
         tabBarIcon: ({ color, size }) => (
           <Ionicons name="bar-chart-outline" color={color} size={size} />
-        ),
-        headerTitle: () => (
-          <Image
-            style={{ width: 320, height: 30 }}
-            source={require('./assets/nombre.png')}
-          />),
-    headerStyle: {
-      backgroundColor: '#4d82bc', // Color de fondo de la cabecera
-    },
-    headerTintColor: 'white', // Color de los botones y título en la cabecera
-    headerTitleStyle: {
-      fontWeight: 'bold', // Estilo del título
-    },
-    headerTitleAlign: 'center', // Alineación del título
-  }} />
-   <Tab.Screen name="Perfil" component={Perfil}options={{
-        tabBarIcon: ({ color, size }) => (
-          <Ionicons name="person-circle-outline" color={color} size={size} />
         ),
         headerTitle: () => (
           <Image
@@ -287,6 +250,23 @@ function MainStack({setIsLoggedIn}) {
     },
     headerTitleAlign: 'center', // Alineación del título
   }}/>
+  <Stack.Screen name="Perfil" component={Perfil}  options={{
+          headerTitle: () => (
+            <Image
+              style={{width: 320, height: 30, marginRight: 120}}
+              source={require('./assets/nombre.png')} 
+            />
+          ),
+    headerStyle: {
+      backgroundColor: '#4d82bc', // Color de fondo de la cabecera
+    },
+    headerTintColor: '#000', // Color de los botones y título en la cabecera
+    headerTitleStyle: {
+      fontWeight: 'bold', // Estilo del título
+    },
+    headerTitleAlign: 'center', // Alineación del título
+  }}/>
+  
     </Stack.Navigator>
   );
 }

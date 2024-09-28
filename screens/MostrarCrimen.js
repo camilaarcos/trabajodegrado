@@ -94,7 +94,6 @@ export default function MostrarCrimen(props) {
 
 return(
     <View style={styles.container}>
-        <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
         <ScrollView contentContainerStyle={{
         flex: 1,
         width: '100%',
@@ -105,32 +104,32 @@ return(
         
         <BlurView intensity={100} style={styles.blurPrincipal}> 
             <View style={styles.contenedorcentro}>
-            <Text style={styles.tittle}>{crimen.Tipo}</Text>
-            <View style={styles.contenedorinfo}>
+            <Text style={styles.title}>{crimen.Tipo}</Text>
+              <View style={styles.contenedorinfo}>
                                 <Text style={styles.info}>
-                                    <Text style={styles.tittleinfo}>Fecha:</Text>  {fecha}
+                                    <Text style={styles.titleinfo}>Fecha:</Text>  {fecha}
                                 </Text>
                                 <Text style={styles.info}>
-                                    <Text style={styles.tittleinfo}>Dirección:</Text>  {crimen.Direccion}
+                                    <Text style={styles.titleinfo}>Dirección:</Text>  {crimen.Direccion}
                                 </Text>
                                 <Text style={styles.info}>
-                                    <Text style={styles.tittleinfo}>Barrio:</Text>  {crimen.Barrio}
+                                    <Text style={styles.titleinfo}>Barrio:</Text>  {crimen.Barrio}
                                 </Text>
                                 <Text style={styles.info}>
-                                    <Text style={styles.tittleinfo}>Observación:</Text>  {crimen.Observacion}
+                                    <Text style={styles.titleinfo}>Observación:</Text>  {crimen.Observacion}
                                 </Text>
-                            </View>
+                </View>
                             <View>
                             {userRole === 'admin' && (
-                              <>
-                              <Text>Este texto solo lo ve un usuario con rol de admin</Text>
-      
+                              <>      
+                            <View style={styles.contenedorbutton}>
                             <TouchableOpacity onPress={handleEditCrimen} style={styles.boxbutton}>
-                              <Text style={styles.login}>Editar</Text>
+                              <Text style={styles.textbutton}>Editar</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={()=> handleDeleteCrimen(props.route.params?.crimenesId)} style={styles.boxbutton}>
-                             <Text style={styles.login}>Eliminar</Text>
+                             <Text style={styles.textbutton}>Eliminar</Text>
                             </TouchableOpacity>
+                            </View>
                             </>
                             )}
                             </View>
@@ -145,7 +144,8 @@ return(
             setModalVisible(!modalVisible);
           }}>
           <View style={styles.modalView}>
-          <Text style={styles.info}>Tipo</Text>
+            <Text style={styles.titlemodal}>Editar Crímen</Text>
+          <Text style={styles.infomodal}>{tipo}</Text>
                                   <SelectDropdown
                                       data={data}
                                       onSelect={(selectedItem, index) => {
@@ -154,7 +154,7 @@ return(
                                       renderButton={(selectedItem, isOpened) => (
                                         <View style={styles.dropdownButtonStyle}>
                                           <Text style={styles.dropdownButtonTxtStyle}>
-                                            {(selectedItem && selectedItem.title) || "Tipo"}
+                                            {(selectedItem && selectedItem.title) || "Tipo de crímen nuevo"}
                                           </Text>
                                           <Icon name={isOpened ? "chevron-up" : "chevron-down"} style={styles.dropdownButtonArrowStyle} />
                                         </View>
@@ -168,14 +168,14 @@ return(
                                       showsVerticalScrollIndicator={true}
                                       dropdownStyle={styles.dropdownMenuStyle}
                                     />
-                                    <Text style={styles.info}>Dirección:</Text>
+                                    <Text style={styles.infomodal}>Dirección:</Text>
                                   <TextInput
                                       style={styles.input}
                                       placeholder="Dirección"
                                       value={direccion}
                                       onChangeText={setDireccion}
                                   />
-                                  <Text style={styles.info}>Barrio:</Text>
+                                  <Text style={styles.infomodal}>{barrio}</Text>
                                   <SelectDropdown
                                       data={dataBarrio}
                                       onSelect={(selectedItem, index) => {
@@ -184,7 +184,7 @@ return(
                                       renderButton={(selectedItem, isOpened) => (
                                         <View style={styles.dropdownButtonStyle}>
                                           <Text style={styles.dropdownButtonTxtStyle}>
-                                            {(selectedItem && selectedItem.title) || "Barrio"}
+                                            {(selectedItem && selectedItem.title) || "Barrio Nuevo"}
                                           </Text>
                                           <Icon name={isOpened ? "chevron-up" : "chevron-down"} style={styles.dropdownButtonArrowStyle} />
                                         </View>
@@ -198,16 +198,23 @@ return(
                                       showsVerticalScrollIndicator={true}
                                       dropdownStyle={styles.dropdownMenuStyle}
                                     />
-                                    <Text style={styles.info}>Observaciones: </Text>
+                                    <Text style={styles.infomodal}>Observaciones: </Text>
                                   <TextInput
                                       style={styles.input}
                                       placeholder="Observación"
                                       value={observacion}
                                       onChangeText={setObservacion}
                                   />
-                                  <TouchableOpacity onPress={handleSaveCrimen} style={styles.boxbutton}>
-                          <Text style={styles.login}>Guardar</Text>
+                                  <View style={styles.contenedorbutton}>
+                                            <TouchableOpacity onPress={handleSaveCrimen} style={styles.boxbutton2}>
+                          <Text style={styles.textbutton}>Guardar</Text>
                       </TouchableOpacity>
+                      <TouchableOpacity
+                        style={styles.boxbutton2}
+                        onPress={() => setModalVisible(!modalVisible)}>
+                        <Text style={styles.textbutton}>Cerrar</Text>
+                      </TouchableOpacity>
+                      </View>
           </View>
           </Modal>
             </BlurView>
@@ -221,22 +228,24 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
+        backgroundColor: '#dfe9f5',
       },
       blurPrincipal: {
-        height: '80%',
+        height: '60%',
         borderRadius: 10,
         overflow: 'hidden',
+        marginTop: 40,
       },
       imagefondo: {
         width: '100%',
         height: '100%',
         resizeMode: 'cover',
       },
-      tittle: {
+      title: {
         fontSize: 30,
         color: '#4d82bc',
         fontWeight: 'bold',
-        marginBottom: 10,
+        marginTop: 10,
       },
      contenedorcentro: {
         width: 350,
@@ -249,14 +258,18 @@ const styles = StyleSheet.create({
       },
       contenedorinfo: {
         width: '100%',
-        marginTop: 10,
+        marginTop: 30,
+        padding: 10,
+        backgroundColor: '#ffffff',
+        borderRadius: 5,
+        marginBottom: 5,
       },
       info: {
         fontSize: 20,
         color: '#000',
-        marginTop: 20,
+        marginTop: 10,
       },
-      tittleinfo:{
+      titleinfo:{
         fontSize: 20,
         color: '#000',
         fontWeight: 'bold',
@@ -267,14 +280,87 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff',
         borderRadius: 20,
         padding: 35,
-        alignItems: 'center',
         shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
+    },
+    titlemodal: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      textAlign: 'center',
+      marginBottom: 20,
+    },
+    infomodal: {
+      fontSize: 20,
+      color: '#000',
+      marginTop: 10,
+      backgroundColor: '#dfe9f5',
+      borderRadius: 5,
+      width: 300,
+    },
+    contenedorbutton: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginTop: 20,
+    },
+    boxbutton: {
+      flexDirection: 'row',
+      backgroundColor: "#ffffff80",
+      padding: 5,
+      borderRadius: 8,
+      borderWidth: 2,
+      borderColor: '#fff',
+      marginHorizontal: 20,
+    },
+    textbutton:{
+      fontWeight: "bold",
+    },
+    boxbutton2: {
+      flexDirection: 'row',
+      backgroundColor: "#dfe9f580",
+      padding: 5,
+      borderRadius: 8,
+      borderWidth: 2,
+      borderColor: '#dfe9f5',
+      marginHorizontal: 20,
+    },
+    dropdownButtonStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      backgroundColor: '#a7aed3',
+      marginTop: 10,
+      width: 300,
+      borderRadius: 5,
+    },
+    dropdownButtonTxtStyle: {
+      fontSize: 20,
+      color: '#000',
+    },
+    dropdownItemStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      padding: 10,
+      borderWidth: 0.5,
+    },
+    dropdownItemTxtStyle: {
+      fontSize: 20,
+      color: '#000',
+    },
+    dropdownMenuStyle: {
+      position: 'absolute',
+    left: '50%',
+    transform: [{ translateX: -150 }],
+    width: 300,
+      borderRadius: 5,
+      backgroundColor: '#ffffff',
+    },
+    input: {
+      backgroundColor: '#a7aed3',
+      marginTop: 10,
+      width: 300,
+      borderRadius: 5,
+      fontSize: 20,
     },
 });

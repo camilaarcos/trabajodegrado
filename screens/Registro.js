@@ -75,8 +75,8 @@ return(
       flexGrow: 1,
       alignItems: 'center',
       padding: 16,
+      backgroundColor: '#dfe9f5',
     }}>
-        <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
         
         <Text style={styles.tittle}>Registro de crímenes</Text>
         <Image source={require('../assets/Info.png')} style={styles.imageStyle} />
@@ -224,10 +224,8 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         padding: 10,
-        backgroundColor: '#ffffff',
         width: 300,
-        borderColor: 'grey',
-        borderWidth: 1,
+        borderWidth: 0.5,
       },
       dropdownItemIconStyle: {
         fontSize: 16,

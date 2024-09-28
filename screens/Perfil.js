@@ -54,24 +54,25 @@ export default function Perfil() {
 
 return(
     <View style={styles.container}>
-        <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
-        <Text style={styles.tittle}>Información</Text>
+        <Text style={styles.tittle}>Perfil usuario</Text>
         <Image source={require('../assets/Otp.png')} style={styles.imageStyle} />
         <View style={styles.containercorreo}>
-        <Text style={styles.texto}>Nombre: {name} </Text>
+        <Text style={styles.nombre}><Text style={styles.texto}>Nombre: </Text>  {name}</Text>
         <Text style={styles.texto}>Correo electrónico asociado: </Text>
-        <Text style={styles.correo}>{email}</Text>
-        <Text style={styles.texto}>Rol: {userRole}</Text>
+        <Text style={styles.nombre}>{email}</Text>
+        <Text style={styles.nombre}><Text style={styles.texto}>Rol: </Text>  {userRole}</Text>
         </View>
         {userRole === 'admin' && (
                               <>
+        <View style={styles.containerUsuarios}>
         <Text style={styles.texto}>Usuarios Registrados</Text>
         {usuarios.map((usuario) => (
-            <TouchableOpacity  key={usuario.id} style={styles.crimenesContainer}
+            <TouchableOpacity  key={usuario.id} style={styles.usuarioContainer}
             onPress={()=>navigation.navigate('MostrarUsuario', { usuarioId: usuario.id })}>
               <Text style={styles.textoCrimen}>{usuario.nombre}</Text>
             </TouchableOpacity>
           ))}
+          </View>
         </>
                             )}
         <View style={styles.enlaces}>
@@ -84,24 +85,6 @@ return(
           <Text style={styles.OutLink}> Cerrar sesión</Text>
         </TouchableOpacity>
     </View>
-    {/* <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            setModalVisible(!modalVisible);
-          }}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>Nombre: {name2}</Text>
-              <Text style={styles.modalText}>Correo: {email2}</Text>
-              <Text style={styles.modalText}>Rol: {userRole2}</Text>
-              <TouchableOpacity
-                style={styles.modalButton}
-                onPress={() => setModalVisible(!modalVisible)}>
-                <Text style={styles.textStyle}>Cerrar</Text>
-              </TouchableOpacity>
-              </View>
-          </Modal> */}
         </View>
     
 );
@@ -112,11 +95,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-      },
-      imagefondo: {
-        width: '100%',
-        height: '100%',
-        resizeMode: 'cover',
+        backgroundColor: '#dfe9f5',
       },
       tittle: {
         fontSize: 30,
@@ -129,7 +108,7 @@ const styles = StyleSheet.create({
         height: 200, 
       },
       enlaces: {
-        marginTop: 50,
+        marginTop: 20,
       },
       logoutButton: {
         backgroundColor: "#ffffff80",
@@ -147,6 +126,9 @@ const styles = StyleSheet.create({
         color: '#000',
         fontWeight: 'bold',
       },
+      nombre: {
+        fontSize: 20,
+      },
       registerLink: {
         color: "#000",
         fontWeight: 'bold',
@@ -156,20 +138,26 @@ const styles = StyleSheet.create({
         color: "#000",
         fontWeight: 'bold',
       },
-      modalView: {
-        marginTop: 200,
-        margin: 20,
-        backgroundColor: '#ffffff',
-        borderRadius: 20,
-        padding: 35,
-        alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5,
+    containerUsuarios: {
+      width: '100%',
+      backgroundColor: '#ffffff80',
+      padding: 10,
+      alignItems: 'flex-start',
+      borderRadius: 5,
+      marginTop: 10,
     },
+    usuarioContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      width : '100%',
+      padding: 10,
+      backgroundColor: '#ffffff',
+      borderRadius: 5,
+      marginBottom: 5,
+      },
+      textoCrimen: {
+        fontSize: 20,
+        color: '#000',
+      },
 });

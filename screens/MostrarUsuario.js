@@ -94,7 +94,6 @@ export default function MostrarUsuario(props) {
 
 return(
     <View style={styles.container}>
-        <Image source={require('../assets/fondo.png')} style={[styles.imagefondo, StyleSheet.absoluteFill]} />
         <ScrollView contentContainerStyle={{
         flex: 1,
         width: '100%',
@@ -105,26 +104,26 @@ return(
         
         <BlurView intensity={100} style={styles.blurPrincipal}> 
             <View style={styles.contenedorcentro}>
-            <Text style={styles.tittle}>{usuario.nombre}</Text>
+            <Text style={styles.title}>{usuario.nombre}</Text>
             <View style={styles.contenedorinfo}>
                                 <Text style={styles.info}>
-                                    <Text style={styles.tittleinfo}>correo:</Text>  {usuario.correo}
+                                    <Text style={styles.titleinfo}>Correo electrónico:</Text>  {usuario.correo}
                                 </Text>
                                 <Text style={styles.info}>
-                                    <Text style={styles.tittleinfo}>rol:</Text>  {usuario.rol}
+                                    <Text style={styles.titleinfo}>Rol:</Text>  {usuario.rol}
                                 </Text>
                             </View>
                             <View>
                             {userRole === 'admin' && (
                               <>
-                              <Text>Este texto solo lo ve un usuario con rol de admin</Text>
-      
+                              <View style={styles.contenedorbutton}>
                             <TouchableOpacity onPress={handleEditUsuario} style={styles.boxbutton}>
                               <Text style={styles.login}>Editar</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={()=> handleDeleteUsuario(props.route.params?.usuarioId)} style={styles.boxbutton}>
                              <Text style={styles.login}>Eliminar</Text>
                             </TouchableOpacity>
+                            </View>
                             </>
                             )}
                             </View>
@@ -139,31 +138,38 @@ return(
             setModalVisible(!modalVisible);
           }}>
           <View style={styles.modalView}>
-          <Text style={styles.info}>editar usuario</Text>
-                                    <Text style={styles.info}>nombre:</Text>
+          <Text style={styles.titlemodal}>Editar usuario</Text>
+                                    <Text style={styles.infomodal}>Nombre:</Text>
                                   <TextInput
                                       style={styles.input}
                                       placeholder="nombre"
                                       value={nombre}
                                       onChangeText={setNombre}
                                   />
-                                  <Text style={styles.info}>correo:</Text>
+                                  <Text style={styles.infomodal}>Correo:</Text>
                                   <TextInput
                                       style={styles.input}
                                       placeholder="correo"
                                       value={correo}
                                       onChangeText={setCorreo}
                                   />
-                                  <Text style={styles.info}>rol:</Text>
+                                  <Text style={styles.infomodal}>Rol:</Text>
                                   <TextInput
                                       style={styles.input}
                                       placeholder="rol"
                                       value={rol}
                                       onChangeText={setRol}
                                   />
-                                  <TouchableOpacity onPress={handleSaveUsuario} style={styles.boxbutton}>
-                          <Text style={styles.login}>Guardar</Text>
+                                  <View style={styles.contenedorbutton}>
+                                  <TouchableOpacity onPress={handleSaveUsuario} style={styles.boxbutton2}>
+                          <Text style={styles.textbutton}>Guardar</Text>
                       </TouchableOpacity>
+                      <TouchableOpacity
+                        style={styles.boxbutton2}
+                        onPress={() => setModalVisible(!modalVisible)}>
+                        <Text style={styles.textbutton}>Cerrar</Text>
+                      </TouchableOpacity>
+                      </View>
           </View>
           </Modal>
             </BlurView>
@@ -177,22 +183,20 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
+        backgroundColor: '#dfe9f5',
       },
       blurPrincipal: {
-        height: '80%',
+        height: '50%',
         borderRadius: 10,
         overflow: 'hidden',
+        marginTop: 40,
       },
-      imagefondo: {
-        width: '100%',
-        height: '100%',
-        resizeMode: 'cover',
-      },
-      tittle: {
+      title: {
         fontSize: 30,
         color: '#4d82bc',
         fontWeight: 'bold',
         marginBottom: 10,
+        marginTop: 10,
       },
      contenedorcentro: {
         width: 350,
@@ -205,14 +209,18 @@ const styles = StyleSheet.create({
       },
       contenedorinfo: {
         width: '100%',
-        marginTop: 10,
+        marginTop: 30,
+        padding: 10,
+        backgroundColor: '#ffffff',
+        borderRadius: 5,
+        marginBottom: 5,
       },
       info: {
         fontSize: 20,
         color: '#000',
-        marginTop: 20,
+        marginTop: 10,
       },
-      tittleinfo:{
+      titleinfo:{
         fontSize: 20,
         color: '#000',
         fontWeight: 'bold',
@@ -225,12 +233,55 @@ const styles = StyleSheet.create({
         padding: 35,
         alignItems: 'center',
         shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
+
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
+    },
+    titlemodal: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      textAlign: 'center',
+      marginBottom: 20,
+    },
+    infomodal: {
+      fontSize: 20,
+      color: '#000',
+      marginTop: 10,
+      backgroundColor: '#dfe9f5',
+      borderRadius: 5,
+      width: 300,
+    },
+    contenedorbutton: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginTop: 20,
+    },
+    boxbutton: {
+      flexDirection: 'row',
+      backgroundColor: "#ffffff80",
+      padding: 5,
+      borderRadius: 8,
+      borderWidth: 2,
+      borderColor: '#fff',
+      marginHorizontal: 20,
+    },
+    textbutton:{
+      fontWeight: "bold",
+    },
+    input: {
+      backgroundColor: '#a7aed3',
+      marginTop: 10,
+      width: 300,
+      borderRadius: 5,
+    },
+    boxbutton2: {
+      flexDirection: 'row',
+      backgroundColor: "#dfe9f580",
+      padding: 5,
+      borderRadius: 8,
+      borderWidth: 2,
+      borderColor: '#dfe9f5',
+      marginHorizontal: 20,
     },
 });
