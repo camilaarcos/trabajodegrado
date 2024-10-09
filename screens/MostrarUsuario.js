@@ -56,10 +56,7 @@ export default function MostrarUsuario(props) {
 
     const handleSaveUsuario = async () => {
       try {
-        // const user = auth.currentUser; // Obtén el usuario actual
-        // if (user !== user.email) {
-        //   await updateEmail(user, correo); // Actualiza el correo en la autenticación
-        // }
+
         const docRef = doc(FIREBASE_DB, 'usuarios', props.route.params?.usuarioId);
         await updateDoc(docRef, {
             nombre: nombre,
@@ -69,7 +66,7 @@ export default function MostrarUsuario(props) {
         Alert.alert("Usuario actualizado", "El usuario ha sido actualizado exitosamente.");
         setModalVisible(false);
         getUsuario(props.route.params.usuarioId);
-        // navigation.goBack();
+
     } catch (error) {
         console.error("Error al actualizar el usuario:", error);
         Alert.alert("Error", "Hubo un problema al actualizar el usuario.");
@@ -80,10 +77,7 @@ export default function MostrarUsuario(props) {
       try {
         const docRef = doc(FIREBASE_DB, 'usuarios', id);
         await deleteDoc(docRef);
-        const user = auth().currentUser; 
-        if (user) {
-          await deleteUser(user); 
-        }
+
         Alert.alert("usuario eliminado", "El usuario ha sido eliminado exitosamente.");
         navigation.goBack();
     } catch (error) {

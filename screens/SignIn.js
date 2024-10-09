@@ -51,7 +51,7 @@ export default function SignIn() {
       setAlertVisible(true);
       setsiginSuccess(true);
       const userDocRef = doc(FIREBASE_DB, 'usuarios', user.uid);
-      await setDoc(userDocRef, { uid: user.uid, nombre:name, correo: email, rol: 'usuario' });
+      await setDoc(userDocRef, { uid: user.uid, nombre:name, correo: email, rol: 'Usuario' });
     } catch (error) {
       console.log(error);
       setAlertMessage('Error al registrar el usuario');
