@@ -24,7 +24,7 @@ export default function Mapas() {
         if (!direccionData) {
           throw new Error('No se encontró ninguna dirección en la colección');
         }
-
+ 
         const direccionCompleta = `${direccionData}, Tuluá, Valle`;
         console.log("Dirección obtenida:", direccionCompleta); // Depuración
         setDireccion(direccionCompleta);
