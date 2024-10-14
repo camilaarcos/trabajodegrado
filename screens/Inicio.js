@@ -1,7 +1,5 @@
 import {Text, View, TouchableOpacity, Image, StyleSheet, ScrollView } from "react-native";
 import React, { useState, useEffect } from "react";
-import { FIREBASE_DB } from "../src/config/firebase";
-import { collection, doc, onSnapshot, orderBy, query, QuerySnapshot } from "firebase/firestore";
 import { useNavigation } from '@react-navigation/native';
 import SelectDropdown from 'react-native-select-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';

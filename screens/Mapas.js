@@ -1,85 +1,81 @@
 import { Text, View, Image, StyleSheet, ScrollView, ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from "react";
 import MapView, { Marker } from "react-native-maps";
-import { collection, getDocs, doc } from "firebase/firestore";
+import { collection, getDocs, doc, onSnapshot } from "firebase/firestore";
 import { FIREBASE_DB } from "../src/config/firebase";
 import Geocoder from 'react-native-geocoding';
 
 Geocoder.init("AIzaSyC66ZWY55i0_SWvY9pskT9Mj4OptmQZoiY");
 export default function Mapas() {
-  const [direccion, setDireccion] = useState(null);
-  const [coordenadas, setCoordenadas] = useState(null);
+  const [coordenadas, setCoordenadas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchDireccion = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(FIREBASE_DB, 'crimenes'));
-        let direccionData = null;
-        querySnapshot.forEach((doc) => {
-          direccionData = doc.data().Direccion; 
-        });
-
-        if (!direccionData) {
-          throw new Error('No se encontró ninguna dirección en la colección');
+    const unsubscribe = onSnapshot(collection(FIREBASE_DB, 'crimenes'), (snapshot) => {
+      let direccionesData = [];
+      snapshot.forEach((doc) => {
+        const direccion = doc.data().Direccion;
+        if (direccion) {
+          direccionesData.push(`${direccion}, Tuluá, Valle`);
         }
- 
-        const direccionCompleta = `${direccionData}, Tuluá, Valle`;
-        console.log("Dirección obtenida:", direccionCompleta); // Depuración
-        setDireccion(direccionCompleta);
-        obtenerCoordenadas(direccionCompleta);
-      } catch (error) {
-        setError(error.message);
-        setLoading(false);
-        console.error("Error obteniendo los datos de Firestore: ", error);
-      }
-    };
+      });
 
-    fetchDireccion();
+      if (direccionesData.length === 0) {
+        setError('No se encontraron direcciones en la colección');
+        setLoading(false);
+        return;
+      }
+
+      console.log("Direcciones obtenidas:", direccionesData); // Depuración
+      obtenerCoordenadas(direccionesData);
+    }, (error) => {
+      setError(error.message);
+      setLoading(false);
+      console.error("Error obteniendo los datos de Firestore: ", error);
+    });
+
+    return () => unsubscribe();
   }, []);
 
-  const obtenerCoordenadas = async (direccion) => {
+  const obtenerCoordenadas = async (direcciones) => {
     try {
-      console.log("Dirección enviada a la API:", direccion); // Depuración
-      const response = await Geocoder.from(direccion);
-      console.log("Respuesta de la API de Google Maps:", response); // Depuración
-      if (response.results.length > 0) {
-        const location = response.results[0].geometry.location;
-        setCoordenadas({
-          latitude: location.lat,
-          longitude: location.lng,
-        });
-      } else {
-        throw new Error('No se pudo convertir la dirección a coordenadas');
-      }
+      const coordenadasPromises = direcciones.map(async (direccion) => {
+        const response = await Geocoder.from(direccion);
+        if (response.results.length > 0) {
+          const location = response.results[0].geometry.location;
+          return {
+            direccion,
+            latitude: location.lat,
+            longitude: location.lng,
+          };
+        } else {
+          console.error(`No se pudo convertir la dirección a coordenadas: ${direccion}`);
+          return null;
+        }
+      });
+
+      const coordenadasResults = await Promise.all(coordenadasPromises);
+      const validCoordenadas = coordenadasResults.filter(coord => coord !== null);
+      setCoordenadas(validCoordenadas);
+      setLoading(false);
     } catch (error) {
       setError(error.message);
       console.error("Error al obtener las coordenadas: ", error);
-    } finally {
       setLoading(false);
     }
   };
+
   if (loading) {
     return <ActivityIndicator size="large" color="#0000ff" />;
   }
-
-  // const location = {
-  //   latitude: 4.7110,
-  //   longitude: -74.0721,
-  //   latitudeDelta: 0.0922,
-  //   longitudeDelta: 0.0421,
-  // };
 
   if (error) {
     return <Text>Error: {error}</Text>;
   }
 
-  // if (!location) {
-  //   return <Text>Cargando...</Text>;
-  // }
-  if (!coordenadas) {
-    return <Text>No se encontraron coordenadas para la dirección proporcionada.</Text>;
+  if (coordenadas.length === 0) {
+    return <Text>No se encontraron coordenadas para las direcciones proporcionadas.</Text>;
   }
 
   return (
@@ -91,15 +87,19 @@ export default function Mapas() {
       <MapView
         style={styles.map}
         initialRegion={{
-          ...coordenadas,
+          latitude: coordenadas[0].latitude,
+          longitude: coordenadas[0].longitude,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
       >
-        <Marker
-          coordinate={coordenadas}
-          title={"Ubicación seleccionada"}
-        />
+        {coordenadas.map((coord, index) => (
+          <Marker
+            key={index}
+            coordinate={{ latitude: coord.latitude, longitude: coord.longitude }}
+            title={coord.direccion}
+          />
+        ))}
       </MapView>
     </ScrollView>
   );
@@ -120,6 +120,6 @@ const styles = StyleSheet.create({
   map: {
     width: '100%',
     height: '80%',
-    marginTop: 10,
+    // marginTop: 10,
   },
 });
