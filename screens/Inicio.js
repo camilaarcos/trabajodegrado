@@ -1,4 +1,4 @@
-import {Text, View, TouchableOpacity, Image, StyleSheet, ScrollView } from "react-native";
+import {Text, View, TouchableOpacity, Image, StyleSheet, ScrollView,TextInput } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useNavigation } from '@react-navigation/native';
 import SelectDropdown from 'react-native-select-dropdown';
@@ -12,6 +12,23 @@ export default function Inicio() {
   const [selectedTipo, setSelectedTipo] = useState(null);
   const [selectedFecha, setSelectedFecha] = useState(null);
   const [selectedBarrio, setSelectedBarrio] = useState(null);
+  const [searchText, setSearchText] = useState('');
+
+  const filterChangeX = (selectedItem) => {
+    let filtered = crimenes;
+
+    if (selectedItem && selectedItem !== "Tipo de crimen") {
+      filtered = filtered.filter(crimen => crimen.Tipo === selectedItem);
+    }
+    if (searchText) {
+      filtered = filtered.filter(crimen => 
+        crimen.Tipo.toLowerCase().includes(searchText.toLowerCase()) ||
+        crimen.Barrio.toLowerCase().includes(searchText.toLowerCase()) ||
+        crimen.Fecha.toLowerCase().includes(searchText.toLowerCase())
+      );
+    }
+    setFilteredCrimenes(filtered);
+  };
 
   useEffect(() => {
     const unsubscribe = fetchCrimenes((result) => {
@@ -58,6 +75,14 @@ export default function Inicio() {
     setFilteredCrimenes(filtered);
   };
 
+  const handleSearchTextChange = (text) => {
+    setSearchText(text);
+    if (text === '') {
+      setFilteredCrimenes(crimenes);
+    } else {
+      filterChangeX(null);
+    }
+  };
 
 return(
   <ScrollView contentContainerStyle={{ flexGrow: 1,
@@ -66,6 +91,12 @@ return(
         backgroundColor: '#dfe9f5'}}>
         <Text style={styles.tittle}>Detalles de los crímenes</Text>
         <Text style={styles.texto}>Filtros</Text>
+        <TextInput
+        style={styles.searchInput}
+        placeholder="Buscar..."
+        value={searchText}
+        onChangeText={handleSearchTextChange}
+      />
         <View style={styles.dropdown}>
         <SelectDropdown
         data={tipos}
@@ -169,6 +200,13 @@ export const styles = StyleSheet.create({
         fontSize: 20,
         marginBottom: 10,
         fontWeight: 'bold',
+      },
+      searchInput: {
+        width: '100%',
+        padding: 5,
+        backgroundColor: '#ffffff',
+        borderRadius: 5,
+        marginBottom: 10,
       },
       crimenes: {
         width: '100%',
