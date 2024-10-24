@@ -8,7 +8,7 @@ import Geocoder from 'react-native-geocoding';
 import SelectDropdown from 'react-native-select-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-Geocoder.init("AIzaSyC66ZWY55i0_SWvY9pskT9Mj4OptmQZoiY");
+Geocoder.init(" ");
 export default function Mapas() {
   const [coordenadas, setCoordenadas] = useState([]);
   const [loading, setLoading] = useState(true);
