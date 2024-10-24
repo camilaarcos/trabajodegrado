@@ -95,7 +95,7 @@ const validateForm = () => {
             <BlurView intensity={100} style={styles2.blurPrincipal}>   
               <View style={styles.login1}>
                 <Text style={styles.tittle}>Cambiar Contraseña</Text>
-                  <Image source={require('../assets/Security.png')} style={styles.avatar} />
+                  {/* <Image source={require('../assets/Security.png')} style={styles.avatar} /> */}
                     <TextInput
                       style={styles.input}
                       placeholder="Contraseña actual"

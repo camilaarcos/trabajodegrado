@@ -2,7 +2,7 @@ import {Text, View, Image, StyleSheet, TextInput, Pressable, Platform, Touchable
 import React, {useState} from "react";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {FIREBASE_DB} from '../src/config/firebase';
-import {collection, addDoc} from 'firebase/firestore';
+import {collection, addDoc, query, where, getDocs} from 'firebase/firestore';
 import { useNavigation } from "@react-navigation/native";
 import SelectDropdown from 'react-native-select-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -27,21 +27,54 @@ export default function Registro() {
   const [alertIcon, setAlertIcon] = useState(null);
   const [Registrosuccess, setRegistroSuccess] = useState(false);
 
+
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = ("0" + (date.getMonth() + 1)).slice(-2); // Meses empiezan en 0
+    const day = ("0" + date.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
+  };
+
+
   const onSend = async() => {
-    // setLoading(true);
+    const formattedFecha = formatDate(newItem.Fecha);
+
+    // Validar si ya existe un crimen con los mismos valores
+  const crimenRef = collection(FIREBASE_DB, 'crimenes');
+  const q = query(
+    crimenRef,
+    where('Tipo', '==', newItem.Tipo),
+    where('Barrio', '==', newItem.Barrio),
+    where('Fecha', '==', formattedFecha),
+    where('Direccion', '==', newItem.Direccion)
+  );
+
+  const querySnapshot = await getDocs(q);
+
+  if (!querySnapshot.empty) {
+    // Si existe un registro, mostramos una alerta
+    setAlertMessage('Ya existe un crimen registrado con esos datos');
+    setAlertIcon(require('../assets/error.png'));
+    setAlertVisible(true);
+  } else {
+    // Si no existe, procedemos a guardar el registro
     try {
-      await addDoc(collection(FIREBASE_DB, 'crimenes'), newItem);
+      await addDoc(collection(FIREBASE_DB, 'crimenes'), {
+        ...newItem,
+        Fecha: formattedFecha  // Guardar la fecha sin la hora
+      });
       setAlertMessage('Registro correctamente');
       setAlertIcon(require('../assets/success.png'));
       setAlertVisible(true);
       setRegistroSuccess(true);
     } catch (error) {
-      console.error("Error registando crímen: ", error);
+      console.error("Error registrando crímen: ", error);
       setAlertMessage('Error al registrar el crímen');
       setAlertIcon(require('../assets/error.png'));
       setAlertVisible(true);
     }
-  };
+  }
+};
 
   const toggleDatePicker = () => {
     setShowDatePicker(!showDatePicker);
@@ -79,7 +112,7 @@ return(
     }}>
         
         <Text style={styles.tittle}>Registro de crímenes</Text>
-        <Image source={require('../assets/Info.png')} style={styles.imageStyle} />
+        {/* <Image source={require('../assets/Info.png')} style={styles.imageStyle} /> */}
         <Text style={styles.texto}>Seleccione el tipo de crímen</Text>
 
         
@@ -185,11 +218,7 @@ return(
 
 export const styles = StyleSheet.create({
 
-      imagefondo: {
-        // width: '100%',
-        height: '120%',
-        resizeMode: 'cover',
-      },
+
       tittle: {
         fontSize: 30,
         color: '#4d82bc',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
-
+import { Ionicons } from "@expo/vector-icons";
 const CustomAlert = ({ visible, title, message, icon, onClose }) => {
   return (
     <Modal
@@ -17,7 +17,7 @@ const CustomAlert = ({ visible, title, message, icon, onClose }) => {
           </View>
           <Text style={styles.message}>{message}</Text>
           <TouchableOpacity style={styles.button} onPress={onClose}>
-            <Text style={styles.buttonText}>Cerrar</Text>
+          <Ionicons name="close" size={25} color="black" />
           </TouchableOpacity>
         </View>
       </View>
@@ -64,14 +64,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   button: {
-    backgroundColor: '#2196F3',
-    padding: 10,
-    borderRadius: 5,
-    width: 61,
-    alignItems: 'center',
-    alignSelf: 'flex-end',
-    borderWidth: 1,
-    borderColor: '#000',
+    position: 'absolute',
+    top: 5,
+    right: 5,
   },
   buttonText: {
     color: 'white',

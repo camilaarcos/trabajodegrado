@@ -55,7 +55,7 @@ export default function Perfil() {
 return(
     <View style={styles.container}>
         <Text style={styles.tittle}>Perfil usuario</Text>
-        <Image source={require('../assets/Otp.png')} style={styles.imageStyle} />
+        {/* <Image source={require('../assets/Otp.png')} style={styles.imageStyle} /> */}
         <View style={styles.containercorreo}>
         <Text style={styles.nombre}><Text style={styles.texto}>Nombre: </Text>{name}</Text>
         <Text style={styles.texto}>Correo electrónico asociado: </Text>

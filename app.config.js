@@ -1,14 +1,14 @@
 import 'dotenv/config';
 export default{
   "expo": {
-    "name": "proyecto",
-    "slug": "proyecto",
+    "name": "CrimenCraft",
+    "slug": "CrimenCraft",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/logo.png",
+    "icon": "./assets/I1.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/logo.png",
+      "image": "./assets/CrimenCraft (1).png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -17,7 +17,7 @@ export default{
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/logo.png",
+        "foregroundImage": "./assets/I1.png",
         "backgroundColor": "#ffffff"
       },
       "config": {
@@ -25,9 +25,6 @@ export default{
           "apiKey": process.env.GOOGLE_MAPS_API_KEY
         }
       }
-    },
-    "web": {
-      "favicon": "./assets/logo.png"
     },
     extra: {
       apiKey: process.env.API_KEY,

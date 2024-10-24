@@ -72,7 +72,7 @@ export default function RecoverPassword  () {
         <BlurView intensity={100} style={styles2.blurPrincipal}>   
       <View style={styles.login1}>
       <Text style={[styles.tittle, styles2.tittle]}>Recuperar Contraseña</Text>
-      <Image source={require('../assets/Security.png')} style={styles.avatar} />
+      {/* <Image source={require('../assets/Security.png')} style={styles.avatar} /> */}
       <Text>Ingresa el correo electrónico asociado</Text>
       <TextInput
         style={styles.input}

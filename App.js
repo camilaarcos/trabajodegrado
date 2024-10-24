@@ -1,4 +1,4 @@
-import { StyleSheet, View, Modal, TouchableOpacity, Text, Button } from 'react-native';
+import { StyleSheet, View, Modal, TouchableOpacity, Text, Button, Image } from 'react-native';
 import React, { useState } from "react";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -43,6 +43,12 @@ function MyTabs({openMenu}) {
         tabBarIcon: ({ color, size }) => (
           <Ionicons name="home" color={color} size={size} />
         ),
+        headerTitle: () => (
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Image source={require('./assets/I1.png')} style={{ width: 50, height: 50, marginRight: 10 }} />
+            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>CrimenCraft</Text>
+          </View>
+          ),
           headerRight: () => (
             <TouchableOpacity onPress={openMenu}>
             <Ionicons name="menu" size={34} color="black" />
@@ -58,12 +64,29 @@ function MyTabs({openMenu}) {
             size={size + 10} 
             backgroundColor={focused ? color : 'white'} 
           />
-        )}} />
+        ),
+        headerTitle: () => (
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Image source={require('./assets/I1.png')} style={{ width: 50, height: 50, marginRight: 10 }} />
+            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>CrimenCraft</Text>
+          </View>
+          ),
+          headerRight: () => (
+            <TouchableOpacity onPress={openMenu}>
+            <Ionicons name="menu" size={34} color="black" />
+          </TouchableOpacity>
+          ),}} />
      
   <Tab.Screen name="Mapas" component={Mapas}options={{
         tabBarIcon: ({ color, size }) => (
           <Ionicons name="bar-chart-outline" color={color} size={size} />
         ),
+        headerTitle: () => (
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Image source={require('./assets/I1.png')} style={{ width: 50, height: 50, marginRight: 10 }} />
+            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>CrimenCraft</Text>
+          </View>
+          ),
         headerRight: () => (
           <TouchableOpacity onPress={openMenu}>
           <Ionicons name="menu" size={34} color="black" />
@@ -94,23 +117,90 @@ function MainStack({setIsLoggedIn}) {
   return (
     <View style={{ flex: 1 }}>
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Home" component={Home} options={{
+        // headerTitle: () => (
+        //   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        //     {/* <Image source={require('./assets/I1.png')} style={{ width: 50, height: 50 }} /> */}
+        //     <Text style={{ fontSize: 20, fontWeight: 'bold' }}></Text>
+        //   </View>
+        //   ),
+        //   headerBackground: () => (
+        //     // <View style={{ backgroundColor: '#6B8E2390', height: '100%' }} />
+        //   ),
+          }} />
       <Stack.Screen name="MyTabs" options={{ headerShown: false }}>
         {props => <MyTabs {...props} openMenu={() => setModalVisible(true)} />}
       </Stack.Screen>
-      <Stack.Screen name="Inicio de sesión" >
+      <Stack.Screen name="Inicio de sesión" options={
+        {
+          headerTitle: () => (
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Image source={require('./assets/I1.png')} style={{ width: 50, height: 50, marginRight: 10 }} />
+            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>CrimenCraft</Text>
+          </View>
+          ),
+        }
+      } >
       {props => <LogIn {...props} setIsLoggedIn={setIsLoggedIn} />}
         </Stack.Screen> 
-        <Stack.Screen name="Registrarse" component={SignIn}  />
+        <Stack.Screen name="Registrarse" component={SignIn}  options={{
+        headerTitle: () => (
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Image source={require('./assets/I1.png')} style={{ width: 50, height: 50, marginRight: 10 }} />
+            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>CrimenCraft</Text>
+          </View>
+          ),}} />
         <Stack.Screen name="Inicio" >
           {props => <Inicio {...props} openMenu={() => setModalVisible(true)} />} 
         </Stack.Screen>
-  <Stack.Screen name="RecoverPassword" component={RecoverPassword}  />
-  <Stack.Screen name="Cambiar Contraseña" component={CambiarContraseña} />
-  <Stack.Screen name="Registro de crímenes" component={Registro} />
-  <Stack.Screen name="MostrarCrimen" component={MostrarCrimen} />
-  <Stack.Screen name="MostrarUsuario" component={MostrarUsuario}/>
-  <Stack.Screen name="Perfil" component={Perfil}/>
+  <Stack.Screen name="RecoverPassword" component={RecoverPassword} 
+   options={{
+    headerTitle: () => (
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Image source={require('./assets/I1.png')} style={{ width: 50, height: 50, marginRight: 10 }} />
+        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>CrimenCraft</Text>
+      </View>
+      ),}} />
+  <Stack.Screen name="Cambiar Contraseña" component={CambiarContraseña}
+   options={{
+    headerTitle: () => (
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Image source={require('./assets/I1.png')} style={{ width: 50, height: 50, marginRight: 10 }} />
+        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>CrimenCraft</Text>
+      </View>
+      ),}} />
+  <Stack.Screen name="Registro de crímenes" component={Registro} 
+   options={{
+    headerTitle: () => (
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Image source={require('./assets/I1.png')} style={{ width: 50, height: 50, marginRight: 10 }} />
+        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>CrimenCraft</Text>
+      </View>
+      ),}}/>
+  <Stack.Screen name="MostrarCrimen" component={MostrarCrimen} 
+   options={{
+    headerTitle: () => (
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Image source={require('./assets/I1.png')} style={{ width: 50, height: 50, marginRight: 10 }} />
+        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>CrimenCraft</Text>
+      </View>
+      ),}}/>
+  <Stack.Screen name="MostrarUsuario" component={MostrarUsuario}
+   options={{
+    headerTitle: () => (
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Image source={require('./assets/I1.png')} style={{ width: 50, height: 50, marginRight: 10 }} />
+        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>CrimenCraft</Text>
+      </View>
+      ),}}/>
+  <Stack.Screen name="Perfil" component={Perfil} 
+   options={{
+    headerTitle: () => (
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Image source={require('./assets/I1.png')} style={{ width: 50, height: 50, marginRight: 10 }} />
+        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>CrimenCraft</Text>
+      </View>
+      ),}}/>
   <Stack.Screen name="Mapas" >
           {props => <Mapas {...props} openMenu={() => setModalVisible(true)} />} 
         </Stack.Screen>
@@ -125,11 +215,11 @@ function MainStack({setIsLoggedIn}) {
   <View style={styles.modalOverlay}>
     <View style={styles.modalContent}>
       <TouchableOpacity
-        style={styles.modalButton}
+        style={styles.modalPerfilButton}
         onPress={()=> {navigation.navigate('Perfil'); setModalVisible(false); }
         }
       >
-        <Text style={styles.modalButtonText}>Perfil</Text>
+        <Text style={styles.modalPerfilButtonText}>Perfil Usuario</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -138,8 +228,10 @@ function MainStack({setIsLoggedIn}) {
       >
         <Text style={styles.modalButtonText}>Cerrar Sesión</Text>
       </TouchableOpacity>
-
-      <Button title="Cerrar" onPress={() => setModalVisible(false)} />
+      <TouchableOpacity style={styles.modalCloseButton} 
+      onPress={() => setModalVisible(false)}>
+            <Ionicons name="close" size={25} color="black" />
+          </TouchableOpacity>
     </View>
   </View>
 </Modal>
@@ -170,28 +262,47 @@ const styles = StyleSheet.create({
   },
   modalOverlay: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    // justifyContent: 'center',
+    alignItems: 'flex-end',
+    // justifyContent: 'space-evenly',
+    marginTop: 60,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
-    width: 300,
+    width: 200,
     padding: 20,
     backgroundColor: 'white',
     borderRadius: 10,
     alignItems: 'center',
   },
-  modalButton: {
-    paddingVertical: 15,
+  modalPerfilButton: {
+    paddingVertical: 5,
     width: '100%',
-    backgroundColor: '#4d82bc',
     borderRadius: 5,
-    marginBottom: 10,
+    alignItems: 'center',
+  },
+  modalPerfilButtonText: {
+    color: 'black',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textDecorationLine: "underline",
+  },
+  modalButton: {
+    paddingVertical: 5,
+    width: '100%',
+    backgroundColor: 'gray',
+    borderRadius: 5,
+    marginTop: 10,
     alignItems: 'center',
   },
   modalButtonText: {
     color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
+    // fontSize: 18,
+    // fontWeight: 'bold',
+  },
+  modalCloseButton: {
+    position: 'absolute',
+    top: 5,
+    right: 5,
   },
 });
