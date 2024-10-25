@@ -48,22 +48,25 @@ export default function LogIn({setIsLoggedIn}) {
       
       <ScrollView contentContainerStyle={{
         flex: 1,
-        width: '100%',
-        height: '100%',
+        flexDirection: 'column',
+        width: 368,
+        height: 815,
         alignItems: 'center',
-        marginTop: 90,
       }}>
         
-        <BlurView intensity={100} style={styles.blurPrincipal}>   
           <View style={styles.login1}>
-          <Text style={styles.tittle}>Inicio de sesión</Text>
-          <Image source={require('../assets/avatar.png')} style={styles.avatar} />
-              <Text style={styles.email}>Correo electrónico</Text>
+            <View style = {styles.titulo}>
+            <Text style={styles.tittle}>Inicio de sesión</Text>
+            </View>
+          
+          <Image source={require('../assets/I1.png')} style={styles.avatar} />
+          <View style = {styles.ContainerCentral}>
+              <Text style={styles.email}>Correo Electrónico</Text>
               <TextInput onChangeText={(text)=> setEmail(text)} style={styles.input} placeholder='ejemplo@gmail.com' keyboardType='email-address'/>
               <Text style={styles.email}>Contraseña</Text>
               <TextInput onChangeText={(text)=> setPassword(text)} style={styles.input} placeholder='contraseña' secureTextEntry= {true} keyboardType='numbers-and-punctuation'/>
               <TouchableOpacity onPress={handleSignIn} style={styles.boxbutton}>
-              <Text style={styles.login}>Iniciar sesión</Text>
+              <Text style={styles.login}>Inicia sesión</Text>
               </TouchableOpacity>
               <CustomAlert
                 visible={alertVisible}
@@ -83,13 +86,15 @@ export default function LogIn({setIsLoggedIn}) {
               <View style={styles.forgotPasswordContainer}>
               <Text style={styles.registerText}>¿Olvidaste tu contraseña?</Text>
               <TouchableOpacity onPress={() => navigation.navigate('RecoverPassword')}>
-                <Text style={styles.registerLink}>Recuperar</Text>
+                <Text style={styles.registerLink}>Recuperala</Text>
               </TouchableOpacity>
               
               </View>
+          </View>    
+              
 
             </View>
-          </BlurView>
+          {/* </BlurView> */}
         </ScrollView>
       
     </View>
@@ -100,99 +105,100 @@ export default function LogIn({setIsLoggedIn}) {
     container: {
       flex: 1,
       alignItems: 'center',
-      backgroundColor: '#dfe9f5',
+      backgroundColor: '#FEFEFE',
     },
-    blurPrincipal: {
-      height: '80%',
-      borderRadius: 10,
-      overflow: 'hidden',
+    titulo: {
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: 10,
+      width: 368,
+      height: 60,
+      marginTop: 30,
     },
-    imagefondo: {
-      width: '100%',
-      height: '100%',
-      resizeMode: 'cover',
-    },
+
     tittle: {
-      fontSize: 30,
-      color: '#4d82bc',
+      fontSize: 40,
+      color: '#2E3A47',
       fontWeight: 'bold',
-      marginBottom: 10,
-    },
-    imageStyle: {
-      width: 100, 
-      height: 100, 
-      marginTop: 20,
-      alignSelf: 'flex-end',
+      textAlign: 'center',
     },
     login1: {
-      width: 350,
-      height: '100%',
-      borderColor: '#4d82bc',
-      borderWidth: 2,
-      borderRadius: 10,
-      padding: 10,
+      flexDirection: 'column',
+      // justifyContent: 'center',
       alignItems: 'center',
+      // gap: 15,
+      width: 368,
+      height: 815,
+      // backgroundColor: '#000',
     },
     avatar: {
       width: 100,
       height: 100,
-      marginBottom: 10,
+    },
+    ContainerCentral: {
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'flex-start',
+      gap: 15,
+      width: 277,
+      height: 395,
+      marginTop: 50,
     },
     email: {
-      fontSize: 17,
-      color: '#000',
+      fontSize: 12,
+      color: '#2E3A47',
       fontWeight: 'bold',
     },
     input: {
-      width: 250,
-      height: 40,
-      borderColor: '#fff',
-      borderWidth: 2,
+      width: 277,
+      height: 44,
+      borderColor: '#00AFFF',
+      borderWidth: 1,
       borderRadius: 10,
       padding: 10,
-      marginVertical: 10,
-      backgroundColor: '#ffffff90',
-      marginBottom: 20,
+      backgroundColor: '#80808035',
       fontWeight: '400',
     },
     login: {
-      color: "#000",
+      color: "#FFFFFF",
       fontWeight: 'bold',
-
+      fontSize: 14,
     },
    boxbutton: {
-    backgroundColor: "#ffffff80",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: "#50AB89",
     padding: 10,
-    borderRadius: 5,
-    borderWidth: 2,
-    borderColor: '#fff',
-    margin: 10,
+    gap: 10,
+    borderRadius: 10,
+    width: 277,
+    height: 44,
+    marginTop: 30,
     },
     registerContainer: {
       flexDirection: "row", 
       alignItems: "center", 
       justifyContent: "center", 
-      marginTop: 20, 
+      marginTop: 50, 
+      gap: 5,
+      width: 267,
     },
     registerText: {
-      marginRight: 5, 
+      // marginRight: 5, 
+      color: "#2E3A47",
+      fontSize: 14,
+      fontWeight: 'bold',
     },
     registerLink: {
-      color: "#000", 
+      color: "#009CE3", 
       fontWeight: 'bold',
-      textDecorationLine: "underline",
     },
     forgotPasswordContainer: {
-      flexDirection: 'row',
-      marginTop: 10, 
-      alignItems: 'center',
-    },
-    blurContainer: {
-      marginTop: 20,
-      marginVertical: 5, 
-      padding: 5, 
-      paddingBottom: 10, 
-      borderRadius: 10, 
-      overflow: 'hidden', 
+      flexDirection: "row", 
+      alignItems: "center", 
+      justifyContent: "center", 
+      width: 267,
+      gap: 5,
     },
   });

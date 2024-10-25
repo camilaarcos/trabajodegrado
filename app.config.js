@@ -8,9 +8,9 @@ export default{
     "icon": "./assets/I1.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/CrimenCraft (1).png",
+      "image": "./assets/CrimenCraft.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#E5F4F1"
     },
     "ios": {
       "supportsTablet": true
@@ -18,7 +18,7 @@ export default{
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/I1.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#E5F4F1"
       },
       "config": {
         "googleMaps": {

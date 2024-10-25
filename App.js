@@ -117,16 +117,7 @@ function MainStack({setIsLoggedIn}) {
   return (
     <View style={{ flex: 1 }}>
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={Home} options={{
-        // headerTitle: () => (
-        //   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        //     {/* <Image source={require('./assets/I1.png')} style={{ width: 50, height: 50 }} /> */}
-        //     <Text style={{ fontSize: 20, fontWeight: 'bold' }}></Text>
-        //   </View>
-        //   ),
-        //   headerBackground: () => (
-        //     // <View style={{ backgroundColor: '#6B8E2390', height: '100%' }} />
-        //   ),
+      <Stack.Screen name="Home" component={Home} options={{ headerShown: false
           }} />
       <Stack.Screen name="MyTabs" options={{ headerShown: false }}>
         {props => <MyTabs {...props} openMenu={() => setModalVisible(true)} />}
@@ -134,41 +125,41 @@ function MainStack({setIsLoggedIn}) {
       <Stack.Screen name="Inicio de sesión" options={
         {
           headerTitle: () => (
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Image source={require('./assets/I1.png')} style={{ width: 50, height: 50, marginRight: 10 }} />
-            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>CrimenCraft</Text>
-          </View>
-          ),
+              <Text style={{ fontWeight: 'bold', textAlign: 'left'}}>Volver</Text>
+            ),
+          headerStyle: {
+            backgroundColor: '#FEFEFE',
+          },
         }
       } >
       {props => <LogIn {...props} setIsLoggedIn={setIsLoggedIn} />}
         </Stack.Screen> 
         <Stack.Screen name="Registrarse" component={SignIn}  options={{
-        headerTitle: () => (
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Image source={require('./assets/I1.png')} style={{ width: 50, height: 50, marginRight: 10 }} />
-            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>CrimenCraft</Text>
-          </View>
-          ),}} />
+            headerTitle: () => (
+              <Text style={{ fontWeight: 'bold', textAlign: 'left'}}>Volver</Text>
+            ),
+          headerStyle: {
+            backgroundColor: '#FEFEFE',
+          },}} />
         <Stack.Screen name="Inicio" >
           {props => <Inicio {...props} openMenu={() => setModalVisible(true)} />} 
         </Stack.Screen>
   <Stack.Screen name="RecoverPassword" component={RecoverPassword} 
    options={{
     headerTitle: () => (
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Image source={require('./assets/I1.png')} style={{ width: 50, height: 50, marginRight: 10 }} />
-        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>CrimenCraft</Text>
-      </View>
-      ),}} />
+      <Text style={{ fontWeight: 'bold', textAlign: 'left'}}>Volver</Text>
+    ),
+  headerStyle: {
+    backgroundColor: '#FEFEFE',
+  },}} />
   <Stack.Screen name="Cambiar Contraseña" component={CambiarContraseña}
    options={{
     headerTitle: () => (
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Image source={require('./assets/I1.png')} style={{ width: 50, height: 50, marginRight: 10 }} />
-        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>CrimenCraft</Text>
-      </View>
-      ),}} />
+      <Text style={{ fontWeight: 'bold', textAlign: 'left'}}>Volver</Text>
+    ),
+  headerStyle: {
+    backgroundColor: '#FEFEFE',
+  },}} />
   <Stack.Screen name="Registro de crímenes" component={Registro} 
    options={{
     headerTitle: () => (

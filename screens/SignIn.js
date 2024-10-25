@@ -77,15 +77,16 @@ export default function SignIn() {
         width: '100%',
         height: '100%',
         alignItems: 'center',
-        marginTop: 70,
+        marginTop: 30,
       }}>
         
-        <BlurView intensity={100} style={styles2.BlurPrincipal2}>
           
           <View style={styles.login1}>
             <StatusBar style="auto" />
             <Text style={styles.tittle}>Registro de usuario</Text>
-            <Image source={require('../assets/avatar.png')} style={styles.avatar} />
+            <Image source={require('../assets/I1.png')} style={styles.avatar} />
+
+            <View style={styles2.inputContainer}>
             <Text style={styles.email}>Nombre</Text>
               <TextInput onChangeText={(text)=> setName(text)} style={styles.input} placeholder='Nombre'/>
               <Text style={styles.email}>Correo electrónico</Text>
@@ -95,7 +96,7 @@ export default function SignIn() {
               <Text style={styles.email}>Confirmar Contraseña</Text>
               <TextInput onChangeText={(text) => setConfirmPassword(text)} style={styles.input} placeholder='Confirmar contraseña' secureTextEntry={true} />
               <TouchableOpacity onPress={handleCreateAccount}  style={styles.boxbutton}>
-              <Text style={styles.login}>Registrarse</Text>
+              <Text style={styles.login}>Registrate</Text>
               </TouchableOpacity>
               <CustomAlert
                 visible={alertVisible}
@@ -112,8 +113,9 @@ export default function SignIn() {
                 <Text style={styles.registerLink}>Inicia sesión</Text>
               </TouchableOpacity>
               </View>
+              </View>
+              
             </View>
-          </BlurView>
         </ScrollView>
       
     </View>
@@ -122,14 +124,21 @@ export default function SignIn() {
 
 const styles2 = StyleSheet.create({
   
-  BlurPrincipal2: {
-    height: '90%',
-    borderRadius: 10,
-    overflow: 'hidden',
-  },
   registerContainer2: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: "row", 
+    alignItems: "center", 
+    justifyContent: "center", 
+    gap: 5,
+    width: 267, 
+    marginTop: 20,
+  },
+  inputContainer: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    gap: 16,
+    width: 277,
+    height: 395,
+    marginTop: 50,
   },
 });

@@ -8,68 +8,134 @@ export default function Home() {
 
     return (
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.tittle}>Bienvenidos a CrimenCraft</Text>
-        <TouchableOpacity onPress={()=> navigation.navigate('Registro de crímenes')} style={styles.boxbutton} >
-          <Text style={styles.textbutton}>Registrar Crímen</Text>
-            </TouchableOpacity>
-              <View style={styles.registerContainer}>
-              <Text style={styles.registerText}>¿Ya tienes cuenta?</Text>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('Inicio de sesión')}
-              >
-                <Text style={styles.registerLink}>Inicia sesión</Text>
-              </TouchableOpacity>
+        <View style = {styles.Principal}>
+              <View style = {styles.Principal2}>
+                <Image source={require('../assets/I1.png')} style={styles.ImagenPrincipal}/>
+                <Text style = {styles.PrincipalTitulo}>CrimenCraft</Text>
               </View>
-              <View style={styles.registerContainer}>
-              <Text style={styles.registerText}>¿No tienes una cuenta?</Text>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('Registrarse')}
-              >
-                <Text style={styles.registerLink}>Regístrate</Text>
-              </TouchableOpacity>
+              <Text style = {styles.PrincipalSlogan}>Juntos hacemos la diferencia</Text>
+              <Text style = {styles.PrincipalFrase}>Reporta y visualiza crímenes ocurridos en la ciudad de Tuluá</Text>
+        </View>
+      
+          <View style = {styles.PrincipalAbajo}>
+              <View style = {styles.PrincipalBoton}>
+              <TouchableOpacity onPress={()=> navigation.navigate('Registro de crímenes')} style={styles.boxbutton} >
+                <Text style={styles.textbutton}>Registra un crímen</Text>
+                  </TouchableOpacity>
               </View>
+             
+                <View style = {styles.PrincipalUltimosBotones}>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('Inicio de sesión')}
+                  >
+                    <Text style={styles.registerLink}>Inicia sesión</Text>
+                  </TouchableOpacity>
+    
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('Registrarse')}
+                  >
+                    <Text style={styles.registerLink}>Crea tu cuenta</Text>
+                  </TouchableOpacity>
+                  </View>
+
+          </View>
               </ScrollView>
     );
   }
   export const styles = StyleSheet.create({
     container: {
-      flexGrow: 1,
-      alignItems: 'center', 
-      backgroundColor: '#dfe9f5',
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "flex-start",
+      position: "relative",
+      width: "412px",
+      height: "917px",
+      background: "#FEFEFE",
     },
-  tittle: {
-    fontFamily: "",
-     fontSize: 30,
-     fontWeight: "bold",
-      marginTop: 20,
-      textAlign : "center",
+    Principal: {
+      flexDirection: "column",
+      // justifyContent: "center",
+      padding: 30,
+      paddingVertical: 50,
+      gap: 10,
+      width: 412,
+      height: 520,
     },
-  boxbutton: {
-    backgroundColor: "#FF000080",
-    padding: 5,
-    paddingVertical: 45,
-    borderRadius: 90,
-    borderWidth: 2,
-    borderColor: 'red',
-    marginTop: 30,
-    marginBottom: 30,
+    Principal2: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    ImagenPrincipal: {
+      width: 100,
+      height: 100,
+    },
+    PrincipalTitulo: {
+      // fontFamily: "Poppins",
+      fontSize: 16,
+      fontWeight: "bold",
+      color:"#2E3A47",
+      alignItems: "center",
+    },
+    PrincipalSlogan: {
+      // fontFamily: "Poppins",
+      fontSize: 45,
+      fontWeight: "bold",
+      color:"#2E3A47",
+      padding: 10,
+      textAlign: "left",
+      marginTop: 30,
+    },
+    PrincipalFrase: {
+      // fontFamily: "Poppins",
+      fontSize: 18,
+      fontWeight: "bold",
+      color:"#2E3A47",
+      textAlign: "center",
+      padding: 10,
+    },
+    PrincipalAbajo: {
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      width: '100%',
+      height: 350,
+      backgroundColor: "#E5F4F1",
+      borderTopLeftRadius: 30,
+      borderTopRightRadius: 30,
+    },
+    PrincipalBoton: {
+      alignItems: "center",
+      padding: 10,
+      width: 412,
+      height: 173.5,
+    },
+
+    boxbutton: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#50AB89",
+    padding: 10,
+    borderRadius: 100,
+    width: 277,
+    height: 44,
 
   },
   textbutton:{
     fontWeight: "bold",
+    color: "#fff",
   },
-  registerContainer: {
-    flexDirection: "row", 
-    alignItems: "center", 
-    justifyContent: "center", 
-    marginTop: 30,
-  },
-  registerText: {
-    marginRight: 5, 
+  PrincipalUltimosBotones: {
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 10,
   },
   registerLink: {
-    color: "#000", 
+    color: "#2E3A47", 
     fontWeight: 'bold',
-    textDecorationLine: "underline",
+    // textDecorationLine: "underline",
+    fontSize: 16,
+    padding: 10,
   },
   });

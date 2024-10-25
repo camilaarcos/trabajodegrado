@@ -66,14 +66,14 @@ export default function RecoverPassword  () {
         width: '100%',
         height: '100%',
         alignItems: 'center',
-        marginTop: 90,
+        // marginTop: 90,
       }}>
         
-        <BlurView intensity={100} style={styles2.blurPrincipal}>   
       <View style={styles.login1}>
       <Text style={[styles.tittle, styles2.tittle]}>Recuperar Contraseña</Text>
-      {/* <Image source={require('../assets/Security.png')} style={styles.avatar} /> */}
-      <Text>Ingresa el correo electrónico asociado</Text>
+      <Image source={require('../assets/I1.png')} style={styles.avatar} />
+      <View style={styles2.ContainerCentral}>
+      <Text>Ingresa tu correo electrónico asociado</Text>
       <TextInput
         style={styles.input}
         placeholder="Correo electrónico"
@@ -94,21 +94,23 @@ export default function RecoverPassword  () {
       onClose={handleCloseAlert}
     />
       </View>
-      </BlurView>
+      </View>
         </ScrollView>
     </View>
   );
 };
 
 const styles2 = StyleSheet.create({
-  blurPrincipal: {
-    marginTop: 20,
-    height: '70%',
-      borderRadius: 10,
-      overflow: 'hidden',
-  },
+
   tittle: {
     marginTop: 30,
   },
-
+ContainerCentral: {
+  flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    gap: 16,
+    width: 277,
+    marginTop: 30,
+},
 });
