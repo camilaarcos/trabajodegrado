@@ -40,8 +40,8 @@ function MyTabs({openMenu}) {
       },
     }} >
       <Tab.Screen name="Inicio" component={Inicio} options={{
-        tabBarIcon: ({ color, size }) => (
-          <Ionicons name="home" color={color} size={size} />
+        tabBarIcon: ({ focused, size }) => (
+          <Ionicons name="home" color={focused ? '#50AB89' : 'gray'} size={size} />
         ),
         headerTitle: () => (
           <View style={{ flexDirection: 'row', alignItems: 'center', }}>
@@ -54,7 +54,7 @@ function MyTabs({openMenu}) {
           ),
           headerStyle: {
             backgroundColor: '#FEFEFE',
-            height: 80,
+            height: 100,
           },
   }}/>
       <Tab.Screen name=" " component={Registro}
@@ -64,7 +64,7 @@ function MyTabs({openMenu}) {
             name="add" 
             color={focused ? 'white' : 'gray'} 
             size={size + 10} 
-            backgroundColor={focused ? color : 'white'} 
+            backgroundColor={focused ? '#50AB89' : 'white'} 
           />
         ),
         
@@ -82,8 +82,8 @@ function MyTabs({openMenu}) {
           }} />
      
   <Tab.Screen name="Mapas" component={Mapas}options={{
-        tabBarIcon: ({ color, size }) => (
-          <Ionicons name="bar-chart-outline" color={color} size={size} />
+        tabBarIcon: ({ focused, size }) => (
+          <Ionicons name="bar-chart-outline" color={focused ? '#50AB89' : 'gray'} size={size} />
         ),
         headerTitle: () => (
           <View style={{ flexDirection: 'row', alignItems: 'center', }}>
@@ -96,7 +96,7 @@ function MyTabs({openMenu}) {
           ),
           headerStyle: {
             backgroundColor: '#FEFEFE',
-            height: 80,
+            height: 100,
           },
   }} />
 

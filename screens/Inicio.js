@@ -87,30 +87,29 @@ export default function Inicio() {
 
 return(
   <ScrollView contentContainerStyle={{ flexGrow: 1,
-        alignItems: 'center',
-        padding: 16,
-        backgroundColor: '#dfe9f5'}}>
+        // alignItems: 'center',
+        // padding: 16,
+        backgroundColor: '#FEFEFE'}}>
         <Text style={styles.tittle}>Detalles de los crímenes</Text>
-        <Text style={styles.texto}>Filtros</Text>
         <TextInput
         style={styles.searchInput}
         placeholder="Buscar..."
         value={searchText}
         onChangeText={handleSearchTextChange}
       />
+      <Text style={styles.texto}>Filtrar por</Text>
         <View style={styles.dropdown}>
         <SelectDropdown
         data={tipos}
         onSelect={filterChangeTipo}
         renderButton={(selectedItem, isOpened) => (
-          <View style={styles.dropdownButtonStyle}>
+          <View style={styles.dropdownButtonStyle1}>
             {selectedItem && (
               <Icon name={selectedItem.icon}  />
             )}
-            <Text >
-              {(selectedItem ) || "Tipo de crimen"}
+            <Text style ={styles.FuenteDrop}>
+              {(selectedItem ) || "Tipo de crímen"}
             </Text>
-            <Icon name={isOpened ? "chevron-up" : "chevron-down"} />
           </View>
         )}
         renderItem={(item, index, isSelected) => (
@@ -127,14 +126,13 @@ return(
         data={fechas}
         onSelect={filterChangeFecha}
         renderButton={(selectedItem, isOpened) => (
-          <View style={styles.dropdownButtonStyle}>
+          <View style={styles.dropdownButtonStyle2}>
             {selectedItem && (
               <Icon name={selectedItem.icon}  />
             )}
-            <Text >
+            <Text style ={styles.FuenteDrop} >
               {(selectedItem ) || "Fecha"}
             </Text>
-            <Icon name={isOpened ? "chevron-up" : "chevron-down"} />
           </View>
         )}
         renderItem={(item, index, isSelected) => (
@@ -151,14 +149,13 @@ return(
         data={barrios}
         onSelect={filterChangeBarrio}
         renderButton={(selectedItem, isOpened) => (
-          <View style={styles.dropdownButtonStyle}>
+          <View style={styles.dropdownButtonStyle3}>
             {selectedItem && (
               <Icon name={selectedItem.icon}  />
             )}
-            <Text >
+            <Text style ={styles.FuenteDrop} >
               {(selectedItem ) || "Barrio"}
             </Text>
-            <Icon name={isOpened ? "chevron-up" : "chevron-down"} />
           </View>
         )}
         renderItem={(item, index, isSelected) => (
@@ -190,31 +187,41 @@ return(
 export const styles = StyleSheet.create({
 
       tittle: {
-        fontSize: 30,
-        color: '#4d82bc',
+        textAlign: 'center',
+        fontSize: 24,
+        color: '#2E3A47',
         fontWeight: 'bold',
-        marginTop: 10,
-        marginBottom: 10,
+        padding: 10,
       },
       texto: {
-        color: '#000',
-        fontSize: 20,
+        color: '#2E3A47',
+        fontSize: 14,
         marginBottom: 10,
         fontWeight: 'bold',
+        textAlign: 'left',
+        marginLeft: 10,
       },
       searchInput: {
-        width: '100%',
+        width: 372,
+        height: 44,
         padding: 5,
-        backgroundColor: '#ffffff',
-        borderRadius: 5,
+        gap: 10,
+        borderRadius: 10,
         marginBottom: 10,
+        marginLeft: 10,
+        borderColor: '#00AFFF',
+        borderWidth: 1,
       },
       crimenes: {
+        flexDirection: 'column',
         width: '100%',
-        backgroundColor: '#ffffff80',
+        backgroundColor: '#E5F4F1',
         padding: 10,
-        alignItems: 'flex-start',
+        alignItems: 'center',
         borderRadius: 5,
+        marginTop: 20,
+        borderTopRightRadius: 20,
+        borderTopLeftRadius: 20,
       },
       crimenesContainer: {
         flexDirection: 'row',
@@ -222,38 +229,71 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         padding: 10,
-        backgroundColor: '#ffffff',
-        borderRadius: 5,
-        marginBottom: 5,
+        gap: 10,
+        height: 41,
+        backgroundColor: '#FEFEFE',
+        borderRadius: 15,
+        marginBottom: 8,
       },
       textoCrimen: {
-        fontSize: 20,
-        color: '#000',
+        fontSize: 14,
+        color: '#2E3A47',
       },
       dropdown: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: 'center',
-        width: '100%',
-        padding: 10,
-        backgroundColor: '#ffffff',
-        borderRadius: 5,
-        marginBottom: 10,
+        width: 372,
+        height: 30,
+        gap: 19,
+        margin: 10,
       },
-      dropdownButtonStyle: {
+      dropdownButtonStyle1: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
+        backgroundColor: '#50AB89',
+        borderRadius: 100,
+        // padding: 10,
+        gap: 10,
+        width: 129,
+        height: 30,
+      },
+      dropdownButtonStyle2: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#50AB89',
+        borderRadius: 100,
+        gap: 10,
+        width: 64,
+        height: 30,
+      },
+      dropdownButtonStyle3: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#50AB89',
+        borderRadius: 100,
+        gap: 10,
+        width: 64,
+        height: 30,
       },
       dropdownItemStyle: {
         flexDirection: 'row',
         alignItems: 'center',
         padding: 10,
         borderWidth: 0.5,
+        
+      },
+      FuenteDrop: {
+        color: '#ffffff',
+        fontWeight: 'bold',
+        fontSize: 16,
       },
       dropdownItemTxtStyle: {
-        fontSize: 16,
-        color: '#000',
+        fontSize: 14,
+        color: '#2E3A47',
       },
       dropdownMenuStyle: {
         position: 'absolute',
