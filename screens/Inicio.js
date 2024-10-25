@@ -14,6 +14,7 @@ export default function Inicio() {
   const [selectedBarrio, setSelectedBarrio] = useState(null);
   const [searchText, setSearchText] = useState('');
 
+  
   const filterChangeX = (selectedItem) => {
     let filtered = crimenes;
 

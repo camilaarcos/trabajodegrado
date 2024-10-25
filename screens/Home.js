@@ -59,7 +59,7 @@ export default function Home() {
       paddingVertical: 50,
       gap: 10,
       width: 412,
-      height: 520,
+      height: 500,
     },
     Principal2: {
       flexDirection: "row",
@@ -99,7 +99,7 @@ export default function Home() {
       justifyContent: "center",
       alignItems: "center",
       width: '100%',
-      height: 350,
+      height: 340,
       backgroundColor: "#E5F4F1",
       borderTopLeftRadius: 30,
       borderTopRightRadius: 30,

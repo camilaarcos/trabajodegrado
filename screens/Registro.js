@@ -28,30 +28,47 @@ export default function Registro() {
   const [Registrosuccess, setRegistroSuccess] = useState(false);
 
 
-  const formatDate = (date) => {
-    const year = date.getFullYear();
-    const month = ("0" + (date.getMonth() + 1)).slice(-2); // Meses empiezan en 0
-    const day = ("0" + date.getDate()).slice(-2);
-    return `${year}-${month}-${day}`;
-  };
-
-
   const onSend = async() => {
-    const formattedFecha = formatDate(newItem.Fecha);
 
+    // Verificar si los campos obligatorios están completos
+  if (!newItem.Tipo || newItem.Tipo.trim() === '' ||
+  !newItem.Direccion || newItem.Direccion.trim() === '' ||
+  !newItem.Barrio || newItem.Barrio.trim() === '') {
+    // Mostrar mensaje de alerta si alguno está vacío
+    setAlertMessage('Por favor, completa todos los campos obligatorios: Tipo de crímen, Dirección y Barrio');
+    setAlertIcon(require('../assets/error.png'));
+    setAlertVisible(true);
+    return; // Salir de la función si faltan datos
+    }
+
+     // Obtener solo la fecha sin la hora
+     const dateOnly = new Date(newItem.Fecha);
+     dateOnly.setHours(0, 0, 0, 0);  // Ajustar la hora a medianoche
+     
+     // Actualizar `newItem` con la fecha ajustada
+     const itemToSave = {
+       ...newItem,
+       Fecha: dateOnly
+     };
     // Validar si ya existe un crimen con los mismos valores
   const crimenRef = collection(FIREBASE_DB, 'crimenes');
   const q = query(
     crimenRef,
-    where('Tipo', '==', newItem.Tipo),
-    where('Barrio', '==', newItem.Barrio),
-    where('Fecha', '==', formattedFecha),
-    where('Direccion', '==', newItem.Direccion)
+    where('Tipo', '==', itemToSave.Tipo),
+    where('Barrio', '==', itemToSave.Barrio),
+    where('Direccion', '==', itemToSave.Direccion)
   );
 
   const querySnapshot = await getDocs(q);
 
-  if (!querySnapshot.empty) {
+  // Verificar si existe una fecha idéntica en los resultados
+  const duplicateExists = querySnapshot.docs.some(doc => {
+    const existingDate = doc.data().Fecha.toDate();
+    existingDate.setHours(0, 0, 0, 0); // Asegurarse de que no incluya la hora
+    return existingDate.getTime() === dateOnly.getTime();
+  });
+
+  if (duplicateExists) {
     // Si existe un registro, mostramos una alerta
     setAlertMessage('Ya existe un crimen registrado con esos datos');
     setAlertIcon(require('../assets/error.png'));
@@ -59,10 +76,10 @@ export default function Registro() {
   } else {
     // Si no existe, procedemos a guardar el registro
     try {
-      await addDoc(collection(FIREBASE_DB, 'crimenes'), {
-        ...newItem,
-        Fecha: formattedFecha  // Guardar la fecha sin la hora
-      });
+
+     
+
+      await addDoc(collection(FIREBASE_DB, 'crimenes'), itemToSave);
       setAlertMessage('Registro correctamente');
       setAlertIcon(require('../assets/success.png'));
       setAlertVisible(true);
