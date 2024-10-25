@@ -44,16 +44,18 @@ function MyTabs({openMenu}) {
           <Ionicons name="home" color={color} size={size} />
         ),
         headerTitle: () => (
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Image source={require('./assets/I1.png')} style={{ width: 50, height: 50, marginRight: 10 }} />
+          <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+            <Image source={require('./assets/I1.png')} style={{ width: 70, height: 70}} />
             <Text style={{ fontSize: 20, fontWeight: 'bold' }}>CrimenCraft</Text>
-          </View>
-          ),
-          headerRight: () => (
-            <TouchableOpacity onPress={openMenu}>
+            <TouchableOpacity style ={{marginLeft:150}} onPress={openMenu}>
             <Ionicons name="menu" size={34} color="black" />
           </TouchableOpacity>
+          </View>
           ),
+          headerStyle: {
+            backgroundColor: '#FEFEFE',
+            height: 80,
+          },
   }}/>
       <Tab.Screen name=" " component={Registro}
        options={{
@@ -65,33 +67,37 @@ function MyTabs({openMenu}) {
             backgroundColor={focused ? color : 'white'} 
           />
         ),
+        
         headerTitle: () => (
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Image source={require('./assets/I1.png')} style={{ width: 50, height: 50, marginRight: 10 }} />
-            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>CrimenCraft</Text>
-          </View>
-          ),
-          headerRight: () => (
-            <TouchableOpacity onPress={openMenu}>
+          <View style={{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold' }}> </Text>
+            <TouchableOpacity style ={{marginLeft:330}} onPress={openMenu}>
             <Ionicons name="menu" size={34} color="black" />
           </TouchableOpacity>
-          ),}} />
+          </View>
+          ),
+          headerStyle: {
+            backgroundColor: '#FEFEFE',
+          },
+          }} />
      
   <Tab.Screen name="Mapas" component={Mapas}options={{
         tabBarIcon: ({ color, size }) => (
           <Ionicons name="bar-chart-outline" color={color} size={size} />
         ),
         headerTitle: () => (
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Image source={require('./assets/I1.png')} style={{ width: 50, height: 50, marginRight: 10 }} />
+          <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+            <Image source={require('./assets/I1.png')} style={{ width: 70, height: 70}} />
             <Text style={{ fontSize: 20, fontWeight: 'bold' }}>CrimenCraft</Text>
+            <TouchableOpacity style ={{marginLeft:150}} onPress={openMenu}>
+            <Ionicons name="menu" size={34} color="black" />
+          </TouchableOpacity>
           </View>
           ),
-        headerRight: () => (
-          <TouchableOpacity onPress={openMenu}>
-          <Ionicons name="menu" size={34} color="black" />
-        </TouchableOpacity>
-        ),
+          headerStyle: {
+            backgroundColor: '#FEFEFE',
+            height: 80,
+          },
   }} />
 
     </Tab.Navigator>
@@ -123,10 +129,9 @@ function MainStack({setIsLoggedIn}) {
         {props => <MyTabs {...props} openMenu={() => setModalVisible(true)} />}
       </Stack.Screen>
       <Stack.Screen name="Inicio de sesión" options={
-        {
-          headerTitle: () => (
-              <Text style={{ fontWeight: 'bold', textAlign: 'left'}}>Volver</Text>
-            ),
+        {    headerTitle: () => (
+          <Text style={{ fontWeight: 'bold', textAlign: 'left'}}> </Text>
+        ),
           headerStyle: {
             backgroundColor: '#FEFEFE',
           },
@@ -135,9 +140,9 @@ function MainStack({setIsLoggedIn}) {
       {props => <LogIn {...props} setIsLoggedIn={setIsLoggedIn} />}
         </Stack.Screen> 
         <Stack.Screen name="Registrarse" component={SignIn}  options={{
-            headerTitle: () => (
-              <Text style={{ fontWeight: 'bold', textAlign: 'left'}}>Volver</Text>
-            ),
+              headerTitle: () => (
+                <Text style={{ fontWeight: 'bold', textAlign: 'left'}}> </Text>
+              ),
           headerStyle: {
             backgroundColor: '#FEFEFE',
           },}} />
@@ -147,7 +152,7 @@ function MainStack({setIsLoggedIn}) {
   <Stack.Screen name="RecoverPassword" component={RecoverPassword} 
    options={{
     headerTitle: () => (
-      <Text style={{ fontWeight: 'bold', textAlign: 'left'}}>Volver</Text>
+      <Text style={{ fontWeight: 'bold', textAlign: 'left'}}> </Text>
     ),
   headerStyle: {
     backgroundColor: '#FEFEFE',
@@ -155,7 +160,7 @@ function MainStack({setIsLoggedIn}) {
   <Stack.Screen name="Cambiar Contraseña" component={CambiarContraseña}
    options={{
     headerTitle: () => (
-      <Text style={{ fontWeight: 'bold', textAlign: 'left'}}>Volver</Text>
+      <Text style={{ fontWeight: 'bold', textAlign: 'left'}}> </Text>
     ),
   headerStyle: {
     backgroundColor: '#FEFEFE',
@@ -163,11 +168,9 @@ function MainStack({setIsLoggedIn}) {
   <Stack.Screen name="Registro de crímenes" component={Registro} 
    options={{
     headerTitle: () => (
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Image source={require('./assets/I1.png')} style={{ width: 50, height: 50, marginRight: 10 }} />
-        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>CrimenCraft</Text>
-      </View>
-      ),}}/>
+      <Text style={{ fontWeight: 'bold', textAlign: 'left'}}> </Text>
+    ),
+      }}/>
   <Stack.Screen name="MostrarCrimen" component={MostrarCrimen} 
    options={{
     headerTitle: () => (

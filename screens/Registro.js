@@ -108,109 +108,110 @@ return(
       flexGrow: 1,
       alignItems: 'center',
       padding: 16,
-      backgroundColor: '#dfe9f5',
+      backgroundColor: '#FEFEFE',
     }}>
         
         <Text style={styles.tittle}>Registro de crímenes</Text>
-        {/* <Image source={require('../assets/Info.png')} style={styles.imageStyle} /> */}
-        <Text style={styles.texto}>Seleccione el tipo de crímen</Text>
+       <Image source={require('../assets/I1.png')} style={styles.imageStyle} />
+       <View style = {styles.Contenedor}>
+          <Text style={styles.texto}>Tipo de crímen</Text>
 
-        
-        <SelectDropdown
-        data={data}
-        onSelect={(selectedItem) => {
-          setNewItem({ ...newItem, Tipo: selectedItem.title });
-        }}
-        renderButton={(selectedItem, isOpened) => (
-          <View style={styles.dropdownButtonStyle}>
-            {selectedItem && (
-              <Icon name={selectedItem.icon}  />
-            )}
-            <Text >
-              {(selectedItem && selectedItem.title) || "Tipo de crimen"}
-            </Text>
-            <Icon name={isOpened ? "chevron-up" : "chevron-down"} />
-          </View>
-        )}
-        renderItem={(item, index, isSelected) => (
-          <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: '#D2D9DF' }) }}>
-            <Icon name={item.icon} style={styles.dropdownItemIconStyle} />
-            <Text style={styles.dropdownItemTxtStyle}>{item.title}</Text>
-          </View>
-        )}
-        showsVerticalScrollIndicator={true}
-        dropdownStyle={styles.dropdownMenuStyle}
-      />
-      
-      <Text style={styles.texto}>Seleccione la fecha del crímen</Text>
-      {showDatePicker && (
-        <DateTimePicker
-          value={newItem.Fecha}
-          mode="date"
-          display="spinner"
-          onChange={onChangeDate}
+          <SelectDropdown
+          data={data}
+          onSelect={(selectedItem) => {
+            setNewItem({ ...newItem, Tipo: selectedItem.title });
+          }}
+          renderButton={(selectedItem, isOpened) => (
+            <View style={styles.dropdownButtonStyle}>
+              {selectedItem && (
+                <Icon name={selectedItem.icon}  />
+              )}
+              <Text >
+                {(selectedItem && selectedItem.title) || "Tipo de crimen"}
+              </Text>
+              <Icon name={isOpened ? "chevron-up" : "chevron-down"} />
+            </View>
+          )}
+          renderItem={(item, index, isSelected) => (
+            <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: '#80808035' }) }}>
+              <Icon name={item.icon} style={styles.dropdownItemIconStyle} />
+              <Text style={styles.dropdownItemTxtStyle}>{item.title}</Text>
+            </View>
+          )}
+          showsVerticalScrollIndicator={true}
+          dropdownStyle={styles.dropdownMenuStyle}
         />
-      )}
-
-      {!showDatePicker && (
-        <Pressable onPress={toggleDatePicker}>
-        <TextInput
-        style={styles.inputContainer}
-        placeholder={newItem.Fecha.toDateString()}
-        value={Fecha}
-        onChangeText={setFecha}
-        editable={false}/>
-        </Pressable>
-      )}
-
-      <Text style={styles.texto}>Ingrese la dirección del crímen</Text>
-        <TextInput 
-        onChangeText={(text)=> setNewItem({...newItem, Direccion: text})}
-        style={styles.inputContainer} placeholder="Dirección" require/>
-        <SelectDropdown
-        data={dataBarrio}
-        onSelect={(selectedItem) => {
-          setNewItem({ ...newItem, Barrio: selectedItem.title });
-        }}
-        renderButton={(selectedItem, isOpened) => (
-          <View style={styles.dropdownButtonStyle}>
-            <Text style={styles.dropdownButtonTxtStyle}>
-              {(selectedItem && selectedItem.title) || "Barrio"}
-            </Text>
-            <Icon name={isOpened ? "chevron-up" : "chevron-down"} style={styles.dropdownButtonArrowStyle} />
-          </View>
+        
+        <Text style={styles.texto}>Fecha</Text>
+        {showDatePicker && (
+          <DateTimePicker
+            value={newItem.Fecha}
+            mode="date"
+            display="spinner"
+            onChange={onChangeDate}
+          />
         )}
-        renderItem={(item, index, isSelected) => (
-          <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: '#D2D9DF' }) }}>
-            <Text style={styles.dropdownItemTxtStyle}>{item.title}</Text>
-          </View>
+
+        {!showDatePicker && (
+          <Pressable onPress={toggleDatePicker}>
+          <TextInput
+          style={styles.inputContainer}
+          placeholder={newItem.Fecha.toDateString()}
+          value={Fecha}
+          onChangeText={setFecha}
+          editable={false}/>
+          </Pressable>
         )}
-        showsVerticalScrollIndicator={true}
-        dropdownStyle={styles.dropdownMenuStyle}
-        search
-        searchInputStyle={styles.dropdownItemStyle}
-        searchInputTxtColor={'#151E26'}
-        searchPlaceHolder={'Buscar Barrio'}
-        searchPlaceHolderColor={'#72808D'}
-        renderSearchInputLeftIcon={() => {
-          return <FontAwesome name={'search'} color={'#72808D'} size={20} />;
-        }}
-      />
-        <TextInput 
-        onChangeText={(text)=> setNewItem({...newItem, Observacion: text})}
-        style={styles.inputObservaciones}placeholder="Observaciones"
-        multiline={true}
-         require/>
-        <TouchableOpacity onPress={onSend} style={styles.boxbutton}>
-              <Text style={styles.Registro}>Registrar</Text>
-              </TouchableOpacity>
-              <CustomAlert
-              visible={alertVisible}
-              message={alertMessage}
-              icon={alertIcon}
-              onClose={handleCloseAlert}
-            />
-              {/* <Loading isVisible={loading} text="Cargando..."/> */}
+
+        <Text style={styles.texto}>Dirección</Text>
+          <TextInput 
+          onChangeText={(text)=> setNewItem({...newItem, Direccion: text})}
+          style={styles.inputContainer} placeholder="Dirección" require/>
+          <SelectDropdown
+          data={dataBarrio}
+          onSelect={(selectedItem) => {
+            setNewItem({ ...newItem, Barrio: selectedItem.title });
+          }}
+          renderButton={(selectedItem, isOpened) => (
+            <View style={styles.dropdownButtonStyle}>
+              <Text style={styles.dropdownButtonTxtStyle}>
+                {(selectedItem && selectedItem.title) || "Barrio"}
+              </Text>
+              <Icon name={isOpened ? "chevron-up" : "chevron-down"} style={styles.dropdownButtonArrowStyle} />
+            </View>
+          )}
+          renderItem={(item, index, isSelected) => (
+            <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: '#80808035' }) }}>
+              <Text style={styles.dropdownItemTxtStyle}>{item.title}</Text>
+            </View>
+          )}
+          showsVerticalScrollIndicator={true}
+          dropdownStyle={styles.dropdownMenuStyle}
+          search
+          searchInputStyle={styles.dropdownItemStyle}
+          searchInputTxtColor={'#2E3A47'}
+          searchPlaceHolder={'Buscar Barrio'}
+          searchPlaceHolderColor={'#2E3A47'}
+          renderSearchInputLeftIcon={() => {
+            return <FontAwesome name={'search'} color={'#2E3A47'} size={20} />;
+          }}
+        />
+          <TextInput 
+          onChangeText={(text)=> setNewItem({...newItem, Observacion: text})}
+          style={styles.inputObservaciones}placeholder="Observaciones"
+          multiline={true}
+          require/>
+          <TouchableOpacity onPress={onSend} style={styles.boxbutton}>
+                <Text style={styles.Registro}>Registrar</Text>
+                </TouchableOpacity>
+                <CustomAlert
+                visible={alertVisible}
+                message={alertMessage}
+                icon={alertIcon}
+                onClose={handleCloseAlert}
+              />
+      </View>
+              
         </ScrollView>
 );
 
@@ -220,31 +221,31 @@ export const styles = StyleSheet.create({
 
 
       tittle: {
-        fontSize: 30,
-        color: '#4d82bc',
+        fontSize: 35,
+        color: '#2E3A47',
         fontWeight: 'bold',
-        marginBottom: 10,
+        // marginBottom: 10,
       },
       texto: {
-        color: '#000',
+        color: '#2E3A47',
         fontSize: 15,
         marginTop: 10,
       },
       imageStyle: {
-        width: 200, 
-        height: 200, 
+        width: 150, 
+        height: 150, 
       },
       dropdownButtonStyle: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        width: 250,
-        height: 43,
-        borderColor: '#fff',
-        borderWidth: 2,
+        width: 277,
+        height: 44,
+        borderColor: '#00AFFF',
+        borderWidth: 1,
         borderRadius: 10,
         padding: 10,
-        backgroundColor: '#ffffff90',
+        backgroundColor: '#80808035',
         fontWeight: '400',
         marginTop: 10,
       },
@@ -258,12 +259,12 @@ export const styles = StyleSheet.create({
       },
       dropdownItemIconStyle: {
         fontSize: 16,
-        color: '#000',
+        color: '#2E3A47',
         marginRight: 10,
       },
       dropdownItemTxtStyle: {
         fontSize: 16,
-        color: '#000',
+        color: '#2E3A47',
       },
       dropdownMenuStyle: {
         position: 'absolute',
@@ -274,54 +275,57 @@ export const styles = StyleSheet.create({
       zIndex: 1000,
       height: 500,
         borderRadius: 5,
-        backgroundColor: '#ffffff',
+        backgroundColor: '#FEFEFE',
       },
       inputContainer: {
-        width: 250,
-        height: 40,
-        borderColor: '#fff',
-        borderWidth: 2,
+        width: 277,
+        height: 44,
+        borderColor: '#00AFFF',
+        borderWidth: 1,
         borderRadius: 10,
         padding: 10,
-        backgroundColor: '#ffffff90',
+        backgroundColor: '#80808035',
         fontWeight: '400',
       },
       inputContainerbarrio: {
-        width: 250,
-        height: 40,
-        borderColor: '#fff',
-        borderWidth: 2,
+        width: 277,
+        height: 44,
+        borderColor: '#00AFFF',
+        borderWidth: 1,
         borderRadius: 10,
         padding: 10,
-        backgroundColor: '#ffffff90',
+        backgroundColor: '#80808035',
         fontWeight: '400',
         marginTop: 10,
       },
       inputObservaciones: {
-        width: 250,
+        width: 277,
         height: 200,
-        borderColor: '#fff',
-        borderWidth: 2,
+        borderColor: '#00AFFF',
+        borderWidth: 1,
         borderRadius: 10,
-        backgroundColor: '#ffffff90',
-        fontWeight: '400',
-        textAlignVertical: 'top',
         padding: 10,
-        marginTop : 10,
+        backgroundColor: '#80808035',
+        fontWeight: '400',
+        marginTop: 10,
+        textAlignVertical: 'top',
         
       },
       Registro: {
-        color: "#000",
+        color: "#fff",
         fontWeight: 'bold',
   
       },
      boxbutton: {
-      backgroundColor: "#ffffff80",
-      padding: 10,
-      borderRadius: 5,
-      borderWidth: 2,
-      borderColor: '#fff',
-      margin: 10,
+      flexDirection: 'row',
       alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: "#50AB89",
+      padding: 10,
+      gap: 10,
+      borderRadius: 10,
+      width: 277,
+      height: 44,
+      marginTop: 10,
       },
 });
