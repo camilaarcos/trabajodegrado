@@ -42,7 +42,8 @@ function MyTabs({openMenu}) {
       <Tab.Screen name="Inicio" component={Inicio} options={{
         tabBarIcon: ({ focused, size }) => (
           <Ionicons name="home" color={focused ? '#50AB89' : 'gray'} size={size} />
-        ),
+        ),tabBarActiveTintColor: '#50AB89',
+        tabBarInactiveTintColor: 'gray',
         headerTitle: () => (
           <View style={{ flexDirection: 'row', alignItems: 'center', }}>
             <Image source={require('./assets/I1.png')} style={{ width: 70, height: 70}} />
@@ -64,7 +65,7 @@ function MyTabs({openMenu}) {
             name="add" 
             color={focused ? 'white' : 'gray'} 
             size={size + 10} 
-            backgroundColor={focused ? '#50AB89' : 'white'} 
+            backgroundColor={focused ? '#50AB89' : '#E5F4F1'} 
           />
         ),
         
@@ -84,7 +85,8 @@ function MyTabs({openMenu}) {
   <Tab.Screen name="Mapas" component={Mapas}options={{
         tabBarIcon: ({ focused, size }) => (
           <Ionicons name="bar-chart-outline" color={focused ? '#50AB89' : 'gray'} size={size} />
-        ),
+        ),tabBarActiveTintColor: '#50AB89',
+        tabBarInactiveTintColor: 'gray',
         headerTitle: () => (
           <View style={{ flexDirection: 'row', alignItems: 'center', }}>
             <Image source={require('./assets/I1.png')} style={{ width: 70, height: 70}} />
@@ -172,28 +174,22 @@ function MainStack({setIsLoggedIn}) {
     ),
       }}/>
   <Stack.Screen name="MostrarCrimen" component={MostrarCrimen} 
-   options={{
-    headerTitle: () => (
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Image source={require('./assets/I1.png')} style={{ width: 50, height: 50, marginRight: 10 }} />
-        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>CrimenCraft</Text>
-      </View>
-      ),}}/>
+    options={{
+      headerTitle: () => (
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Image source={require('./assets/I1.png')} style={{ width: 50, height: 50, marginRight: 10 }} />
+          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>CrimenCraft</Text>
+        </View>
+        ),}}/>
   <Stack.Screen name="MostrarUsuario" component={MostrarUsuario}
    options={{
     headerTitle: () => (
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Image source={require('./assets/I1.png')} style={{ width: 50, height: 50, marginRight: 10 }} />
-        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>CrimenCraft</Text>
-      </View>
+      <Text style={{ fontWeight: 'bold', textAlign: 'left'}}> </Text>
       ),}}/>
   <Stack.Screen name="Perfil" component={Perfil} 
    options={{
     headerTitle: () => (
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Image source={require('./assets/I1.png')} style={{ width: 50, height: 50, marginRight: 10 }} />
-        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>CrimenCraft</Text>
-      </View>
+      <Text style={{ fontWeight: 'bold', textAlign: 'left'}}> </Text>
       ),}}/>
   <Stack.Screen name="Mapas" >
           {props => <Mapas {...props} openMenu={() => setModalVisible(true)} />} 

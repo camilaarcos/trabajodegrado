@@ -173,7 +173,10 @@ return(
       {filteredCrimenes.map((crimen) => (
         <TouchableOpacity key={crimen.id} style={styles.crimenesContainer}
           onPress={() => navigation.navigate('MostrarCrimen', { crimenesId: crimen.id })}>
-          <Text style={styles.textoCrimen}>{crimen.Tipo}</Text>
+         <View style={styles.row}>
+        <Text style={styles.textoCrimen}>{crimen.Tipo}</Text>
+        <Text style={styles.textoCrimen}>{crimen.Fecha}</Text>
+      </View>
         </TouchableOpacity>
       ))}
     </View>
@@ -204,7 +207,7 @@ export const styles = StyleSheet.create({
       searchInput: {
         width: 372,
         height: 44,
-        padding: 5,
+        padding: 10,
         gap: 10,
         borderRadius: 10,
         marginBottom: 10,
@@ -218,10 +221,8 @@ export const styles = StyleSheet.create({
         backgroundColor: '#E5F4F1',
         padding: 10,
         alignItems: 'center',
-        borderRadius: 5,
         marginTop: 20,
-        borderTopRightRadius: 20,
-        borderTopLeftRadius: 20,
+        borderRadius: 20,
       },
       crimenesContainer: {
         flexDirection: 'row',
@@ -238,6 +239,12 @@ export const styles = StyleSheet.create({
       textoCrimen: {
         fontSize: 14,
         color: '#2E3A47',
+
+      },
+      row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
       },
       dropdown: {
         flexDirection: 'row',
@@ -254,10 +261,8 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#50AB89',
         borderRadius: 100,
-        // padding: 10,
-        gap: 10,
-        width: 129,
-        height: 30,
+        padding: 5,
+        height: 35,
       },
       dropdownButtonStyle2: {
         flexDirection: 'row',
@@ -265,9 +270,8 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#50AB89',
         borderRadius: 100,
-        gap: 10,
-        width: 64,
-        height: 30,
+        padding: 5,
+        height: 35,
       },
       dropdownButtonStyle3: {
         flexDirection: 'row',
@@ -275,9 +279,8 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#50AB89',
         borderRadius: 100,
-        gap: 10,
-        width: 64,
-        height: 30,
+        padding: 5,
+        height: 35,
       },
       dropdownItemStyle: {
         flexDirection: 'row',
