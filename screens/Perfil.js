@@ -54,8 +54,8 @@ export default function Perfil() {
 
 return(
     <View style={styles.container}>
-        <Text style={styles.tittle}>Perfil usuario</Text>
-        {/* <Image source={require('../assets/Otp.png')} style={styles.imageStyle} /> */}
+        <Text style={styles.tittle}>Perfil</Text>
+        <Image source={require('../assets/I1.png')} style={styles.imageStyle} />
         <View style={styles.containercorreo}>
         <Text style={styles.nombre}><Text style={styles.texto}>Nombre: </Text>{name}</Text>
         <Text style={styles.texto}>Correo electrónico asociado: </Text>
@@ -95,59 +95,68 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        backgroundColor: '#dfe9f5',
+        backgroundColor: '#fefefe',
       },
       tittle: {
-        fontSize: 30,
-        color: '#4d82bc',
+        fontSize: 40,
+        color: '#2E3A47',
         fontWeight: 'bold',
         marginTop: 10,
       },
       imageStyle: {
-        width: 200, 
-        height: 200, 
+        width: 100, 
+        height: 100, 
       },
       enlaces: {
+        flexDirection: 'column',
         marginTop: 20,
+        width: '100%',
+        gap: 10,
       },
       logoutButton: {
-      backgroundColor: "#ffffff80",
+        width: 257,
+      backgroundColor: "#50AB89",
       padding: 10,
       borderRadius: 5,
-      borderWidth: 2,
-      borderColor: '#fff',
       margin: 10,
+      alignItems: 'center',
+      marginLeft: 65,
       },
       containercorreo: {
-        width: '100%',
-        backgroundColor: '#ffffff80',
+        width: '90%',
+        justifyContent: 'center',
+        backgroundColor: '#E5F4F1',
         padding: 10,
-        borderRadius: 5,
-        marginTop: 10,
+        gap: 10,
+        borderRadius: 20,
+        margin: 10,
       },
       texto: {
-        fontSize: 20,
-        color: '#000',
+        fontSize: 14,
+        color: '#2E3A47',
         fontWeight: 'bold',
       },
       nombre: {
-        fontSize: 20,
+        fontSize: 14,
+        color: '#2E3A47',
       },
       registerLink: {
-        color: "#000",
+        color: "#00AFFF",
         fontWeight: 'bold',
-        textDecorationLine: "underline",
+        textAlign: 'right',
+        marginRight: 20,
       },
       OutLink: {
-        color: "#000",
+        color: "#fff",
         fontWeight: 'bold',
       },
     containerUsuarios: {
-      width: '100%',
-      backgroundColor: '#ffffff80',
+      width: '90%',
+      backgroundColor: '#E5F4F1',
       padding: 10,
+      gap: 10,
       alignItems: 'flex-start',
-      borderRadius: 5,
+      borderRadius: 20,
       marginTop: 10,
     },
     usuarioContainer: {
@@ -156,12 +165,12 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       width : '100%',
       padding: 10,
-      backgroundColor: '#ffffff',
-      borderRadius: 5,
-      marginBottom: 5,
+      gap: 10,
+      backgroundColor: '#fefefe',
+      borderRadius: 15,
       },
       textoCrimen: {
-        fontSize: 20,
-        color: '#000',
+        fontSize: 14,
+        color: '#2E3A47',
       },
 });

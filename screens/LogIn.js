@@ -191,7 +191,7 @@ export default function LogIn({setIsLoggedIn}) {
       fontWeight: 'bold',
     },
     registerLink: {
-      color: "#009CE3", 
+      color: "#00AFFF", 
       fontWeight: 'bold',
     },
     forgotPasswordContainer: {

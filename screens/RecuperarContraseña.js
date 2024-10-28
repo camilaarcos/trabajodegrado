@@ -100,7 +100,7 @@ export default function RecoverPassword  () {
   );
 };
 
-const styles2 = StyleSheet.create({
+export const styles2 = StyleSheet.create({
 
   tittle: {
     marginTop: 30,

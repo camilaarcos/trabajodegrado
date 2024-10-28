@@ -99,78 +99,79 @@ return(
       />
       <Text style={styles.texto}>Filtrar por</Text>
         <View style={styles.dropdown}>
-        <SelectDropdown
-        data={tipos}
-        onSelect={filterChangeTipo}
-        renderButton={(selectedItem, isOpened) => (
-          <View style={styles.dropdownButtonStyle1}>
-            {selectedItem && (
-              <Icon name={selectedItem.icon}  />
-            )}
-            <Text style ={styles.FuenteDrop}>
-              {(selectedItem ) || "Tipo de crímen"}
-            </Text>
-          </View>
-        )}
-        renderItem={(item, index, isSelected) => (
-          <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: '#D2D9DF' }) }}>
-            <Icon name={item.icon} style={styles.dropdownItemIconStyle} />
-            <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
-          </View>
-        )}
-        showsVerticalScrollIndicator={true}
-        dropdownStyle={styles.dropdownMenuStyle}
-        
-      />
-      <SelectDropdown
-        data={fechas}
-        onSelect={filterChangeFecha}
-        renderButton={(selectedItem, isOpened) => (
-          <View style={styles.dropdownButtonStyle2}>
-            {selectedItem && (
-              <Icon name={selectedItem.icon}  />
-            )}
-            <Text style ={styles.FuenteDrop} >
-              {(selectedItem ) || "Fecha"}
-            </Text>
-          </View>
-        )}
-        renderItem={(item, index, isSelected) => (
-          <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: '#D2D9DF' }) }}>
-            <Icon name={item.icon} style={styles.dropdownItemIconStyle} />
-            <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
-          </View>
-        )}
-        showsVerticalScrollIndicator={true}
-        dropdownStyle={styles.dropdownMenuStyle}
-      />
+              <SelectDropdown
+              data={tipos}
+              onSelect={filterChangeTipo}
+              renderButton={(selectedItem, isOpened) => (
+                <View style={styles.dropdownButtonStyle1}>
+                  {selectedItem && (
+                    <Icon name={selectedItem.icon}  />
+                  )}
+                  <Text style ={styles.FuenteDrop}>
+                    {(selectedItem ) || "Tipo de crímen"}
+                  </Text>
+                </View>
+              )}
+              renderItem={(item, index, isSelected) => (
+                <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: '#D2D9DF' }) }}>
+                  <Icon name={item.icon} style={styles.dropdownItemIconStyle} />
+                  <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
+                </View>
+              )}
+              showsVerticalScrollIndicator={true}
+              dropdownStyle={styles.dropdownMenuStyle}
+              
+            />
+            <SelectDropdown
+              data={fechas}
+              onSelect={filterChangeFecha}
+              renderButton={(selectedItem, isOpened) => (
+                <View style={styles.dropdownButtonStyle2}>
+                  {selectedItem && (
+                    <Icon name={selectedItem.icon}  />
+                  )}
+                  <Text style ={styles.FuenteDrop} >
+                    {(selectedItem ) || "Fecha"}
+                  </Text>
+                </View>
+              )}
+              renderItem={(item, index, isSelected) => (
+                <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: '#D2D9DF' }) }}>
+                  <Icon name={item.icon} style={styles.dropdownItemIconStyle} />
+                  <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
+                </View>
+              )}
+              showsVerticalScrollIndicator={true}
+              dropdownStyle={styles.dropdownMenuStyle}
+            />
 
-      <SelectDropdown
-        data={barrios}
-        onSelect={filterChangeBarrio}
-        renderButton={(selectedItem, isOpened) => (
-          <View style={styles.dropdownButtonStyle3}>
-            {selectedItem && (
-              <Icon name={selectedItem.icon}  />
-            )}
-            <Text style ={styles.FuenteDrop} >
-              {(selectedItem ) || "Barrio"}
-            </Text>
-          </View>
-        )}
-        renderItem={(item, index, isSelected) => (
-          <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: '#D2D9DF' }) }}>
-             <Icon name={item.icon} style={styles.dropdownItemIconStyle} />
-            <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
-          </View>
-        )}
-        showsVerticalScrollIndicator={true}
-        dropdownStyle={styles.dropdownMenuStyle}
-        
-      />
+            <SelectDropdown
+              data={barrios}
+              onSelect={filterChangeBarrio}
+              renderButton={(selectedItem, isOpened) => (
+                <View style={styles.dropdownButtonStyle3}>
+                  {selectedItem && (
+                    <Icon name={selectedItem.icon}  />
+                  )}
+                  <Text style ={styles.FuenteDrop} >
+                    {(selectedItem ) || "Barrio"}
+                  </Text>
+                </View>
+              )}
+              renderItem={(item, index, isSelected) => (
+                <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: '#D2D9DF' }) }}>
+                  <Icon name={item.icon} style={styles.dropdownItemIconStyle} />
+                  <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
+                </View>
+              )}
+              showsVerticalScrollIndicator={true}
+              dropdownStyle={styles.dropdownMenuStyle}
+              
+            />
       </View>
         <View style={styles.crimenes}>
-      {filteredCrimenes.map((crimen) => (
+      {filteredCrimenes.length > 0 ? (
+      filteredCrimenes.map((crimen) => (
         <TouchableOpacity key={crimen.id} style={styles.crimenesContainer}
           onPress={() => navigation.navigate('MostrarCrimen', { crimenesId: crimen.id })}>
          <View style={styles.row}>
@@ -178,7 +179,10 @@ return(
         <Text style={styles.textoCrimen}>{crimen.Fecha}</Text>
       </View>
         </TouchableOpacity>
-      ))}
+      ))
+    ) : (
+      <Text style={styles.textoCrimen}>No hay crímenes registrados</Text>
+    )}
     </View>
 
         
@@ -191,7 +195,7 @@ export const styles = StyleSheet.create({
 
       tittle: {
         textAlign: 'center',
-        fontSize: 24,
+        fontSize: 26,
         color: '#2E3A47',
         fontWeight: 'bold',
         padding: 10,
@@ -223,6 +227,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 20,
         borderRadius: 20,
+        minHeight: 550,
       },
       crimenesContainer: {
         flexDirection: 'row',
@@ -250,37 +255,36 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        width: 372,
-        height: 30,
+        flexWrap: 'wrap',
+        width: "100%",
+        height: 'auto',
         gap: 19,
         margin: 10,
+        marginBottom: 10,
       },
       dropdownButtonStyle1: {
         flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
         backgroundColor: '#50AB89',
         borderRadius: 100,
         padding: 5,
         height: 35,
+        paddingHorizontal: 10,
       },
       dropdownButtonStyle2: {
         flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
         backgroundColor: '#50AB89',
         borderRadius: 100,
         padding: 5,
         height: 35,
+        paddingHorizontal: 10,
       },
       dropdownButtonStyle3: {
         flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
         backgroundColor: '#50AB89',
         borderRadius: 100,
         padding: 5,
         height: 35,
+        paddingHorizontal: 10,
       },
       dropdownItemStyle: {
         flexDirection: 'row',
@@ -293,6 +297,7 @@ export const styles = StyleSheet.create({
         color: '#ffffff',
         fontWeight: 'bold',
         fontSize: 16,
+        
       },
       dropdownItemTxtStyle: {
         fontSize: 14,

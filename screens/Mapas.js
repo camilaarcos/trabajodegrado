@@ -8,7 +8,7 @@ import Geocoder from 'react-native-geocoding';
 import SelectDropdown from 'react-native-select-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-Geocoder.init(" ");
+Geocoder.init("AIzaSyC66ZWY55i0_SWvY9pskT9Mj4OptmQZoiY");
 export default function Mapas() {
   const [coordenadas, setCoordenadas] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -133,14 +133,14 @@ export default function Mapas() {
         data={tipos}
         onSelect={(selectedItem) => setTipoSeleccionado(selectedItem)}
         renderButton={(selectedItem, isOpened) => (
-          <View style={styles.dropdownButtonStyle}>
+          <View style={styles.dropdownButtonStyle1}>
             {selectedItem && (
               <Icon name={selectedItem.icon}  />
             )}
-            <Text >
+            <Text style ={styles.FuenteDrop}>
               {(selectedItem ) || "Tipo de crimen"}
             </Text>
-            <Icon name={isOpened ? "chevron-up" : "chevron-down"} />
+            <Icon style ={styles.icono} name={isOpened ? "chevron-up" : "chevron-down"} />
           </View>
         )}
         renderItem={(item, index, isSelected) => (
@@ -157,14 +157,14 @@ export default function Mapas() {
         data={barrios}
         onSelect={(selectedItem) => setBarrioSeleccionado(selectedItem)}
         renderButton={(selectedItem, isOpened) => (
-          <View style={styles.dropdownButtonStyle}>
+          <View style={styles.dropdownButtonStyle2}>
             {selectedItem && (
               <Icon name={selectedItem.icon}  />
             )}
-            <Text >
+            <Text style ={styles.FuenteDrop}>
               {(selectedItem ) || "Barrio"}
             </Text>
-            <Icon name={isOpened ? "chevron-up" : "chevron-down"} />
+            <Icon style ={styles.icono} name={isOpened ? "chevron-up" : "chevron-down"} />
           </View>
         )}
         renderItem={(item, index, isSelected) => (
@@ -181,12 +181,12 @@ export default function Mapas() {
 
 
       <View style={styles.switchContainer}>
-        <Text style={styles.switchLabel}>Ver mapa de Puntos</Text>
+        <Text style={styles.switchLabel}>Mapa de Puntos</Text>
         <Switch
           value={viewType === "Calor"}
           onValueChange={(value) => setViewType(value ? "Calor" : "Puntos")}
         />
-        <Text style={styles.switchLabel}>Ver mapa de Calor</Text>
+        <Text style={styles.switchLabel}>Mapa de Calor</Text>
       </View>
 
       <View style={styles.mapContainer}>
@@ -235,7 +235,8 @@ export default function Mapas() {
             const [barrio, tipo] = clave.split('-');
             return (
               <Text key={clave} style={styles.recuentoText}>
-                {tipo}: {count} en {barrio}
+                <Text style={styles.recuentoTitulo2}>•{tipo}: </Text>
+                 {count} en {barrio}
               </Text>
             );
           })
@@ -246,12 +247,13 @@ export default function Mapas() {
               const [, tipo] = clave.split('-');
               return (
                 <Text key={clave} style={styles.recuentoText}>
-                  {tipo}: {count} en {barrioSeleccionado}
+                 <Text style={styles.recuentoTitulo2}>•{tipo}: </Text>
+                 {count} en {barrioSeleccionado}
                 </Text>
               );
             })
         )}
-        <Text style={styles.recuentoText}>Total: {totalCrimenes}</Text>
+        <Text style={styles.recuentoText}> <Text style={styles.recuentoTitulo2}> •Total:</Text>  {totalCrimenes}</Text>
       </View>
       
     </ScrollView>
@@ -262,18 +264,14 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     alignItems: 'center',
     padding: 16,
-    backgroundColor: '#dfe9f5',
+    backgroundColor: '#fefefe',
   },
   tittle: {
-    fontSize: 30,
-    color: '#4d82bc',
+    fontSize: 26,
+    color: '#2E3A47',
     fontWeight: 'bold',
-    marginTop: 10,
-  },
-  tittle2: {
-    fontSize: 30,
-    color: '#4d82bc',
-    fontWeight: 'bold',
+    padding: 10,
+    textAlign: 'center',
   },
   map: {
     width: '100%',
@@ -285,28 +283,53 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
-    width: '100%',
-    padding: 10,
-    backgroundColor: '#ffffff',
-    borderRadius: 5,
+    flexWrap: 'wrap',
+    width: "100%",
+    height: 'auto',
+    gap: 19,
+    margin: 10,
     marginBottom: 10,
   },
-  dropdownButtonStyle: {
+  dropdownButtonStyle1: {
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    backgroundColor: '#50AB89',
+    borderRadius: 100,
+    padding: 5,
+    height: 35,
+    paddingHorizontal: 10,
+  },
+  dropdownButtonStyle2: {
+    flexDirection: 'row',
+    backgroundColor: '#50AB89',
+    borderRadius: 100,
+    padding: 5,
+    height: 35,
+    paddingHorizontal: 10,
   },
   dropdownItemStyle: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10,
     borderWidth: 0.5,
+    
+  },
+  FuenteDrop: {
+    color: '#ffffff',
+    fontWeight: 'bold',
+    fontSize: 16,
+    
+  },
+  icono: {
+    color: '#ffffff',
+    // fontSize: 16,
+    marginLeft: 10,
+    marginTop: 5,
   },
   dropdownItemTxtStyle: {
-    fontSize: 16,
-    color: '#000',
+    fontSize: 14,
+    color: '#2E3A47',
   },
   dropdownMenuStyle: {
     position: 'absolute',
@@ -319,18 +342,18 @@ const styles = StyleSheet.create({
   switchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     width: '100%',
   },
   switchLabel: {
     fontSize: 18,
-    color: '#4d82bc',
+    color: '#2E3A47',
   },
   recuentoContainer: {
     marginTop: 20,
     width: '100%',
     padding: 10,
-    backgroundColor: '#fff',
+    backgroundColor: '#E5F4F1',
     borderRadius: 5,
     alignItems: 'flex-start',
   },
@@ -338,10 +361,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: '#2E3A47',
   },
   recuentoText: {
     fontSize: 16,
-    color: '#333',
+    color: '#2E3A47',
     marginBottom: 5,
   },
+  recuentoTitulo2:{
+    fontWeight: 'bold',
+    color: '#2E3A47',
+  }
 });

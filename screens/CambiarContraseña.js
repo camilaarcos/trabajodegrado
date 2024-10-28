@@ -6,6 +6,7 @@ import { actualizaContraseña, reauthenticate } from '../utils/Acciones';
 import { isEmpty, size } from 'lodash'
 import CustomAlert from '../src/componentes/Alertas';
 import { styles } from './LogIn';
+import { styles2 } from './RecuperarContraseña';
 export default function CambiarContraseña  () {
     const [newPassword, setNewPassword] = useState('');
     const [currentPassword, setCurrentPassword] = useState('');
@@ -89,13 +90,11 @@ const validateForm = () => {
                 width: '100%',
                 height: '100%',
                 alignItems: 'center',
-                marginTop: 90,
-              }}>
-            
-            <BlurView intensity={100} style={styles2.blurPrincipal}>   
+              }}> 
               <View style={styles.login1}>
                 <Text style={styles.tittle}>Cambiar Contraseña</Text>
-                  {/* <Image source={require('../assets/Security.png')} style={styles.avatar} /> */}
+                  <Image source={require('../assets/I1.png')} style={styles.avatar} />
+                  <View style={styles2.ContainerCentral}>
                     <TextInput
                       style={styles.input}
                       placeholder="Contraseña actual"
@@ -133,18 +132,14 @@ const validateForm = () => {
                               icon={alertIcon}
                               onClose={() => setAlertVisible(false)}
                             />
+                            </View>
               </View>
-            </BlurView>
           </ScrollView>
     </View>
   );
 };
 
-const styles2 = StyleSheet.create({
-  blurPrincipal: {
-    height: '70%',
-      borderRadius: 10,
-      overflow: 'hidden',
-  },
+const styles3 = StyleSheet.create({
+
 });
 

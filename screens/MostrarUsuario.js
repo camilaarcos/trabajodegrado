@@ -9,7 +9,8 @@ import {fetchUserData} from "../utils/Acciones";
 import { dataRol } from "../utils/Ayudas";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { deleteUser, updateEmail } from "firebase/auth";
-
+import { Ionicons } from "@expo/vector-icons";
+import CustomAlert from "../src/componentes/Alertas";
 export default function MostrarUsuario(props) {
     const navigation = useNavigation();
     const [modalVisible, setModalVisible] = useState(false);
@@ -18,6 +19,10 @@ export default function MostrarUsuario(props) {
     const [nombre, setNombre] = useState('');
     const [correo, setCorreo] = useState('');
     const [rol, setRol] = useState('');
+    const [alertVisible, setAlertVisible] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
+    const [alertIcon, setAlertIcon] = useState(null);
+    const [Registrosuccess, setRegistroSuccess] = useState(false);
     const auth = FIREBASE_AUTH;
  
     const getUsuario = async (uid) => {
@@ -63,13 +68,17 @@ export default function MostrarUsuario(props) {
             correo: correo,
             rol: rol,
         });
-        Alert.alert("Usuario actualizado", "El usuario ha sido actualizado exitosamente.");
-        setModalVisible(false);
+        setAlertMessage("El usuario ha sido actualizado exitosamente.");
+        setAlertIcon(require('../assets/success.png'));
+        setAlertVisible(true);
+        setRegistroSuccess(true);
         getUsuario(props.route.params.usuarioId);
 
     } catch (error) {
         console.error("Error al actualizar el usuario:", error);
-        Alert.alert("Error", "Hubo un problema al actualizar el usuario.");
+        setAlertMessage('Hubo un problema al actualizar el usuario.');
+      setAlertIcon(require('../assets/error.png'));
+      setAlertVisible(true);
     }
     };
   
@@ -78,12 +87,30 @@ export default function MostrarUsuario(props) {
         const docRef = doc(FIREBASE_DB, 'usuarios', id);
         await deleteDoc(docRef);
 
-        Alert.alert("usuario eliminado", "El usuario ha sido eliminado exitosamente.");
+        setAlertMessage("El usuario ha sido eliminado exitosamente.");
+        setAlertIcon(require('../assets/success.png'));
+        setAlertVisible(true);
+        setRegistroSuccess(true);
         navigation.goBack();
     } catch (error) {
         console.error("Error al eliminar el usuario:", error);
-        Alert.alert("Error", "Hubo un problema al eliminar el usuario.");
+        setAlertMessage('Hubo un problema al eliminar el usuario.');
+      setAlertIcon(require('../assets/error.png'));
+      setAlertVisible(true);
     }
+    };
+    const handleCloseAlert = () => {
+      setAlertVisible(false);
+      if(Registrosuccess){
+        setModalVisible(false);
+      }
+    };
+
+    const handleCloseAlert2 = () => {
+      setAlertVisible(false);
+      if(Registrosuccess){
+        navigation.goBack();
+      }
     };
 
 return(
@@ -112,14 +139,21 @@ return(
                               <>
                               <View style={styles.contenedorbutton}>
                             <TouchableOpacity onPress={handleEditUsuario} style={styles.boxbutton}>
-                              <Text style={styles.login}>Editar</Text>
+                              <Text style={styles.textbutton}>Editar</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={()=> handleDeleteUsuario(props.route.params?.usuarioId)} style={styles.boxbutton}>
-                             <Text style={styles.login}>Eliminar</Text>
+                             <Text style={styles.textbutton}>Eliminar</Text>
                             </TouchableOpacity>
                             </View>
                             </>
                             )}
+
+                            <CustomAlert
+                                visible={alertVisible}
+                                message={alertMessage}
+                                icon={alertIcon}
+                                onClose={handleCloseAlert2}
+                              />
                             </View>
                             </View>
                             
@@ -132,22 +166,27 @@ return(
             setModalVisible(!modalVisible);
           }}>
           <View style={styles.modalView}>
+          <TouchableOpacity
+                        style={styles.modalCloseButton}
+                        onPress={() => setModalVisible(!modalVisible)}>
+                        <Ionicons name="close" size={25} color="black" />
+                      </TouchableOpacity>
           <Text style={styles.titlemodal}>Editar usuario</Text>
-                                    <Text style={styles.infomodal}>Nombre:</Text>
+                                    <Text style={styles.textomodal}>Nombre:</Text>
                                   <TextInput
                                       style={styles.input}
                                       placeholder="nombre"
                                       value={nombre}
                                       onChangeText={setNombre}
                                   />
-                                  <Text style={styles.infomodal}>Correo:</Text>
+                                  <Text style={styles.textomodal}>Correo:</Text>
                                   <TextInput
                                       style={styles.input}
                                       placeholder="correo"
                                       value={correo}
                                       onChangeText={setCorreo}
                                   />
-                                  <Text style={styles.infomodal}>{usuario.rol}</Text>
+                                  <Text style={styles.infomodal}><Text style={styles.textomodal}>Rol:</Text>{usuario.rol}</Text>
                                   <SelectDropdown
                                       data={dataRol}
                                       onSelect={(selectedItem, index) => {
@@ -174,11 +213,12 @@ return(
                                   <TouchableOpacity onPress={handleSaveUsuario} style={styles.boxbutton2}>
                           <Text style={styles.textbutton}>Guardar</Text>
                       </TouchableOpacity>
-                      <TouchableOpacity
-                        style={styles.boxbutton2}
-                        onPress={() => setModalVisible(!modalVisible)}>
-                        <Text style={styles.textbutton}>Cerrar</Text>
-                      </TouchableOpacity>
+                      <CustomAlert
+                                visible={alertVisible}
+                                message={alertMessage}
+                                icon={alertIcon}
+                                onClose={handleCloseAlert}
+                              />
                       </View>
           </View>
           </Modal>
@@ -192,75 +232,73 @@ return(
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
-        backgroundColor: '#dfe9f5',
+        // alignItems: 'center',
+        backgroundColor: '#E5F4F1',
       },
-      blurPrincipal: {
-        height: '50%',
-        borderRadius: 10,
-        overflow: 'hidden',
-        marginTop: 40,
+      imageArriba: {
+        width: 100,
+        height: 100,
       },
       title: {
-        fontSize: 30,
-        color: '#4d82bc',
+        fontSize: 40,
+        color: '#2E3A47',
         fontWeight: 'bold',
-        marginBottom: 10,
         marginTop: 10,
       },
      contenedorcentro: {
-        width: 350,
-        height: '100%',
-        borderColor: '#4d82bc',
-        borderWidth: 2,
-        borderRadius: 10,
-        padding: 10,
-        alignItems: 'center',
+      width: 350,
+      backgroundColor: '#fefefe',
+      borderRadius: 10,
+      padding: 10,
+      alignItems: 'center',
       },
       contenedorinfo: {
         width: '100%',
         marginTop: 30,
         padding: 10,
-        backgroundColor: '#ffffff',
-        borderRadius: 5,
-        marginBottom: 5,
       },
       info: {
-        fontSize: 20,
-        color: '#000',
+        fontSize: 14,
+        color: '#2E3A47',
         marginTop: 10,
       },
       titleinfo:{
-        fontSize: 20,
-        color: '#000',
+        fontSize: 14,
+        color: '#2E3A47',
         fontWeight: 'bold',
       },
       modalView: {
         marginTop: 200,
+        justifyContent: 'center',
         margin: 20,
-        backgroundColor: '#ffffff',
+        backgroundColor: '#fefefe',
         borderRadius: 20,
         padding: 35,
-        alignItems: 'center',
         shadowColor: '#000',
-
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
     },
     titlemodal: {
-      fontSize: 20,
+      fontSize: 40,
       fontWeight: 'bold',
       textAlign: 'center',
       marginBottom: 20,
+      color: '#2E3A47',
+    },
+    textomodal: {
+      fontSize: 14,
+      color: '#2E3A47',
+      fontWeight: 'bold',
+      marginTop: 10,
+      width: 300,
     },
     infomodal: {
-      fontSize: 20,
-      color: '#000',
+      fontSize: 14,
+      color: '#2E3A47',
       marginTop: 10,
-      backgroundColor: '#dfe9f5',
-      borderRadius: 5,
       width: 300,
+      // fontWeight: 'bold',
     },
     contenedorbutton: {
       flexDirection: 'row',
@@ -269,43 +307,47 @@ const styles = StyleSheet.create({
     },
     boxbutton: {
       flexDirection: 'row',
-      backgroundColor: "#ffffff80",
+      backgroundColor: "#50AB89",
       padding: 5,
-      borderRadius: 8,
-      borderWidth: 2,
-      borderColor: '#fff',
+      borderRadius: 100,
       marginHorizontal: 20,
+      width: 100,
+      justifyContent: 'center',
     },
     textbutton:{
       fontWeight: "bold",
-    },
-    input: {
-      backgroundColor: '#a7aed3',
-      marginTop: 10,
-      width: 300,
-      borderRadius: 5,
+      color: "#ffffff",
     },
     boxbutton2: {
       flexDirection: 'row',
-      backgroundColor: "#dfe9f580",
+      backgroundColor: "#50AB89",
       padding: 5,
       borderRadius: 8,
-      borderWidth: 2,
-      borderColor: '#dfe9f5',
-      marginHorizontal: 20,
+      width: 100,
+      justifyContent: 'center',
+      marginLeft: 95,
     },
     dropdownButtonStyle: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      backgroundColor: '#a7aed3',
+      backgroundColor: '#08080810',
       marginTop: 10,
-      width: 300,
+      width: '100%',
+      height: 30,
       borderRadius: 5,
+      borderWidth: 1,
+      borderColor: '#00AFFF',
+      paddingHorizontal: 10,
+    },
+    dropdownButtonArrowStyle: {
+      color: '#2E3A47',
+      marginRight: 10,
+      contentSize: 10,
     },
     dropdownButtonTxtStyle: {
-      fontSize: 20,
-      color: '#000',
+      fontSize: 14,
+      color: '#2E3A47',
     },
     dropdownItemStyle: {
       flexDirection: 'row',
@@ -314,8 +356,8 @@ const styles = StyleSheet.create({
       borderWidth: 0.5,
     },
     dropdownItemTxtStyle: {
-      fontSize: 20,
-      color: '#000',
+      fontSize: 14,
+      color: '#2E3A47',
     },
     dropdownMenuStyle: {
       position: 'absolute',
@@ -323,6 +365,23 @@ const styles = StyleSheet.create({
     transform: [{ translateX: -150 }],
     width: 300,
       borderRadius: 5,
-      backgroundColor: '#ffffff',
+      backgroundColor: '#fefefe',
+    },
+    input: {
+      backgroundColor: '#08080815',
+      marginTop: 10,
+      width: '100%',
+      borderRadius: 5,
+      fontSize: 14,
+      height: 30,
+      borderRadius: 5,
+      borderWidth: 1,
+      borderColor: '#00AFFF',
+      paddingHorizontal: 10,
+    },
+    modalCloseButton: {
+      position: 'absolute',
+      top: 15,
+      right: 15,
     },
 });

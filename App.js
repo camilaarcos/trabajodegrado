@@ -71,7 +71,7 @@ function MyTabs({openMenu}) {
         
         headerTitle: () => (
           <View style={{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold' }}> </Text>
+            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>CrimenCraft</Text>
             <TouchableOpacity style ={{marginLeft:330}} onPress={openMenu}>
             <Ionicons name="menu" size={34} color="black" />
           </TouchableOpacity>
@@ -184,7 +184,10 @@ function MainStack({setIsLoggedIn}) {
   <Stack.Screen name="MostrarUsuario" component={MostrarUsuario}
    options={{
     headerTitle: () => (
-      <Text style={{ fontWeight: 'bold', textAlign: 'left'}}> </Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Image source={require('./assets/I1.png')} style={{ width: 50, height: 50, marginRight: 10 }} />
+        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>CrimenCraft</Text>
+      </View>
       ),}}/>
   <Stack.Screen name="Perfil" component={Perfil} 
    options={{
@@ -209,7 +212,7 @@ function MainStack({setIsLoggedIn}) {
         onPress={()=> {navigation.navigate('Perfil'); setModalVisible(false); }
         }
       >
-        <Text style={styles.modalPerfilButtonText}>Perfil Usuario</Text>
+        <Text style={styles.modalPerfilButtonText}>Perfil</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -261,9 +264,11 @@ const styles = StyleSheet.create({
   modalContent: {
     width: 200,
     padding: 20,
-    backgroundColor: 'white',
+    height: 140,
+    backgroundColor: '#fefefe',
     borderRadius: 10,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   modalPerfilButton: {
     paddingVertical: 5,
@@ -272,23 +277,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalPerfilButtonText: {
-    color: 'black',
-    fontSize: 18,
+    color: '#00AFFF',
+    fontSize: 20,
     fontWeight: 'bold',
-    textDecorationLine: "underline",
   },
   modalButton: {
     paddingVertical: 5,
     width: '100%',
-    backgroundColor: 'gray',
+    height: 30,
+    backgroundColor: '#50AB89',
     borderRadius: 5,
     marginTop: 10,
     alignItems: 'center',
+    padding: 10,
+    gap: 10,
   },
   modalButtonText: {
-    color: 'white',
-    // fontSize: 18,
-    // fontWeight: 'bold',
+    color: '#fefefe',
+    fontSize: 14,
+    fontWeight: 'bold',
   },
   modalCloseButton: {
     position: 'absolute',
