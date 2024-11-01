@@ -70,9 +70,9 @@ function MyTabs({openMenu}) {
         ),
         
         headerTitle: () => (
-          <View style={{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>CrimenCraft</Text>
-            <TouchableOpacity style ={{marginLeft:330}} onPress={openMenu}>
+          <View style={{ flexDirection: 'row', alignItems: 'center'}}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', marginRight:50 }}>CrimenCraft</Text>
+            <TouchableOpacity style ={{paddingHorizontal:165}} onPress={openMenu}>
             <Ionicons name="menu" size={34} color="black" />
           </TouchableOpacity>
           </View>
@@ -211,8 +211,8 @@ function MainStack({setIsLoggedIn}) {
         style={styles.modalPerfilButton}
         onPress={()=> {navigation.navigate('Perfil'); setModalVisible(false); }
         }
-      >
-        <Text style={styles.modalPerfilButtonText}>Perfil</Text>
+      > 
+        <Text style={styles.modalPerfilButtonText}>Ver Perfil</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     alignItems: 'flex-end',
     // justifyContent: 'space-evenly',
-    marginTop: 60,
+    marginTop: 80,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalPerfilButtonText: {
-    color: '#00AFFF',
+    color: '#000',
     fontSize: 20,
     fontWeight: 'bold',
   },
@@ -285,9 +285,9 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     width: '100%',
     height: 30,
-    backgroundColor: '#50AB89',
+    backgroundColor: '#E32636',
     borderRadius: 5,
-    marginTop: 10,
+    marginTop: 30,
     alignItems: 'center',
     padding: 10,
     gap: 10,

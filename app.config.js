@@ -10,12 +10,14 @@ export default{
     "splash": {
       "image": "./assets/CrimenCraft.png",
       "resizeMode": "contain",
-      "backgroundColor": "#E5F4F1"
+      "backgroundColor": "#E5F4F1",
+      
     },
     "ios": {
       "supportsTablet": true
     },
     "android": {
+      package: "com.univalle.crimencraft",
       "adaptiveIcon": {
         "foregroundImage": "./assets/I1.png",
         "backgroundColor": "#E5F4F1"
@@ -27,6 +29,9 @@ export default{
       }
     },
     extra: {
+      eas: {
+        projectId: "50d68530-11a8-4cee-9a35-e7cb4a536808"
+      },
       apiKey: process.env.API_KEY,
       authDomain: process.env.AUTH_DOMAIN,
       projectId: process.env.PROJECTID,

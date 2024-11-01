@@ -330,6 +330,7 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
       marginTop: 10,
       width: 300,
+      
     },
     infomodal: {
       fontSize: 14,
@@ -385,6 +386,7 @@ const styles = StyleSheet.create({
     dropdownButtonTxtStyle: {
       fontSize: 14,
       color: '#2E3A47',
+      paddingLeft: 5,
     },
     dropdownItemStyle: {
       flexDirection: 'row',
@@ -414,6 +416,7 @@ const styles = StyleSheet.create({
       borderRadius: 5,
       borderWidth: 1,
       borderColor: '#00AFFF',
+      paddingLeft: 5,
     },
     input2: {
       backgroundColor: '#08080815',
@@ -424,6 +427,7 @@ const styles = StyleSheet.create({
       borderRadius: 5,
       borderWidth: 1,
       borderColor: '#00AFFF',
+      padding: 5,
     },
     modalCloseButton: {
       position: 'absolute',

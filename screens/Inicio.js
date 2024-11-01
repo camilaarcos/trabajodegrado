@@ -1,4 +1,4 @@
-import {Text, View, TouchableOpacity, Image, StyleSheet, ScrollView,TextInput } from "react-native";
+import {Text, View, TouchableOpacity, Image, StyleSheet, ScrollView,TextInput, ActivityIndicator } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useNavigation } from '@react-navigation/native';
 import SelectDropdown from 'react-native-select-dropdown';
@@ -9,6 +9,7 @@ export default function Inicio() {
   const navigation = useNavigation();
   const [crimenes, setCrimenes] = useState([]);
   const [filteredCrimenes, setFilteredCrimenes] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedTipo, setSelectedTipo] = useState(null);
   const [selectedFecha, setSelectedFecha] = useState(null);
   const [selectedBarrio, setSelectedBarrio] = useState(null);
@@ -33,12 +34,14 @@ export default function Inicio() {
 
   useEffect(() => {
     const unsubscribe = fetchCrimenes((result) => {
+      setIsLoading(true);
       if (result.statusResponse) {
         setCrimenes(result.data);
         setFilteredCrimenes(result.data);
       } else {
         console.log(result.error);
       }
+      setIsLoading(false);
     });
     return () => unsubscribe();
   },[]);
@@ -170,19 +173,23 @@ return(
             />
       </View>
         <View style={styles.crimenes}>
-      {filteredCrimenes.length > 0 ? (
-      filteredCrimenes.map((crimen) => (
-        <TouchableOpacity key={crimen.id} style={styles.crimenesContainer}
-          onPress={() => navigation.navigate('MostrarCrimen', { crimenesId: crimen.id })}>
-         <View style={styles.row}>
-        <Text style={styles.textoCrimen}>{crimen.Tipo}</Text>
-        <Text style={styles.textoCrimen}>{crimen.Fecha}</Text>
-      </View>
-        </TouchableOpacity>
-      ))
-    ) : (
-      <Text style={styles.textoCrimen}>No hay crímenes registrados</Text>
-    )}
+        {isLoading ? (
+          <ActivityIndicator size="large" color="#00AFFF" style={styles.loading} /> 
+        ) : (
+          filteredCrimenes.length > 0 ? (
+            filteredCrimenes.map((crimen) => (
+              <TouchableOpacity key={crimen.id} style={styles.crimenesContainer}
+                onPress={() => navigation.navigate('MostrarCrimen', { crimenesId: crimen.id })}>
+                <View style={styles.row}>
+                  <Text style={styles.textoCrimen}>{crimen.Tipo}</Text>
+                  <Text style={styles.textoCrimen}>{crimen.Fecha}</Text>
+                </View>
+              </TouchableOpacity>
+            ))
+          ) : (
+            <Text style={styles.textoCrimen}>No hay crímenes registrados</Text>
+          )
+        )}
     </View>
 
         
@@ -199,6 +206,9 @@ export const styles = StyleSheet.create({
         color: '#2E3A47',
         fontWeight: 'bold',
         padding: 10,
+      },
+      loading: {
+        marginTop: 20,
       },
       texto: {
         color: '#2E3A47',

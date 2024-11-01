@@ -1,0 +1,43 @@
+{
+  "cli": {
+    "version": ">= 12.6.2",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "env": {
+                "EXPO_PUBLIC_API_URL": "2323213",
+                "EXPO_PUBLIC_something": "123123",
+                "API_KEY": "AIzaSyDVI1okoTmQX_-dVduWpG2FI-v1N7e0Sgo",
+                "AUTH_DOMAI2": "proyecto-3dd90.firebaseapp.com",
+                "PROJECT_ID": "proyecto-3dd90",
+                "STORAGE_BUCKET": "proyecto-3dd90.appspot.com",
+                "MESSAGING_SENDER_ID": "172339892413",
+                "APP_ID": "1:172339892413:web:8a86a321838cc3b27267d4",
+                "GOOGLE_MAPS_API_KEY": "AIzaSyC66ZWY55i0_SWvY9pskT9Mj4OptmQZoiY"
+            }
+    },
+    "preview": {
+      "distribution": "internal",
+      "env": {
+                "EXPO_PUBLIC_API_URL": "2323213",
+                "EXPO_PUBLIC_something": "123123",
+                "API_KEY": "AIzaSyDVI1okoTmQX_-dVduWpG2FI-v1N7e0Sgo",
+                "AUTH_DOMAI2": "proyecto-3dd90.firebaseapp.com",
+                "PROJECT_ID": "proyecto-3dd90",
+                "STORAGE_BUCKET": "proyecto-3dd90.appspot.com",
+                "MESSAGING_SENDER_ID": "172339892413",
+                "APP_ID": "1:172339892413:web:8a86a321838cc3b27267d4",
+                "GOOGLE_MAPS_API_KEY": "AIzaSyC66ZWY55i0_SWvY9pskT9Mj4OptmQZoiY"
+            }
+    },
+    "production": {
+      "autoIncrement": true
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}

@@ -109,7 +109,7 @@ export default function Mapas() {
   };
 
   if (loading) {
-    return <ActivityIndicator size="large" color="#0000ff" />;
+    return <ActivityIndicator size="large" color="#00AFFF" />;
   }
 
   if (error) {
